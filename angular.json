@@ -23,9 +23,15 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              "src/assets/libs/css/materialize.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "src/assets/libs/js/jquery-3.3.1.js",
+              "../node_modules/jquery/dist/jquery.min.js",
+              "src/assets/libs/js/materialize.js",
+              "src/assets/libs/js/mtl.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {

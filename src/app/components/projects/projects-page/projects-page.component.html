@@ -1,0 +1,48 @@
+<div class="row" style="margin-top:50px">
+  <div class="col s10 offset-s1">
+    <div class="card white">
+      <div class="card-content">
+        <h3 class="center-align" style="margin-top: -10px !important;">Tus Proyectos</h3>
+        <hr>
+        <div class="row">
+          <div class="center" *ngIf="type === 'user'">
+            <label style="margin-right: 10px">
+              <input name="group1" type="radio" checked (click)="load('client')"/>
+              <span>Como cliente</span>
+            </label>
+            <label>
+              <input name="group1" type="radio" (click)="load('employer')"/>
+              <span>Como empleador</span>
+            </label>
+          </div>
+        </div>
+        <!--<ul class="tabs">
+          <li class="tab col s3"><a href="#swipe-1">En curso</a></li>
+          <li class="tab col s3"><a href="#swipe-2">Finalizados</a></li>
+        </ul>
+        <div id="swipe-1" class="col s12" style="height: 100%">
+          <ul class="collapsible2">
+              <li *ngFor="let project of data.internalProjects">
+                <div *ngIf="project.state === 'Open'" class="collapsible-header">{{ project.name }}</div>
+                <div *ngIf="project.state === 'Open'" class="collapsible-body">
+                  <span style="word-break: break-all;">{{ project.description }}</span>
+                </div>
+              </li>
+          </ul>
+        </div>
+        <div id="swipe-2" class="col s12">
+          <ul class="collapsible2">
+            <li *ngFor="let project of data.internalProjects">
+              <div *ngIf="project.state === 'Close'" class="collapsible-header">{{ project.name }}</div>
+              <div *ngIf="project.state === 'Close'" class="collapsible-body">
+                <span style="word-break: break-all;">{{ project.description }}</span>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+-->
+      </div>
+    </div>
+  </div>
+</div>

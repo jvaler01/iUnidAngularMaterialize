@@ -1,0 +1,27 @@
+<ul id="sidenav-left" class="sidenav sidenav-fixed light-blue darken-3 white-text">
+
+
+
+
+  <li><div class="light-blue darken-4" style="display: inline-block; padding-top: 10px;padding-bottom: 10px;width: 100%"><a [routerLink]="['home']" class="logo-container white-text">Bienvenido</a></div></li>
+
+
+
+
+  <li><a [routerLink]="[sidebarData.option.route]" class="waves-effect waves-teal white-text">{{ sidebarData.option.name }}</a></li>
+  <li class="no-padding" *ngFor="let option of sidebarData.option2">
+    <ul class="collapsible collapsible-accordion">
+      <li class="light-blue darken-3"><a class="collapsible-header waves-effect waves-teal white-text">{{ option.name }}</a>
+        <div class="collapsible-body">
+          <ul>
+            <li class="light-blue darken-3" *ngFor="let suboption of option.values"><a class="white-text" [routerLink]="[suboption.route]">{{ suboption.name }}</a></li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </li>
+  <li *ngIf="admin()"><a [routerLink]="[sidebarData.option.route]" class="waves-effect waves-teal white-text">{{ sidebarData.option.name }}</a></li>
+  <li *ngIf="sidebarData.option3.name !== 'false'"><a [routerLink]="[sidebarData.option3.route]" class="waves-effect waves-teal white-text">{{ sidebarData.option3.name }}</a></li>
+  <li *ngIf="sidebarData.option4.name !== 'false'"><a [routerLink]="[sidebarData.option4.route]" (click)="logout()" class="waves-effect waves-teal white-text">{{ sidebarData.option4.name }}</a></li>
+</ul>
+

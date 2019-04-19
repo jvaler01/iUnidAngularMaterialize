@@ -1,0 +1,98 @@
+<div class="row" style="margin-top:50px">
+  <div class="col s10 offset-s1">
+    <div class="card white">
+      <div class="card-content">
+        <h3 class="center-align" style="margin-top: -10px !important;">Perfil</h3>
+        <hr>
+        <div class="card white">
+          <div class="card-content">
+            <div class="row">
+              <div class="col m3 center">
+                <img class="mt-4" src="assets/img/user-avatar.svg" style="max-width: 100px; width: 100%;">
+              </div>
+              <div class="col m9">
+                <h4>{{ data.user.name }}</h4>
+                <div class="row">
+                  <div class="col xl6">
+                    <p>{{ data.user.description }}</p>
+                  </div>
+                  <div class="col xl6">
+                    <h5>{{ data.user.email }}</h5>
+                    <h4>Valoración: {{ data.user.score + '%' }}</h4>
+                    <div class="progress">
+                      <div class="determinate" [style.width]="data.user.score + '%'"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col s12 center">
+
+            <h3>Proyectos Externos
+              <a [routerLink]="['/iUnidUser/uploadExt']" class="btn btn-floating text-white">
+                <i class="fas fa-plus" style="font-size: 14px !important;"></i>
+              </a>
+            </h3>
+            <hr>
+            <ul class="collapsible">
+              <li *ngFor="let project of data.projects">
+                <div class="collapsible-header">{{ project.name }}</div>
+                <div class="collapsible-body">
+                  <span>{{ project.description }}</span>
+                  <br>
+                  <a [href]="project.url" target="_blank">{{ project.url }}</a></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col m6">
+            <div class="card white">
+              <div class="card-content">
+                <h3 class="center">Habilidades</h3>
+                <ul style=" list-style-type: none;">
+                  <li *ngFor="let skill of data.user.skills">{{ skill }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col m6">
+            <div class="card white">
+              <div class="card-content">
+                <h3 class="center">Cursos</h3>
+                <ul style=" list-style-type: none;">
+                  <li *ngFor="let couser of data.user.courses">{{ couser }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+        <div class="row">
+          <div class="col s12">
+            <div class="card white">
+              <div class="card-content">
+                <h3 class="center">Certificados</h3>
+                <ul style=" list-style-type: none;">
+                  <li *ngFor="let certificate of data.user.certificates">{{ certificate }}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>

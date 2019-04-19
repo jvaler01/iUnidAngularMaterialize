@@ -1,0 +1,19 @@
+.avatar-r:hover{
+  /*border: 5px solid darkblue;*/
+  box-shadow: 0px 0px 9px 12px #007AA3;
+  cursor: pointer;
+}
+.avatar-r{
+  width: 170px;
+}
+.user-option{
+  border-right: 1px solid lightgray;
+}
+img {
+  border-radius: 50%;
+}
+@media(max-width: 600px) {
+  .user-option{
+    border-right: 0;
+  }
+}

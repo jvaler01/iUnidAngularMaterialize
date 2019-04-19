@@ -1,0 +1,160 @@
+<div class="row" style="margin-top:50px">
+  <div class="col s10 offset-s1">
+    <div class="card white">
+      <div class="card-content">
+        <h3 class="center-align" style="margin-top: -10px !important;">Registro de Usuario</h3>
+        <hr>
+        <div class="row">
+          <form [formGroup]="form" class="col s8 offset-s2" (ngSubmit)="sendData()">
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="first_name" type="text" class="" formControlName="name" [ngClass]="{'invalid': form.get('name').errors?.required }">
+                <label for="first_name">Nombre</label>
+                <div *ngIf="form.get('name').errors?.required" class="red-text">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="lastName" type="text" class="" formControlName="lastName" [ngClass]="{'invalid': form.get('lastName').errors?.required }">
+                <label for="lastName">Apellidos</label>
+                <div *ngIf="form.get('lastName').errors?.required" class="red-text">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="email" type="email" class="" formControlName="email" [ngClass]="{'invalid': !form.controls['email'].valid }">
+                <label for="email">Email</label>
+                <div *ngIf="form.get('email').errors?.required" class="red-text">
+                  Este campo es requerido
+                </div>
+                <div *ngIf="form.get('email').errors?.pattern" class="red-text">
+                  El formato no es valido
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="password" type="password" class="" formControlName="password" [ngClass]="{'invalid': !form.controls['password'].valid }">
+                <label for="password">Contraseña</label>
+                <div *ngIf="form.get('password').errors?.required" class="red-text">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="repeatPassword" type="password" class="" formControlName="repeatPassword">
+                <label for="repeatPassword">Repetir contraseña</label>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea id="desc" class="materialize-textarea" formControlName="desc"
+                          [ngClass]="{'invalid': !form.controls['desc'].valid, 'recomend': form.get('desc').value.length === 0}"></textarea>
+                <label for="desc">Descripción</label>
+                <div *ngIf="!form.controls['desc'].valid" class="red-text">
+                  Mínimo 50 caracteres
+                </div>
+                <div *ngIf="form.get('desc').value.length === 0" [ngClass]="{'recomend-text': form.get('desc').value.length === 0}">
+                  Este campo es recomendado
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="courses" type="text" class="" formControlName="courses">
+                <label for="courses">Cursos</label>
+                <div *ngIf="form.get('courses').value.length === 0" [ngClass]="{'recomend-text': form.get('courses').value.length === 0}">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="certificates" type="text" class="" formControlName="certificates">
+                <label for="certificates">Certificados</label>
+                <div *ngIf="form.get('certificates').value.length === 0" [ngClass]="{'recomend-text': form.get('certificates').value.length === 0}">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+
+
+
+            <!-- FOTO TODO -->
+            <!-- -->
+            <!-- -->
+            <div class="file-field input-field">
+              <div class="btn light-blue darken-4">
+                <span>Foto</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+            <!-- -->
+            <!-- -->
+            <!-- FOTO TODO -->
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="skills" type="text" class="" formControlName="skills">
+                <label for="skills">Habilidades</label>
+                <div *ngIf="form.get('skills').value.length === 0" [ngClass]="{'recomend-text': form.get('skills').value.length === 0}">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="phoneNumber" type="text" class="" formControlName="phoneNumber">
+                <label for="phoneNumber">Número de teléfono</label>
+                <div *ngIf="form.get('phoneNumber').value.length === 0" [ngClass]="{'recomend-text': form.get('phoneNumber').value.length === 0}">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+
+
+
+
+            <div class="center">
+              <button type="submit" class="waves-effect waves-light btn light-blue darken-4" [ngClass]="{'disabled': !form.valid}">Registrar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

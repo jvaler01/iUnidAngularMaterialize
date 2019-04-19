@@ -1,0 +1,223 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { HttpHeaders } from '@angular/common/http';
+import {User} from '../models/user';
+import {map} from 'rxjs/operators';
+import {Company} from '../models/Company';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ControllerService {
+  apiUrl = 'http://localhost:3000/';
+  constructor(private http: HttpClient) { }
+  login( user: User) {
+    let body = JSON.stringify(user);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json'
+    });
+    let url = `${this.apiUrl}login`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  registerUser( user: User) {
+    let body = JSON.stringify(user);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json'
+    });
+    let url = `${this.apiUrl}registerUser`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  registerCompany( company: Company) {
+    let body = JSON.stringify(company);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json'
+    });
+    let url = `${this.apiUrl}registerCompany`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  createExternalProject( token: any, data:any ) {
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}createExternalProject`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  createInternalProject( token: any, data:any ) {
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}createInternalProject`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  getUser( token: any, email:any ) {
+    let data = {
+      email: email
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}getUser`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  getCompany( token: any, email:any ) {
+    let data = {
+      email: email
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}getCompany`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  getProjects( token: any, email:any) {
+    let data = {
+      email: email
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}obtainAllProjects`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  getProjectsIdsNames( token: any, email:any) {
+    let data = {
+      email: email
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}obtainProjectNameAndId`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  getProjectsThatHeWorks( token: any, email:any) {
+    let data = {
+      email: email
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}obtainAllProjectsThatHeWorks`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  getProjectsbyName( token: any, email:any , name: any) {
+    let data = {
+      email: email,
+      name: name
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}obtainProjectName`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  getProjectsbyCategory( token: any, email:any , category: any) {
+    let data = {
+      email: email,
+      category: category
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}obtainProjectCategory`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  getProjectsbytag( token: any, email:any , tags: any) {
+    let data = {
+      email: email,
+      tags: tags
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}obtainProjectTags`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  joinProject( token: any, email:any , projectId: any) {
+    let data = {
+      email: email,
+      id: projectId
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}addingPendingRequest`;
+    return this.http.put(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+}
