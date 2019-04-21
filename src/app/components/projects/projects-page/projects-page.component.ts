@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ControllerService} from '../../../services/controller.service';
+declare  var $: any;
 
 @Component({
   selector: 'app-projects-page',
@@ -43,6 +44,19 @@ export class ProjectsPageComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(document).ready(function() {
+      $('.collapsible').collapsible();
+    });
+    $(document).ready(function(){
+      $('ul.tabs').tabs({
+        swipeable : true,
+        responsiveThreshold : 1920
+      });
+    });
+
+
+
+
   }
 
   load(param: string) {

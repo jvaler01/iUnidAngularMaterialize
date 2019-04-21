@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+declare  var $: any;
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -7,4 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'iUnidMaterialize';
+
+  public ngOnInit()
+  {
+    $(document).ready(function() {
+      $('.collapsible').collapsible();
+    });
+    $(document).ready(function() {
+      $('.sidenav').sidenav();
+    });
+  }
 }

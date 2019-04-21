@@ -1,3 +1,121 @@
-<p>
-  help works!
-</p>
+<div class="row" style="margin-top:50px">
+  <div class="col s10 offset-s1">
+    <div class="card white">
+      <div class="card-content">
+        <h3 class="center-align" style="margin-top: -10px !important;">Ayuda</h3>
+        <hr>
+        <div class="row">
+          <ul class="collapsible">
+            <li>
+              <div class="collapsible-header">¿Cómo puedo modificar mi perfil?</div>
+              <div class="collapsible-body">
+                <p>
+                  Para editar tu perfil debes dirigirte al menú lateral y hacer click en “USUARIO” y,
+                  a continuación, haz click en tu “PERFIL”. Dentro de tu perfil encontrarás un botón con
+                  forma de engranaje arriba a la derecha. Púlsalo para modificar los datos de tu perfil.
+                  // También puedes acceder desde este enlace: modificar perfil.
+                </p>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">¿Puedo modificar mi correo?</div>
+              <div class="collapsible-body">
+                <p>
+                  Por ahora, no. Puedes editar el resto de datos de tu perfil tantas veces como sea necesario.
+                  Recuerda que los campos no obligatorios harán que tu perfil de iUnid sea más completo y atractivo
+                  a la hora de seleccionarte entre otros usuarios.
+                  ¡Anímate y rellénalo todo!
+                </p>
+              </div>
+            </li>
+            <li>
+              <div class="collapsible-header">¿Cómo subo una foto?</div>
+              <div class="collapsible-body">
+                <p>
+                  Para añadir una foto a tu perfil debes dirigirte al menú lateral y hacer click en “USUARIO” y,
+                  a continuación, haz click en tu “PERFIL”. Dentro del mismo encontrarás un botón con forma de engranaje
+                  arriba a la derecha. Púlsalo para modificar los datos de tu perfil. Dentro de la siguiente pantalla
+                  cargada encontrarás la opción de añadir una foto. // También puedes acceder desde este enlace: modificar perfil.
+                </p>
+              </div>
+            </li>
+          </ul>
+
+
+
+
+          <div *ngIf="logged && type === 'user'">
+            <ul class="collapsible">
+              <li>
+                <div class="collapsible-header">¿Cómo puedo buscar trabajo?</div>
+                <div class="collapsible-body">
+                  <p>
+                    Para buscar un proyecto o un trabajo al que unirte, debes dirigirte al menú lateral y hacer click en “TRABAJO”.
+                    A continuación, haz click en “BUSCAR TRABAJO”. Puedes buscar trabajo por el nombre del proyecto, por categoría
+                    o incluso por etiquetas. Para introducir las etiquetas con las que desees filtrar los resultados, debes pulsar
+                    enter tras escribir cada etiqueta. Al presionar enter, la etiqueta seleccionada aparecerá marcada en azul y
+                    podrás seguir añadiendo más etiquetas.
+                    Ten en cuenta que cuantos más campos rellenes para tu búsqueda, más resultados de tu interés encontrarás, pero puede
+                    que haya menos coincidencias. ¡Abre tu mente y encuentra las mejores ofertas!
+                    ¿Cómo puedo hacer una búsqueda concreta de proyectos que me interesen?
+                    Para buscar un proyecto o un trabajo al que unirte, debes dirigirte al menú lateral y hacer click en “TRABAJO”.
+                    A continuación, haz click en “BUSCAR TRABAJO”. Puedes buscar trabajo por el nombre del proyecto, por categoría
+                    o incluso por etiquetas.
+                    Cuantos más campos rellenes y más etiquetas utilices, más precisa será tu búsqueda. Ten en cuenta que si utilizas
+                    muchos filtros a la hora de buscar trabajo, puede que el número de resultados de la búsqueda sea menos amplio de lo
+                    que esperas. ¡Haz todas las pruebas que necesites hasta encontrar el proyecto que esté hecho a tu medida!
+                  </p>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header">¿Cómo puedo hacer mi cuenta más segura?</div>
+                <div class="collapsible-body">
+                  <p>
+                    Si lo deseas puedes enlazar tu cuenta de iUnid con tu número de teléfono y
+                    blindar la cuenta con una doble verificación. Si lo haces, cada vez que accedas
+                    a iUnid desde un nuevo dispositivo deberás introducir tu correo, tu contraseña,
+                    y el código de verificación que recibas en tu móvil.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+
+
+
+
+          <div *ngIf="logged && type === 'company'">
+            <ul class="collapsible">
+              <li>
+                <div class="collapsible-header">¿Cómo puedo subir un proyecto?</div>
+                <div class="collapsible-body">
+                  <p>
+                    Para crear un proyecto nuevo y mostrarlo en tu página de iUnid,
+                    dirígete al menú lateral y haz click en “TRABAJO” y, a continuación,
+                    en “PUBLICAR PROYECTO”.
+                  </p>
+                </div>
+              </li>
+              <li>
+                <div class="collapsible-header">¿Cómo puedo modificar un proyecto?</div>
+                <div class="collapsible-body">
+                  <p>
+                    Si has subido un proyecto y quieres darle unos últimos retoques,
+                    dirígete al menú lateral y haz click en “MIS PROYECTOS”. Te aparecerán todos
+                    los proyectos que hayas subido a tu página hasta la fecha. Elige el que deseas
+                    modificar y podrás actualizar cualquiera de los campos.
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
 import {SesionStatusService} from '../../services/sesion-status.service';
+declare  var $: any;
 
 @Component({
   selector: 'app-sidebar',
@@ -49,7 +50,7 @@ export class SidebarComponent implements OnInit {
                 values: [
                   {
                     name: "Profile",
-                    route: "/iUnidUser/profile-user"
+                    route: "/iUnidUser/userProfile"
                   }
                   ,
                   {
@@ -79,7 +80,7 @@ export class SidebarComponent implements OnInit {
               }
             ],
             option3: {
-              name: "Help",
+              name: "Ayuda",
               route: "/iUnidUser/help"
             },
             option4: {
@@ -87,8 +88,58 @@ export class SidebarComponent implements OnInit {
               route: ""
             },
           };
-        }
-      } else {
+        } if(JSON.parse(localStorage.getItem('user')).companyDB){
+        this.sidebarData = {
+          option: {
+            name: "Home",
+            route: "/iUnidCompany/home"
+          },
+          option2:[
+            {
+              name: "User",
+              values: [
+                {
+                  name: "Profile",
+                  route: "/iUnidCompany/companyProfile"
+                }
+                ,
+                {
+                  name: "Mis Proyectos",
+                  route: "/iUnidCompany/companyProjects"
+                }
+              ]
+            },
+            {
+              name: "Trabajo",
+              values: [
+                {
+                  name: "Buscar Colaboradores",
+                  route: "/iUnidCompany/searchColaborators"
+                }
+                ,
+                {
+                  name: "Publicar Proyecto",
+                  route: "/iUnidCompany/uploadInt"
+                }
+                ,
+                {
+                  name: "Salas de Trabajo",
+                  route: "/iUnidCompany/companyProfile"
+                }
+              ]
+            }
+          ],
+          option3: {
+            name: "Ayuda",
+            route: "/iUnidCompany/help"
+          },
+          option4: {
+            name: "Logout",
+            route: ""
+          },
+        };
+      }
+    } else {
         this.sidebarData = {
           option: {
             name: "Login",
@@ -118,6 +169,9 @@ export class SidebarComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(document).ready(function() {
+      $('.collapsible').collapsible();
+    });
   }
 
   logout() {

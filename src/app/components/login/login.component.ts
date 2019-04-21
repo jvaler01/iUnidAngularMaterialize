@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { User } from '../../models/User';
 import { ControllerService } from '../../services/controller.service';
 import { SesionStatusService } from '../../services/sesion-status.service';
+declare  var $: any;
 
 @Component({
   selector: 'app-login',
@@ -31,7 +32,18 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(document).ready(function() {
+      $('.collapsible').collapsible();
+    });
+    if(localStorage.getItem('user')){
+      if(JSON.parse(localStorage.getItem('user')).userDB){
+        this.router.navigate( ['/iUnidUser']);
+      } else {
+        this.router.navigate( ['/iUnidCompany']);
+      }
+    }
   }
+
   regUser() {
     this.router.navigate( ['/regUser']);
   }

@@ -27,10 +27,9 @@
               "src/assets/libs/css/materialize.css"
             ],
             "scripts": [
-              "src/assets/libs/js/jquery-3.3.1.js",
-              "../node_modules/jquery/dist/jquery.min.js",
-              "src/assets/libs/js/materialize.js",
-              "src/assets/libs/js/mtl.js"
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/hammerjs/hammer.js",
+              "node_modules/materialize-css/dist/js/materialize.js"
             ],
             "es5BrowserSupport": true
           },

@@ -21,12 +21,15 @@ import { RegisterUserComponent } from './components/register-user/register-user.
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { IunidUserComponent } from './components/iunid-user/iunid-user.component';
 import { IunidCompanyComponent } from './components/iunid-company/iunid-company.component';
-import { HomeComponent } from './components/iunid-user/home/home.component';
 import { SearchJobComponent } from './components/iunid-user/search-job/search-job.component';
 import { ProfileUserComponent } from './components/iunid-user/profile-user/profile-user.component';
 import { ProjectsPageComponent } from './components/projects/projects-page/projects-page.component';
 import { RegisterInternalComponent } from './components/projects/register-internal/register-internal.component';
 import { RegisterExternalComponent } from './components/projects/register-external/register-external.component';
+import { SearchColaboratorComponent } from './components/iunid-company/search-colaborator/search-colaborator.component';
+import { ProfileCompanyComponent } from './components/iunid-company/profile-company/profile-company.component';
+import { HomeUserComponent } from './components/iunid-user/home-user/home-user.component';
+import { HomeCompanyComponent } from './components/iunid-company/home-company/home-company.component';
 
 @NgModule({
   declarations: [
@@ -41,12 +44,15 @@ import { RegisterExternalComponent } from './components/projects/register-extern
     SidebarComponent,
     IunidUserComponent,
     IunidCompanyComponent,
-    HomeComponent,
     SearchJobComponent,
     ProfileUserComponent,
     ProjectsPageComponent,
     RegisterInternalComponent,
-    RegisterExternalComponent
+    RegisterExternalComponent,
+    SearchColaboratorComponent,
+    ProfileCompanyComponent,
+    HomeUserComponent,
+    HomeCompanyComponent
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {ControllerService} from '../../../services/controller.service';
+declare  var $: any;
 @Component({
   selector: 'app-profile-user',
   templateUrl: './profile-user.component.html',
@@ -30,5 +31,8 @@ export class ProfileUserComponent implements OnInit {
     });
   }
   ngOnInit() {
+    $(document).ready(function() {
+      $('.collapsible').collapsible();
+    });
   }
 }
