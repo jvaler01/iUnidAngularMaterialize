@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {ControllerService} from '../../../services/controller.service';
+import {MessagesService} from '../../../services/sockets/messages.service';
 declare  var $: any;
 @Component({
   selector: 'app-profile-user',
@@ -16,7 +17,9 @@ export class ProfileUserComponent implements OnInit {
     }
   };
   constructor( private controller: ControllerService,
-               private router: Router) {
+               private router: Router,
+               private messages: MessagesService) {
+    //this.messages.getData().subscribe(data=>console.log(data));
     this.user = JSON.parse(localStorage.getItem('user'));
     console.log("this.user");
     console.log(this.user.token);

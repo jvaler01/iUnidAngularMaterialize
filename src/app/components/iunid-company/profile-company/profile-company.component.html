@@ -2,7 +2,9 @@
   <div class="col s10 offset-s1">
     <div class="card white">
       <div class="card-content">
-        <h3 class="center-align" style="margin-top: -10px !important;">Perfil</h3>
+        <h3 class="center-align" style="margin-top: -10px !important;">Perfil<a [routerLink]="['/iUnidUser/uploadExt']" class="btn btn-floating text-white right">
+          <i class="fas fa-edit"></i>
+        </a></h3>
         <hr>
         <div class="card white">
           <div class="card-content">
@@ -47,6 +49,9 @@
               <li *ngFor="let project of data.projects">
                 <div class="collapsible-header">{{ project.name }}</div>
                 <div class="collapsible-body">
+                  <a [routerLink]="['/iUnidUser/uploadExt']" class="btn btn-floating text-white right">
+                    <i class="fas fa-edit"></i>
+                  </a>
                   <span>{{ project.description }}</span>
                   <br>
                   <a [href]="project.url" target="_blank">{{ project.url }}</a></div>

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ControllerService} from '../../../services/controller.service';
+import {MessagesService} from '../../../services/sockets/messages.service';
 
 @Component({
   selector: 'app-profile-company',
@@ -14,7 +15,10 @@ export class ProfileCompanyComponent implements OnInit {
     }
   };
   contactsCont : number;
-  constructor( private controller: ControllerService ) {
+  constructor( private controller: ControllerService,
+               private messages: MessagesService) {
+
+    //this.messages.getData().subscribe(data=>console.log(data));
     this.user = JSON.parse(localStorage.getItem('user'));
     console.log("this.user");
     console.log(this.user.token);

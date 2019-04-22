@@ -44,7 +44,10 @@
               <ul class="collection">
                 <li class="collection-item" *ngFor="let project of data.internalProjects">
                   <h5>{{ project.name }}</h5>
-                  <p>{{ project.description }}</p>
+                  <p>Catergoria: {{ project.category }}</p>
+                  <p>Descripción: {{ project.description }}</p>
+                  <p>Fecha de entrega: {{ project.deliveryDate  | date }}</p>
+                  <p>Recompensa: {{ project.maxPrice }} - {{ project.minPrice }}</p>
                   <button class="btn" (click)="joinProject(project._id)">Solicitar Entrar</button>
                 </li>
               </ul>

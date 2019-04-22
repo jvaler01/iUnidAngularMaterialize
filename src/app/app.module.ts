@@ -30,6 +30,8 @@ import { SearchColaboratorComponent } from './components/iunid-company/search-co
 import { ProfileCompanyComponent } from './components/iunid-company/profile-company/profile-company.component';
 import { HomeUserComponent } from './components/iunid-user/home-user/home-user.component';
 import { HomeCompanyComponent } from './components/iunid-company/home-company/home-company.component';
+import { LobbyRoomComponent } from './components/lobby/lobby-room/lobby-room.component';
+import { ChatRoomComponent } from './components/lobby/chat-room/chat-room.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { HomeCompanyComponent } from './components/iunid-company/home-company/ho
     SearchColaboratorComponent,
     ProfileCompanyComponent,
     HomeUserComponent,
-    HomeCompanyComponent
+    HomeCompanyComponent,
+    LobbyRoomComponent,
+    ChatRoomComponent
   ],
   imports: [
     BrowserModule,

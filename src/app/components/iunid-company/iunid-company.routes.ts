@@ -6,6 +6,8 @@ import {ProfileCompanyComponent} from './profile-company/profile-company.compone
 import {RegisterExternalComponent} from '../projects/register-external/register-external.component';
 import {RegisterInternalComponent} from '../projects/register-internal/register-internal.component';
 import {HomeCompanyComponent} from './home-company/home-company.component';
+import {LobbyRoomComponent} from '../lobby/lobby-room/lobby-room.component';
+import {ChatRoomComponent} from '../lobby/chat-room/chat-room.component';
 
 export const IUNID_COMPANY_ROUTES: Routes = [
   { path: 'home', component:  HomeCompanyComponent},
@@ -14,6 +16,8 @@ export const IUNID_COMPANY_ROUTES: Routes = [
   { path: 'searchColaborators', component: SearchColaboratorComponent },
   { path: 'uploadExt', component:  RegisterExternalComponent },
   { path: 'uploadInt', component: RegisterInternalComponent },
+  { path: 'lobby', component: LobbyRoomComponent },
+  { path: 'chat', component: ChatRoomComponent },
   { path: 'help', component: HelpComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'companyProfile' }
 ];

@@ -74,7 +74,7 @@ export class SidebarComponent implements OnInit {
                   ,
                   {
                     name: "Salas de Trabajo",
-                    route: "/iUnidUser/profile-user"
+                    route: "/iUnidUser/lobby"
                   }
                 ]
               }
@@ -124,7 +124,7 @@ export class SidebarComponent implements OnInit {
                 ,
                 {
                   name: "Salas de Trabajo",
-                  route: "/iUnidCompany/companyProfile"
+                  route: "/iUnidCompany/lobby"
                 }
               ]
             }

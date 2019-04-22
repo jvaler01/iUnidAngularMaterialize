@@ -18,7 +18,7 @@
         </div>
 
 
-        <div class="tab_container center">
+        <div class="tab_container center" style="text-align: justify !important">
           <input class="tab_input" id="tab1" type="radio" name="tabs" checked>
           <label class="tab_label" for="tab1"><span>En curso</span></label>
 
@@ -31,7 +31,16 @@
               <li *ngFor="let project of data.internalProjects">
                 <div *ngIf="project.state === 'Open'" class="collapsible-header">{{ project.name }}</div>
                 <div *ngIf="project.state === 'Open'" class="collapsible-body">
-                  <span style="word-break: break-all;">{{ project.description }}</span>
+                  <a [routerLink]="['/iUnidUser/uploadExt']" class="btn btn-floating text-white right">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <p>Catergoria: {{ project.category }}</p>
+                  <p>Descripción: {{ project.description }}</p>
+                  <p>Fecha de entrega: {{ project.deliveryDate  | date }}</p>
+                  <p>Recompensa: {{ project.maxPrice }} - {{ project.minPrice }}</p>
+                  <h5>Pendientes de aceptar: </h5>
+                  <p style="word-break: break-all;" *ngFor="let pending of project.pendingAccepts">{{ pending }}<a class="waves-effect waves-light btn">aceptar</a><a class="waves-effect waves-light btn red">borrar</a></p>
+                  <p><a class="waves-effect waves-light btn light-blue darken-4">cerrar proyecto</a></p>
                 </div>
               </li>
             </ul>
@@ -42,7 +51,10 @@
               <li *ngFor="let project of data.internalProjects">
                 <div *ngIf="project.state === 'Close'" class="collapsible-header">{{ project.name }}</div>
                 <div *ngIf="project.state === 'Close'" class="collapsible-body">
-                  <span style="word-break: break-all;">{{ project.description }}</span>
+                  <p>Catergoria: {{ project.category }}</p>
+                  <p>Descripción: {{ project.description }}</p>
+                  <p>Fecha de entrega: {{ project.deliveryDate  | date }}</p>
+                  <p>Recompensa: {{ project.maxPrice }} - {{ project.minPrice }}</p>
                 </div>
               </li>
             </ul>
