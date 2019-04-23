@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ControllerService} from '../../../services/controller.service';
 import {MessagesService} from '../../../services/sockets/messages.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-profile-company',
@@ -16,6 +17,7 @@ export class ProfileCompanyComponent implements OnInit {
   };
   contactsCont : number;
   constructor( private controller: ControllerService,
+               private router: Router,
                private messages: MessagesService) {
 
     //this.messages.getData().subscribe(data=>console.log(data));
@@ -33,5 +35,8 @@ export class ProfileCompanyComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  edit(){
+    localStorage.setItem('dataCompany', JSON.stringify(this.data.company));
+    this.router.navigate( ['/iUnidCompany/editProfile']);
+  }
 }

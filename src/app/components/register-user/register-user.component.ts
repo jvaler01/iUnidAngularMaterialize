@@ -58,10 +58,9 @@ export class RegisterUserComponent implements OnInit {
     userData.courses = this.form.get('courses').value;
     userData.certificates = this.form.get('certificates').value;
     userData.skills = this.form.get('skills').value;
+    userData.phone = this.form.get('phoneNumber').value;
     console.log(userData);
     this.controller.registerUser(userData).subscribe( data => {
-      // localStorage.setItem('user', JSON.stringify(data));
-      // this.router.navigate( ['/iUnidCompany']);
       this.router.navigate( ['/login']);
     }, error => console.log(error));
     console.log(this.form.value);

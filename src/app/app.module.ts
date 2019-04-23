@@ -32,6 +32,8 @@ import { HomeUserComponent } from './components/iunid-user/home-user/home-user.c
 import { HomeCompanyComponent } from './components/iunid-company/home-company/home-company.component';
 import { LobbyRoomComponent } from './components/lobby/lobby-room/lobby-room.component';
 import { ChatRoomComponent } from './components/lobby/chat-room/chat-room.component';
+import { EditUserComponent } from './components/iunid-user/edit-user/edit-user.component';
+import { EditCompanyComponent } from './components/iunid-company/edit-company/edit-company.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { ChatRoomComponent } from './components/lobby/chat-room/chat-room.compon
     HomeUserComponent,
     HomeCompanyComponent,
     LobbyRoomComponent,
-    ChatRoomComponent
+    ChatRoomComponent,
+    EditUserComponent,
+    EditCompanyComponent
   ],
   imports: [
     BrowserModule,

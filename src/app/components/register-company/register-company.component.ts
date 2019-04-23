@@ -42,18 +42,16 @@ export class RegisterCompanyComponent implements OnInit {
   }
 
   sendData() {
-    let userData:any = {};
-    userData.name = this.form.get('name').value;
-    userData.email = this.form.get('email').value;
-    userData.password = this.form.get('password').value;
-    userData.cif = this.form.get('cif').value;
-    userData.description = this.form.get('desc').value;
-    userData.contactEmail = this.form.get('contactEmail').value;
-    userData.img = ':)';
-    console.log(userData);
-    this.controller.registerCompany(userData).subscribe( data => {
-      // localStorage.setItem('user', JSON.stringify(data));
-      // this.router.navigate( ['/iUnidCompany']);
+    let companyData:any = {};
+    companyData.name = this.form.get('name').value;
+    companyData.email = this.form.get('email').value;
+    companyData.password = this.form.get('password').value;
+    companyData.cif = this.form.get('cif').value;
+    companyData.description = this.form.get('desc').value;
+    companyData.contactEmail = this.form.get('contactEmail').value;
+    companyData.img = ':)';
+    console.log(companyData);
+    this.controller.registerCompany(companyData).subscribe( data => {
       this.router.navigate( ['/login']);
     }, error => console.log(error));
     console.log(this.form.value);

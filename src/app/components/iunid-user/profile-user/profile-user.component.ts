@@ -38,4 +38,9 @@ export class ProfileUserComponent implements OnInit {
       $('.collapsible').collapsible();
     });
   }
+
+  edit(){
+    localStorage.setItem('dataUser', JSON.stringify(this.data.user));
+    this.router.navigate( ['/iUnidUser/editProfile']);
+  }
 }

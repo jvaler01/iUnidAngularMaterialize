@@ -8,10 +8,12 @@ import {RegisterInternalComponent} from '../projects/register-internal/register-
 import {HomeCompanyComponent} from './home-company/home-company.component';
 import {LobbyRoomComponent} from '../lobby/lobby-room/lobby-room.component';
 import {ChatRoomComponent} from '../lobby/chat-room/chat-room.component';
+import {EditCompanyComponent} from './edit-company/edit-company.component';
 
 export const IUNID_COMPANY_ROUTES: Routes = [
   { path: 'home', component:  HomeCompanyComponent},
   { path: 'companyProfile', component:  ProfileCompanyComponent},
+  { path: 'editProfile', component:  EditCompanyComponent},
   { path: 'companyProjects', component: ProjectsPageComponent },
   { path: 'searchColaborators', component: SearchColaboratorComponent },
   { path: 'uploadExt', component:  RegisterExternalComponent },

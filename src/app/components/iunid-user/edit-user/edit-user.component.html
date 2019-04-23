@@ -1,0 +1,110 @@
+<div class="row" style="margin-top:50px">
+  <div class="col s10 offset-s1">
+    <div class="card white">
+      <div class="card-content">
+        <h3 class="center-align" style="margin-top: -10px !important;">Editar Perfil</h3>
+        <hr>
+        <div class="row">
+          <form [formGroup]="form" class="col s8 offset-s2" (ngSubmit)="sendData()">
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="first_name" type="text" class="" formControlName="name" [ngClass]="{'invalid': form.get('name').errors?.required }">
+                <label for="first_name">Nombre</label>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="lastName" type="text" class="" formControlName="lastName" [ngClass]="{'invalid': form.get('lastName').errors?.required }">
+                <label for="lastName">Apellidos</label>
+              </div>
+            </div>
+
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea id="desc" class="materialize-textarea" formControlName="desc"
+                          [ngClass]="{'invalid': !form.controls['desc'].valid, 'recomend': form.get('desc').value.length === 0}"></textarea>
+                <label for="desc">Descripción</label>
+                <div *ngIf="!form.controls['desc'].valid" class="red-text">
+                  Mínimo 50 caracteres
+                </div>
+                <div *ngIf="form.get('desc').value.length === 0" [ngClass]="{'recomend-text': form.get('desc').value.length === 0}">
+                  Este campo es recomendado
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="courses" type="text" class="" formControlName="courses">
+                <label for="courses">Cursos</label>
+              </div>
+            </div>
+
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="certificates" type="text" class="" formControlName="certificates">
+                <label for="certificates">Certificados</label>
+              </div>
+            </div>
+
+
+
+            <!-- FOTO TODO -->
+            <!-- -->
+            <!-- -->
+            <div class="file-field input-field">
+              <div class="btn light-blue darken-4">
+                <span>Foto</span>
+                <input type="file">
+              </div>
+              <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+              </div>
+            </div>
+            <!-- -->
+            <!-- -->
+            <!-- FOTO TODO -->
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="skills" type="text" class="" formControlName="skills">
+                <label for="skills">Habilidades</label>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="phoneNumber" type="text" class="" formControlName="phoneNumber">
+                <label for="phoneNumber">Número de teléfono</label>
+              </div>
+            </div>
+
+
+
+
+            <div class="center">
+              <button type="submit" class="waves-effect waves-light btn light-blue darken-4" [ngClass]="{'disabled': !form.valid}">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

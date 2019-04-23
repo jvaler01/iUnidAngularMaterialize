@@ -8,10 +8,12 @@ import {RegisterInternalComponent} from '../projects/register-internal/register-
 import {HomeUserComponent} from './home-user/home-user.component';
 import {LobbyRoomComponent} from '../lobby/lobby-room/lobby-room.component';
 import {ChatRoomComponent} from '../lobby/chat-room/chat-room.component';
+import {EditUserComponent} from './edit-user/edit-user.component';
 
 export const IUNID_USER_ROUTES: Routes = [
   { path: 'home', component: HomeUserComponent },
   { path: 'userProfile', component: ProfileUserComponent },
+  { path: 'editProfile', component: EditUserComponent },
   { path: 'userProjects', component: ProjectsPageComponent },
   { path: 'uploadExt', component:  RegisterExternalComponent },
   { path: 'uploadInt', component: RegisterInternalComponent },

@@ -105,6 +105,33 @@ export class ControllerService {
     }));
   }
 
+
+  editUser( token: any, user: User) {
+    let body = JSON.stringify(user);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}editUser`;
+    return this.http.put(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  editCompany( token: any, company: Company) {
+    let body = JSON.stringify(company);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}editCompany`;
+    return this.http.put(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
   getProjects( token: any, email:any) {
     let data = {
       email: email
