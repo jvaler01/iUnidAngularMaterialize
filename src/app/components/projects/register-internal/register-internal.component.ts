@@ -89,7 +89,13 @@ export class RegisterInternalComponent implements OnInit {
     }
 
     let internalProjectData:any = {};
-    internalProjectData.email = this.user.userDB.email;
+    if(JSON.parse(localStorage.getItem('user')).userDB){
+      internalProjectData.email = this.user.userDB.email;
+    }else{
+
+      internalProjectData.email = this.user.companyDB.email;
+    }
+    //internalProjectData.email = this.user.userDB.email;
     internalProjectData.name = this.form.get('name').value;
     internalProjectData.description = this.form.get('desc').value;
     internalProjectData.tags = this.form.get('tags').value;
@@ -104,7 +110,11 @@ export class RegisterInternalComponent implements OnInit {
     this.controller.createInternalProject(this.user.token, internalProjectData).subscribe( data => {
       // localStorage.setItem('user', JSON.stringify(data));
       // this.router.navigate( ['/iUnidCompany']);
-      this.router.navigate( ['/iUnidUser/profile-user']);
+      if(JSON.parse(localStorage.getItem('user')).userDB){
+        this.router.navigate( ['/iUnidUser/userProfile']);
+      }else{
+        this.router.navigate( ['/iUnidCompany/companyProfile']);
+      }
     }, error => console.log(error));
     console.log(this.form.value);
   }

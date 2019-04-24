@@ -20,7 +20,7 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
     this.company.description = this.data.description;
     this.company.contactEmail = this.data.contactEmail;
     this.form = new FormGroup({
-      name: new FormControl(this.company.name),
+      name: new FormControl(this.company.name, Validators.required),
       desc: new FormControl(this.company.description, Validators.minLength(50)),
       contactEmail: new FormControl(this.company.contactEmail, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')),
     });

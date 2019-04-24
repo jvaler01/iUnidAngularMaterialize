@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ControllerService} from '../../../services/controller.service';
@@ -9,7 +9,7 @@ declare var $: any;
   templateUrl: './edit-internal.component.html',
   styleUrls: ['./edit-internal.component.css']
 })
-export class EditInternalComponent implements OnInit {
+export class EditInternalComponent implements OnInit, OnDestroy {
   form: FormGroup;
   user: any = {};
   options = [
@@ -38,20 +38,34 @@ export class EditInternalComponent implements OnInit {
       label: "Otros"
     }
   ];
+
+  data: any = {};
+  project: any = {};
   constructor(private router: Router,
               private controller: ControllerService) {
     this.user = JSON.parse(localStorage.getItem('user'));
     console.log("this.user");
     console.log(this.user.token);
+    this.data = JSON.parse(localStorage.getItem('dataProject'));
+    console.log(this.data);
+    this.project.id = this.data._id;
+    this.project.name = this.data.name;
+    this.project.desc = this.data.description;
+    this.project.tags = this.data.tags;
+    this.project.maxPrice = this.data.maxPrice;
+    this.project.minPrice = this.data.minPrice;
+    this.project.deliveryDate = this.data.deliveryDate;
+    this.project.counteroffer = this.data.counteroffer;
+    this.project.category = this.data.category;
     this.form = new FormGroup({
-      name: new FormControl('', Validators.required),
-      desc: new FormControl('', [Validators.required, Validators.minLength(50)]),
-      tags: new FormControl('', Validators.required),
-      maxPrice: new FormControl('', Validators.required),
-      minPrice: new FormControl('', Validators.required),
+      name: new FormControl(this.project.name, Validators.required),
+      desc: new FormControl(this.project.desc, [Validators.required, Validators.minLength(50)]),
+      tags: new FormControl(this.project.tags, Validators.required),
+      maxPrice: new FormControl(this.project.maxPrice, Validators.required),
+      minPrice: new FormControl(this.project.minPrice, Validators.required),
       deliveryDate: new FormControl(''),
-      counteroffer: new FormControl(false),
-      category: new FormControl('0', Validators.pattern('[^0]+')),
+      counteroffer: new FormControl(this.project.counteroffer),
+      category: new FormControl(this.project.category, Validators.pattern('[^0]+')),
     });
     console.log(this.form)
   }
@@ -90,7 +104,13 @@ export class EditInternalComponent implements OnInit {
     }
 
     let internalProjectData:any = {};
-    internalProjectData.email = this.user.userDB.email;
+    if(JSON.parse(localStorage.getItem('user')).userDB){
+      internalProjectData.email = this.user.userDB.email;
+    }else{
+
+      internalProjectData.email = this.user.companyDB.email;
+    }
+    //internalProjectData.email = this.user.userDB.email;
     internalProjectData.name = this.form.get('name').value;
     internalProjectData.description = this.form.get('desc').value;
     internalProjectData.tags = this.form.get('tags').value;
@@ -101,12 +121,22 @@ export class EditInternalComponent implements OnInit {
     internalProjectData.category = this.form.get('category').value;
     internalProjectData.initialDate = new Date();
     internalProjectData.files = ':(';
+    internalProjectData.id = this.project.id;
     console.log(internalProjectData);
-    this.controller.createInternalProject(this.user.token, internalProjectData).subscribe( data => {
+    this.controller.editInternalProject(this.user.token, internalProjectData).subscribe( data => {
       // localStorage.setItem('user', JSON.stringify(data));
       // this.router.navigate( ['/iUnidCompany']);
-      this.router.navigate( ['/iUnidUser/profile-user']);
+      console.log(data);
+      if(JSON.parse(localStorage.getItem('user')).userDB){
+        this.router.navigate( ['/iUnidUser/userProfile']);
+      }else{
+        this.router.navigate( ['/iUnidCompany/companyProfile']);
+      }
     }, error => console.log(error));
     console.log(this.form.value);
+  }
+
+  ngOnDestroy(): void {
+    localStorage.removeItem('dataProject');
   }
 }

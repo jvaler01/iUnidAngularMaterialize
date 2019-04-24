@@ -16,6 +16,7 @@ export class ProjectsPageComponent implements OnInit {
   type: string;
   user: any = {};
   data: any = {};
+  projectId;
   constructor( private router: Router,
                private controller: ControllerService ) {
     // this.data = this.data1;
@@ -55,8 +56,9 @@ export class ProjectsPageComponent implements OnInit {
         responsiveThreshold : 1920
       });
     });
-
-
+    $(document).ready(function(){
+      $('.modal').modal();
+    });
 
 
   }
@@ -80,5 +82,30 @@ export class ProjectsPageComponent implements OnInit {
     } else {
       this.router.navigate( ['/iUnidCompany/editInt']);
     }
+  }
+
+  setProjectId(projectId: any){
+    this.projectId = projectId;
+  }
+
+  deleteProject(projectId: any){
+    console.log(projectId);
+    let email: any;
+    if(JSON.parse(localStorage.getItem('user')).userDB){
+      email = this.user.userDB.email
+    } else {
+      email = this.user.companyDB.email
+    }
+    this.controller.deleteInternalProject(this.user.token, projectId, email).subscribe( data => {
+      console.log(data);
+      if(JSON.parse(localStorage.getItem('user')).userDB){
+        this.router.navigate( ['userProjects']);
+      } else {
+        this.router.navigate( ['companyProjects']);
+      }
+    }, error => {
+      console.log(error);
+      this.router.navigate( ['errors']);
+    });
   }
 }

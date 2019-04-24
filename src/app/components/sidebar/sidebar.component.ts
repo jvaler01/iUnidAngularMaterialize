@@ -179,6 +179,7 @@ export class SidebarComponent implements OnInit {
     localStorage.clear();
     this.router.navigate(['/login']);
   }
+
   admin() {
     /*let role: any;
     role = JSON.parse(localStorage.getItem('user')).usuario.role;

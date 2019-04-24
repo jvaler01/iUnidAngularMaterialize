@@ -17,6 +17,7 @@ export class ProfileCompanyComponent implements OnInit {
     }
   };
   contactsCont : number;
+  projectId;
   constructor( private controller: ControllerService,
                private router: Router,
                private messages: MessagesService) {
@@ -55,7 +56,30 @@ export class ProfileCompanyComponent implements OnInit {
   }
 
 
-  deleteUser(){
+  deleteUser(userEmail: any){
+    console.log(userEmail);
+    this.controller.deleteUserOrCompany(this.user.token, userEmail).subscribe( data => {
+      console.log(data);
+      localStorage.clear();
+      this.router.navigate(['/login']);
+    }, error => {
+      console.log(error);
+      this.router.navigate( ['errors']);
+    });
+  }
 
+  setProjectId(projectId: any){
+    this.projectId = projectId;
+  }
+
+  deleteProject(projectId: any){
+    console.log(projectId);
+    this.controller.deleteExternalProject(this.user.token, projectId, this.user.companyDB.email).subscribe( data => {
+      console.log(data);
+      this.router.navigate(['/companyProfile']);
+    }, error => {
+      console.log(error);
+      this.router.navigate( ['errors']);
+    });
   }
 }

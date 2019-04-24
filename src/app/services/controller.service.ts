@@ -11,7 +11,7 @@ import {Company} from '../models/Company';
 export class ControllerService {
   apiUrl = 'http://localhost:3000/';
   constructor(private http: HttpClient) { }
-  login( user: User) {
+  login( user: User ) {
     let body = JSON.stringify(user);
     let headers = new HttpHeaders({
       'Content-Type':'application/json'
@@ -23,7 +23,7 @@ export class ControllerService {
     }));
   }
 
-  registerUser( user: User) {
+  registerUser( user: User ) {
     let body = JSON.stringify(user);
     let headers = new HttpHeaders({
       'Content-Type':'application/json'
@@ -35,7 +35,23 @@ export class ControllerService {
     }));
   }
 
-  registerCompany( company: Company) {
+  deleteUserOrCompany( token: any, email: any ){
+    let data = {
+      email: email
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}deleteAccount`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  registerCompany( company: Company ) {
     let body = JSON.stringify(company);
     let headers = new HttpHeaders({
       'Content-Type':'application/json'
@@ -60,6 +76,32 @@ export class ControllerService {
     }));
   }
 
+  editExternalProject( token: any, data:any ) {
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}editExternalProject`;
+    return this.http.put(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  editInternalProject( token: any, data:any ) {
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}editInternalProject`;
+    return this.http.put(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
   createInternalProject( token: any, data:any ) {
     let body = JSON.stringify(data);
     let headers = new HttpHeaders({
@@ -67,6 +109,40 @@ export class ControllerService {
       'token': token
     });
     let url = `${this.apiUrl}createInternalProject`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  deleteExternalProject( token: any, id:any, email: any ){
+    let data = {
+      id: id,
+      email: email
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}deleteExternalProject`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  deleteInternalProject( token: any, id:any, email: any ){
+    let data = {
+      id: id,
+      email: email
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}deleteInternalProject`;
     return this.http.post(url, body, {headers}).pipe(map( res =>{
       console.log(res);
       return res;
@@ -104,7 +180,6 @@ export class ControllerService {
       return res;
     }));
   }
-
 
   editUser( token: any, user: User) {
     let body = JSON.stringify(user);

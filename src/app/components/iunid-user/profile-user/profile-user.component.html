@@ -53,6 +53,9 @@
               <li *ngFor="let project of data.projects">
                 <div class="collapsible-header">{{ project.name }}</div>
                 <div class="collapsible-body">
+                  <a href="#deleteProjectModal" (click)="setProjectId(project._id)" class="btn btn-floating text-white left red darken-4 modal-trigger">
+                    <i class="far fa-trash-alt"></i>
+                  </a>
                   <a (click)="editExt(project)" class="btn btn-floating text-white right">
                     <i class="fas fa-edit"></i>
                   </a>
@@ -114,7 +117,19 @@
     <p>Estás seguro de que quieres borrar tu cuenta</p>
   </div>
   <div class="modal-footer">
-    <a (click)="deleteUser()" class="btn waves-effect waves-green">Si</a>
+    <a (click)="deleteUser(data.user.email)" class="btn waves-effect waves-green">Si</a>
+    <a class="modal-close btn waves-effect waves-green" style="margin-left: 5px;">No</a>
+  </div>
+</div>
+
+
+<div id="deleteProjectModal" class="modal">
+  <div class="modal-content">
+    <h4>Alerta</h4>
+    <p>Estás seguro de que quieres borrar el proyecto</p>
+  </div>
+  <div class="modal-footer">
+    <a (click)="deleteProject(projectId)" class="btn waves-effect waves-green">Si</a>
     <a class="modal-close btn waves-effect waves-green" style="margin-left: 5px;">No</a>
   </div>
 </div>

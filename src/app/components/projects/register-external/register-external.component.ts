@@ -30,7 +30,12 @@ export class RegisterExternalComponent implements OnInit {
   sendData() {
     console.log(this.form);
     let externalProjectData:any = {};
-    externalProjectData.email = this.user.userDB.email;
+    if(JSON.parse(localStorage.getItem('user')).userDB){
+      externalProjectData.email = this.user.userDB.email;
+    }else{
+      externalProjectData.email = this.user.companyDB.email;
+    }
+    // externalProjectData.email = this.user.userDB.email;
     externalProjectData.name = this.form.get('name').value;
     externalProjectData.description = this.form.get('desc').value;
     externalProjectData.url = this.form.get('url').value;
@@ -38,7 +43,11 @@ export class RegisterExternalComponent implements OnInit {
     this.controller.createExternalProject(this.user.token, externalProjectData).subscribe( data => {
       // localStorage.setItem('user', JSON.stringify(data));
       // this.router.navigate( ['/iUnidCompany']);
-      this.router.navigate( ['/iUnidUser/profile-user']);
+      if(JSON.parse(localStorage.getItem('user')).userDB){
+        this.router.navigate( ['/iUnidUser/userProfile']);
+      }else{
+        this.router.navigate( ['/iUnidCompany/companyProfile']);
+      }
     }, error => console.log(error));
     console.log(this.form.value);
   }

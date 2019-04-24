@@ -16,6 +16,7 @@ export class ProfileUserComponent implements OnInit {
       'name':''
     }
   };
+  projectId;
   constructor( private controller: ControllerService,
                private router: Router,
                private messages: MessagesService) {
@@ -50,11 +51,34 @@ export class ProfileUserComponent implements OnInit {
 
   editExt(project:any){
     console.log(project);
-    localStorage.setItem('dataProject', JSON.stringify(project))
+    localStorage.setItem('dataProject', JSON.stringify(project));
     this.router.navigate( ['/iUnidUser/editExt']);
   }
 
-  deleteUser(){
+  deleteUser(userEmail: any){
+    console.log(userEmail);
+    this.controller.deleteUserOrCompany(this.user.token, userEmail).subscribe( data => {
+      console.log(data);
+      localStorage.clear();
+      this.router.navigate(['/login']);
+    }, error => {
+      console.log(error);
+      this.router.navigate( ['errors']);
+    });
+  }
 
+  setProjectId(projectId: any){
+    this.projectId = projectId;
+  }
+
+  deleteProject(projectId: any){
+    console.log(projectId);
+    this.controller.deleteExternalProject(this.user.token, projectId, this.user.userDB.email).subscribe( data => {
+      console.log(data);
+      this.router.navigate(['/userProfile']);
+    }, error => {
+      console.log(error);
+      this.router.navigate( ['errors']);
+    });
   }
 }

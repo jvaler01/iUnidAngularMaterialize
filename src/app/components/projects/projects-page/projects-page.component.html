@@ -31,6 +31,9 @@
               <li *ngFor="let project of data.internalProjects">
                 <div *ngIf="project.state === 'Open'" class="collapsible-header">{{ project.name }}</div>
                 <div *ngIf="project.state === 'Open'" class="collapsible-body">
+                  <a href="#deleteModal" (click)="setProjectId(project._id)" class="btn btn-floating text-white left red darken-4 modal-trigger">
+                    <i class="far fa-trash-alt"></i>
+                  </a>
                   <a (click)="editInt(project)" class="btn btn-floating text-white right">
                     <i class="fas fa-edit"></i>
                   </a>
@@ -83,5 +86,16 @@
 
       </div>
     </div>
+  </div>
+</div>
+
+<div id="deleteModal" class="modal">
+  <div class="modal-content">
+    <h4>Alerta</h4>
+    <p>Estás seguro de que quieres borrar el proyecto</p>
+  </div>
+  <div class="modal-footer">
+    <a (click)="deleteProject(projectId)" class="btn waves-effect waves-green">Si</a>
+    <a class="modal-close btn waves-effect waves-green" style="margin-left: 5px;">No</a>
   </div>
 </div>

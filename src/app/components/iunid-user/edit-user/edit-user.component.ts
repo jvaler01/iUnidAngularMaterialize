@@ -27,8 +27,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
     this.user.skills = this.data.skills;
     this.user.phone = this.data.phone;
     this.form = new FormGroup({
-      name: new FormControl(this.user.name),
-      lastName: new FormControl(this.user.lastName),
+      name: new FormControl(this.user.name, Validators.required),
+      lastName: new FormControl(this.user.lastName, Validators.required),
       desc: new FormControl(this.user.description, Validators.minLength(50)),
       courses: new FormControl(this.user.courses),
       certificates: new FormControl(this.user.certificates),

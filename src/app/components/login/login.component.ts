@@ -55,13 +55,14 @@ export class LoginComponent implements OnInit {
   sendData() {
     this.user = this.form.value;
     this.controller.login(this.user).subscribe( (data: any) => {
-      localStorage.setItem('user', JSON.stringify(data));
       if (data.userDB) {
+        localStorage.setItem('user', JSON.stringify(data));
         if (data.userDB.userType === 'USER_ROLE') {
           this.router.navigate( ['/iUnidUser']);
         }
       }
       if (data.companyDB) {
+        localStorage.setItem('user', JSON.stringify(data));
         if (data.companyDB.userType === 'COMPANY_ROLE') {
           this.router.navigate( ['/iUnidCompany']);
         }
