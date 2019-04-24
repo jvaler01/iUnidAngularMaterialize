@@ -34,6 +34,8 @@ import { LobbyRoomComponent } from './components/lobby/lobby-room/lobby-room.com
 import { ChatRoomComponent } from './components/lobby/chat-room/chat-room.component';
 import { EditUserComponent } from './components/iunid-user/edit-user/edit-user.component';
 import { EditCompanyComponent } from './components/iunid-company/edit-company/edit-company.component';
+import { EditExternalComponent } from './components/projects/edit-external/edit-external.component';
+import { EditInternalComponent } from './components/projects/edit-internal/edit-internal.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +62,9 @@ import { EditCompanyComponent } from './components/iunid-company/edit-company/ed
     LobbyRoomComponent,
     ChatRoomComponent,
     EditUserComponent,
-    EditCompanyComponent
+    EditCompanyComponent,
+    EditExternalComponent,
+    EditInternalComponent
   ],
   imports: [
     BrowserModule,

@@ -9,6 +9,8 @@ import {HomeUserComponent} from './home-user/home-user.component';
 import {LobbyRoomComponent} from '../lobby/lobby-room/lobby-room.component';
 import {ChatRoomComponent} from '../lobby/chat-room/chat-room.component';
 import {EditUserComponent} from './edit-user/edit-user.component';
+import {EditExternalComponent} from '../projects/edit-external/edit-external.component';
+import {EditInternalComponent} from '../projects/edit-internal/edit-internal.component';
 
 export const IUNID_USER_ROUTES: Routes = [
   { path: 'home', component: HomeUserComponent },
@@ -16,7 +18,9 @@ export const IUNID_USER_ROUTES: Routes = [
   { path: 'editProfile', component: EditUserComponent },
   { path: 'userProjects', component: ProjectsPageComponent },
   { path: 'uploadExt', component:  RegisterExternalComponent },
+  { path: 'editExt', component:  EditExternalComponent },
   { path: 'uploadInt', component: RegisterInternalComponent },
+  { path: 'editInt', component: EditInternalComponent },
   { path: 'searchJob', component: SearchJobComponent },
   { path: 'lobby', component: LobbyRoomComponent },
   { path: 'chat', component: ChatRoomComponent },

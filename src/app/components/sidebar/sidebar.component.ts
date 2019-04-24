@@ -176,6 +176,7 @@ export class SidebarComponent implements OnInit {
 
   logout() {
     localStorage.removeItem('user');
+    localStorage.clear();
     this.router.navigate(['/login']);
   }
   admin() {

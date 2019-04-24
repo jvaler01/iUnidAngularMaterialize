@@ -1,0 +1,128 @@
+<div class="row" style="margin-top:50px">
+  <div class="col s10 offset-s1">
+    <div class="card white">
+      <div class="card-content">
+        <h3 class="center-align" style="margin-top: -10px !important;">Editar Proyecto Interno</h3>
+        <hr>
+        <div class="row">
+          <form [formGroup]="form" class="col s8 offset-s2" (ngSubmit)="sendData()">
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="first_name" type="text" class="" formControlName="name" [ngClass]="{'invalid': form.get('name').errors?.required }">
+                <label for="first_name">Nombre</label>
+                <div *ngIf="form.get('name').errors?.required" class="red-text">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+
+
+            <div class="input-field col s12">
+              <select formControlName="category">
+                <option value="" disabled selected>Selecciona una categoría</option>
+                <option *ngFor="let option of options" [value]="option.value">{{ option.label }}</option>
+              </select>
+              <label>Categoría</label>
+              <div *ngIf="form.get('category').errors?.pattern " class="red-text">
+                Este campo es requerido
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <textarea id="desc" class="materialize-textarea" formControlName="desc"
+                          [ngClass]="{'invalid': !form.controls['desc'].valid, 'invalid': form.get('desc').errors?.required}"></textarea>
+                <label for="desc">Descripción</label>
+                <div *ngIf="!form.controls['desc'].valid" class="red-text">
+                  Mínimo 50 caracteres
+                </div>
+                <div *ngIf="form.get('desc').errors?.required" class="red-text">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="tags" type="text" class="" formControlName="tags" [ngClass]="{'invalid': form.get('tags').errors?.required }">
+                <label for="tags">Tags</label>
+                <div *ngIf="form.get('tags').errors?.required" class="red-text">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+
+            <!-- FILES TODO -->
+            <!-- -->
+            <!-- -->
+            <form action="#">
+              <div class="file-field input-field">
+                <div class="btn light-blue darken-4">
+                  <span>Archivos</span>
+                  <input type="file" multiple>
+                </div>
+                <div class="file-path-wrapper">
+                  <input class="file-path validate" type="text" placeholder="Selecciona los archivos">
+                </div>
+              </div>
+            </form>
+            <!-- -->
+            <!-- -->
+            <!-- FILES TODO -->
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="maxPrice" type="number" class="" formControlName="maxPrice" [ngClass]="{'invalid': form.get('maxPrice').errors?.required }">
+                <label for="maxPrice">Precio máximo</label>
+                <div *ngIf="form.get('maxPrice').errors?.required" class="red-text">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="minPrice" type="number" class="" formControlName="minPrice" [ngClass]="{'invalid': form.get('minPrice').errors?.required }">
+                <label for="minPrice">Precio mínimo</label>
+                <div *ngIf="form.get('minPrice').errors?.required" class="red-text">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="deliveryDate" type="text" class="datepicker" formControlName="deliveryDate">
+                <label for="deliveryDate" class="">Fecha de entrega</label>
+                <div class="recomend-text">
+                  Por defecto se pondrá un mes para la entrega.
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <label>
+                  <input type="checkbox" id="counteroffer" formControlName="counteroffer"/>
+                  <span>Contra oferta</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="center">
+              <button type="submit" class="waves-effect waves-light btn light-blue darken-4"  [ngClass]="{'disabled': !form.valid}">Crear</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ControllerService} from '../../../services/controller.service';
 import {MessagesService} from '../../../services/sockets/messages.service';
 import {Router} from '@angular/router';
+declare  var $: any;
 
 @Component({
   selector: 'app-profile-company',
@@ -34,9 +35,27 @@ export class ProfileCompanyComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(document).ready(function() {
+      $('.collapsible').collapsible();
+    });
+
+    $(document).ready(function(){
+      $('.modal').modal();
+    });
   }
   edit(){
     localStorage.setItem('dataCompany', JSON.stringify(this.data.company));
     this.router.navigate( ['/iUnidCompany/editProfile']);
+  }
+
+  editExt(project:any){
+    console.log(project);
+    localStorage.setItem('dataProject', JSON.stringify(project))
+    this.router.navigate( ['/iUnidCompany/editExt']);
+  }
+
+
+  deleteUser(){
+
   }
 }

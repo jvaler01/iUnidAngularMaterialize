@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ControllerService} from '../../../services/controller.service';
+import {Router} from '@angular/router';
 declare  var $: any;
 
 @Component({
@@ -15,7 +16,8 @@ export class ProjectsPageComponent implements OnInit {
   type: string;
   user: any = {};
   data: any = {};
-  constructor( private controller: ControllerService ) {
+  constructor( private router: Router,
+               private controller: ControllerService ) {
     // this.data = this.data1;
     this.user = JSON.parse(localStorage.getItem('user'));
     console.log("this.user");
@@ -67,6 +69,16 @@ export class ProjectsPageComponent implements OnInit {
     if(param === 'employer'){
       this.data = null;
       this.data = this.data2
+    }
+  }
+
+  editInt(project:any){
+    console.log(project);
+    localStorage.setItem('dataProject', JSON.stringify(project));
+    if(JSON.parse(localStorage.getItem('user')).userDB){
+      this.router.navigate( ['/iUnidUser/editInt']);
+    } else {
+      this.router.navigate( ['/iUnidCompany/editInt']);
     }
   }
 }

@@ -37,10 +37,24 @@ export class ProfileUserComponent implements OnInit {
     $(document).ready(function() {
       $('.collapsible').collapsible();
     });
+
+    $(document).ready(function(){
+      $('.modal').modal();
+    });
   }
 
   edit(){
     localStorage.setItem('dataUser', JSON.stringify(this.data.user));
     this.router.navigate( ['/iUnidUser/editProfile']);
+  }
+
+  editExt(project:any){
+    console.log(project);
+    localStorage.setItem('dataProject', JSON.stringify(project))
+    this.router.navigate( ['/iUnidUser/editExt']);
+  }
+
+  deleteUser(){
+
   }
 }

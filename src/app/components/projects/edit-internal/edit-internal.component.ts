@@ -1,0 +1,112 @@
+import { Component, OnInit } from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {ControllerService} from '../../../services/controller.service';
+declare var $: any;
+
+@Component({
+  selector: 'app-edit-internal',
+  templateUrl: './edit-internal.component.html',
+  styleUrls: ['./edit-internal.component.css']
+})
+export class EditInternalComponent implements OnInit {
+  form: FormGroup;
+  user: any = {};
+  options = [
+    {
+      value: "computer_science",
+      label: "Informática"
+    },
+    {
+      value: "physics",
+      label: "Física"
+    },
+    {
+      value: "graphic_design",
+      label: "Diseño Gráfico"
+    },
+    {
+      value: "design",
+      label: "Diseño"
+    },
+    {
+      value: "architecture",
+      label: "Arquitectura"
+    },
+    {
+      value: "other",
+      label: "Otros"
+    }
+  ];
+  constructor(private router: Router,
+              private controller: ControllerService) {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    console.log("this.user");
+    console.log(this.user.token);
+    this.form = new FormGroup({
+      name: new FormControl('', Validators.required),
+      desc: new FormControl('', [Validators.required, Validators.minLength(50)]),
+      tags: new FormControl('', Validators.required),
+      maxPrice: new FormControl('', Validators.required),
+      minPrice: new FormControl('', Validators.required),
+      deliveryDate: new FormControl(''),
+      counteroffer: new FormControl(false),
+      category: new FormControl('0', Validators.pattern('[^0]+')),
+    });
+    console.log(this.form)
+  }
+
+  ngOnInit() {
+    $(document).ready(function(){
+      $('select').formSelect();
+    });
+    $(document).ready(function(){
+      $('.datepicker').datepicker({
+        firstDay: true,
+        format: 'dd/mm/yyyy',
+        i18n: {
+          cancel: 'Cancelar',
+          months: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+          monthsShort: ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Set", "Oct", "Nov", "Dic"],
+          weekdays: ["Domingo","Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
+          weekdaysShort: ["Dom","Lun", "Mar", "Mie", "Jue", "Vie", "Sab"],
+          weekdaysAbbrev: ["D","L", "M", "M", "J", "V", "S"]
+        }
+      });
+    });
+  }
+
+  sendData() {
+    console.log(this.form);
+
+    let dateValue = $('.datepicker').val();
+    let date: Date = $('.datepicker').val().split("/");
+    if(dateValue === ''){
+      var d = new Date();
+      d.setMonth(d.getMonth() + 1);
+      console.log(d);
+    }else{
+      var d = new Date(date[2], date[1] - 1, date[0]);
+    }
+
+    let internalProjectData:any = {};
+    internalProjectData.email = this.user.userDB.email;
+    internalProjectData.name = this.form.get('name').value;
+    internalProjectData.description = this.form.get('desc').value;
+    internalProjectData.tags = this.form.get('tags').value;
+    internalProjectData.maxPrice = this.form.get('maxPrice').value;
+    internalProjectData.minPrice = this.form.get('minPrice').value;
+    internalProjectData.deliveryDate = d;
+    internalProjectData.counterOffer = this.form.get('counteroffer').value;
+    internalProjectData.category = this.form.get('category').value;
+    internalProjectData.initialDate = new Date();
+    internalProjectData.files = ':(';
+    console.log(internalProjectData);
+    this.controller.createInternalProject(this.user.token, internalProjectData).subscribe( data => {
+      // localStorage.setItem('user', JSON.stringify(data));
+      // this.router.navigate( ['/iUnidCompany']);
+      this.router.navigate( ['/iUnidUser/profile-user']);
+    }, error => console.log(error));
+    console.log(this.form.value);
+  }
+}

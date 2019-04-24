@@ -1,3 +1,61 @@
-<p>
-  search-colaborator works!
-</p>
+<div class="row" style="margin-top:50px">
+  <div class="col s10 offset-s1">
+    <div class="card white">
+      <div class="card-content">
+        <h3 class="center-align" style="margin-top: -10px !important;">Buscar Colaboradores</h3>
+        <hr>
+        <div class="row">
+          <div class="col s12 m12 l2" style="border-right: gray 1px solid">
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="byName" type="text" data-length="10" (keyup.enter)="takeData(nameData.value, 'name')" #nameData>
+                <label for="byName">Por nombre</label>
+              </div>
+            </div>
+
+
+            <div class="input-field col s12">
+              <select id="category" (change)="takeData(categData.value, 'category')" #categData>
+                <option value="" disabled selected>Categorías</option>
+                <option *ngFor="let option of options" [value]="option.value">{{ option.label }}</option>
+              </select>
+              <label>Categorías</label>
+            </div>
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <input id="byTag" type="text" data-length="10" (keyup.enter)="pushTag(tagData.value)" #tagData>
+                <label for="byTag">Por tags</label>
+                <span *ngFor="let tag of tags; let i = index" class="new badge blue left" data-badge-caption="">{{ tag }}<div style="display: inline-block; border-radius: 50%; margin-left: 3px; background-color: #0acffe; width: 15px;" (click)="deleteTag(i)"><i class="fa fa-times" aria-hidden="true"></i></div></span>
+                <p *ngIf="tags.length > 0" class="btn" (click)="takeData(tags, 'tag')">></p>
+                <p *ngIf="tags.length === 0" class="btn disabled" disabled>></p>
+              </div>
+            </div>
+
+          </div>
+          <div class="col s12 m12 l10">
+            <h4 class="center">Resultados</h4>
+            <div *ngIf="!data.internalProjects" class="center">
+              <p>No hay resultados</p>
+            </div>
+            <div *ngIf="data.internalProjects">
+              <ul class="collection">
+                <li class="collection-item" *ngFor="let project of data.internalProjects">
+                  <h5>{{ project.name }}</h5>
+                  <p>Catergoria: {{ project.category }}</p>
+                  <p>Descripción: {{ project.description }}</p>
+                  <p>Fecha de entrega: {{ project.deliveryDate  | date }}</p>
+                  <p>Recompensa: {{ project.maxPrice }} - {{ project.minPrice }}</p>
+                  <button class="btn" (click)="joinProject(project._id)">Enviar Petición</button>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

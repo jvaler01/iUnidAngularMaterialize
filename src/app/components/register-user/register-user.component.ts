@@ -54,6 +54,7 @@ export class RegisterUserComponent implements OnInit {
     let userData:any = {};
     userData.name = this.form.get('name').value + ' ' + this.form.get('lastName').value;
     userData.email = this.form.get('email').value;
+    userData.description = this.form.get('desc').value;
     userData.password = this.form.get('password').value;
     userData.courses = this.form.get('courses').value;
     userData.certificates = this.form.get('certificates').value;
