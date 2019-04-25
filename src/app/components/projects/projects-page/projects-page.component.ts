@@ -108,4 +108,64 @@ export class ProjectsPageComponent implements OnInit {
       this.router.navigate( ['errors']);
     });
   }
+
+  acceptPending(projectId: any, userEmail: any){
+    let email: any;
+    if(JSON.parse(localStorage.getItem('user')).userDB){
+      email = this.user.userDB.email
+    } else {
+      email = this.user.companyDB.email
+    }
+    this.controller.acceptPendingRequest(this.user.token, email, projectId, userEmail).subscribe( data => {
+      console.log(data);
+      if(JSON.parse(localStorage.getItem('user')).userDB){
+        this.router.navigate( ['userProjects']);
+      } else {
+        this.router.navigate( ['companyProjects']);
+      }
+    }, error => {
+      console.log(error);
+      this.router.navigate( ['errors']);
+    });
+  }
+
+  denyPending(projectId: any, userEmail: any){
+    let email: any;
+    if(JSON.parse(localStorage.getItem('user')).userDB){
+      email = this.user.userDB.email
+    } else {
+      email = this.user.companyDB.email
+    }
+    this.controller.denyPendingRequest(this.user.token, email, projectId, userEmail).subscribe( data => {
+      console.log(data);
+      if(JSON.parse(localStorage.getItem('user')).userDB){
+        this.router.navigate( ['userProjects']);
+      } else {
+        this.router.navigate( ['companyProjects']);
+      }
+    }, error => {
+      console.log(error);
+      this.router.navigate( ['errors']);
+    });
+  }
+
+  closeProject(projectId: any){
+    let email: any;
+    if(JSON.parse(localStorage.getItem('user')).userDB){
+      email = this.user.userDB.email
+    } else {
+      email = this.user.companyDB.email
+    }
+    this.controller.closeProject(this.user.token, email, projectId).subscribe( data => {
+      console.log(data);
+      if(JSON.parse(localStorage.getItem('user')).userDB){
+        this.router.navigate( ['userProjects']);
+      } else {
+        this.router.navigate( ['companyProjects']);
+      }
+    }, error => {
+      console.log(error);
+      this.router.navigate( ['errors']);
+    });
+  }
 }

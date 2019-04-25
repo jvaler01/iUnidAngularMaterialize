@@ -322,4 +322,57 @@ export class ControllerService {
       return res;
     }));
   }
+
+  acceptPendingRequest( token: any, email: any, projectId: any, userEmail: any) {
+    let data = {
+      email: email,
+      id: projectId,
+      userEmail: userEmail
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}acceptPendingRequest`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  denyPendingRequest( token: any, email: any, projectId: any, userEmail: any) {
+    let data = {
+      email: email,
+      id: projectId,
+      userEmail: userEmail
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}denyPendingRequest`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  closeProject( token: any, email: any, projectId: any) {
+    let data = {
+      email: email,
+      id: projectId
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}closeProject`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
 }
