@@ -359,6 +359,26 @@ export class ControllerService {
     }));
   }
 
+
+  kickPerson( token: any, email: any, projectId: any, userEmail: any) {
+    let data = {
+      email: email,
+      id: projectId,
+      userEmail: userEmail
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}kickPerson`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+
   closeProject( token: any, email: any, projectId: any) {
     let data = {
       email: email,

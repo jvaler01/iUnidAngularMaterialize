@@ -52,7 +52,7 @@
                     </div>
                     <div class="col xl4">
                       <h5>Trabajadores: </h5>
-                      <p style="word-break: break-all;" *ngFor="let pending of project.pendingAccepts">{{ pending }}<a class="waves-effect waves-light btn">Pagar</a><a class="waves-effect waves-light btn red">Echar</a></p>
+                      <p style="word-break: break-all;" *ngFor="let user of project.users">{{ user }}<a class="waves-effect waves-light btn">Pagar</a><a (click)="kickPerson(project._id ,user)" class="waves-effect waves-light btn red">Echar</a></p>
                     </div>
                   </div>
                   <p><a (click)="closeProject( project._id )" class="waves-effect waves-light btn light-blue darken-4">Cerrar Proyecto</a></p>
