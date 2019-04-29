@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ControllerService} from '../../../services/controller.service';
+import {min} from 'rxjs/operators';
+import {Router} from '@angular/router';
 declare var $: any;
 
 @Component({
@@ -38,7 +40,12 @@ export class SearchJobComponent implements OnInit {
       label: "Otros"
     }
   ];
-  constructor( private controller: ControllerService ) {
+  projectId;
+  minPrice;
+  maxPrice;
+  counterOfferValue = 0;
+  constructor( private router: Router,
+              private controller: ControllerService ) {
     this.user = JSON.parse(localStorage.getItem('user'));
     console.log("this.user");
     console.log(this.user.token);
@@ -54,6 +61,14 @@ export class SearchJobComponent implements OnInit {
 
     $(document).ready(function() {
       $('.collapsible').collapsible();
+    });
+
+    $(document).ready(function(){
+      $('.modal').modal();
+    });
+
+    $(document).ready(function(){
+      $('#counterOfferInput').range();
     });
   }
 
@@ -100,5 +115,38 @@ export class SearchJobComponent implements OnInit {
       this.data = data;
       console.log(this.data);
     }, error => console.log(error));
+  }
+
+  setCounterOfferData(projectId: any, minPrice: any, maxPrice: any){
+    this.projectId = projectId;
+    this.minPrice = minPrice;
+    this.maxPrice = maxPrice;
+    this.counterOfferValue = 0;
+  }
+
+  counterOfferDataInput(counterOffer: any){
+    this.counterOfferValue = counterOffer;
+  }
+
+  sendCounterOffer(){
+    console.log(this.projectId);
+    console.log(this.counterOfferValue);
+    let email: any;
+    if(JSON.parse(localStorage.getItem('user')).userDB){
+      email = this.user.userDB.email
+    } else {
+      email = this.user.companyDB.email
+    }
+    this.controller.counterOffer(this.user.token, email, this.projectId, this.counterOfferValue).subscribe( data => {
+      console.log(data);
+      if(JSON.parse(localStorage.getItem('user')).userDB){
+        this.router.navigate( ['userProjects']);
+      } else {
+        this.router.navigate( ['companyProjects']);
+      }
+    }, error => {
+      console.log(error);
+      this.router.navigate( ['errors']);
+    });
   }
 }

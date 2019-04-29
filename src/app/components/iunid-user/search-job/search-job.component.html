@@ -47,7 +47,8 @@
                   <p>Catergoria: {{ project.category }}</p>
                   <p>Descripción: {{ project.description }}</p>
                   <p>Fecha de entrega: {{ project.deliveryDate  | date }}</p>
-                  <p>Recompensa: {{ project.maxPrice }} - {{ project.minPrice }}</p>
+                  <p>Recompensa: {{ project.minPrice }} - {{ project.maxPrice }}</p>
+                  <a href="#counterOfferModal" (click)="setCounterOfferData(project._id, project.minPrice, project.maxPrice)" class="btn text-white modal-trigger">Realizar Contra Oferta</a>
                   <button class="btn" (click)="joinProject(project._id)">Solicitar Entrar</button>
                 </li>
               </ul>
@@ -58,4 +59,25 @@
       </div>
     </div>
   </div>
+</div>
+
+
+<div id="counterOfferModal" class="modal">
+
+    <div class="modal-content">
+      <h4>Contra oferta</h4>
+        <p class="range-field" style="margin-top: 20px">
+          <input type="range" (change)="counterOfferDataInput(counterOfferData.value)" id="counterOfferInput" min="1" max="{{ maxPrice + 1000 }}" #counterOfferData/>
+        </p>
+        <p>
+          Precio del proyecto: {{ minPrice }} - {{ maxPrice }}
+        </p>
+        <p>
+          Precio seleccionado: {{ counterOfferValue }}
+        </p>
+    </div>
+    <div class="modal-footer">
+      <a (click)="sendCounterOffer()" class="btn waves-effect waves-green">Enviar</a>
+      <a class="modal-close btn waves-effect waves-green" style="margin-left: 5px;">Cancelar</a>
+    </div>
 </div>
