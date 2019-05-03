@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ControllerService} from '../../../services/controller.service';
 declare var $: any;
+declare var M: any;
 
 @Component({
   selector: 'app-edit-internal',
@@ -12,6 +13,8 @@ declare var $: any;
 export class EditInternalComponent implements OnInit, OnDestroy {
   form: FormGroup;
   user: any = {};
+  tags: any = [];
+  valid = false;
   options = [
     {
       value: "computer_science",
@@ -88,6 +91,31 @@ export class EditInternalComponent implements OnInit, OnDestroy {
         }
       });
     });
+    $('.chips').chips();
+
+    $(document).ready(function(){
+      $('.tooltipped').tooltip();
+    });
+    let dataTags = [];
+    for (let i = 0; i < this.project.tags.length; i++) {
+      dataTags.push({tag: this.project.tags[i]})
+    }
+    if(this.project.tags.length != 0){
+      this.valid = true;
+    }
+    $('.chips-initial').chips({
+      data: dataTags,
+    });
+  }
+
+  checkTags(){
+    console.log("in");
+    var chipData= M.Chips.getInstance($('.chips-initial')).chipsData;
+    if( chipData.length !== 0) {
+      this.valid = true;
+    }else{
+      this.valid = false;
+    }
   }
 
   sendData() {
@@ -110,10 +138,20 @@ export class EditInternalComponent implements OnInit, OnDestroy {
 
       internalProjectData.email = this.user.companyDB.email;
     }
+
+    this.tags = [];
+    var chipData= M.Chips.getInstance($('.chips-initial')).chipsData;
+    if( chipData.length !== 0) {
+      for (let i = 0; i < chipData.length; i++){
+        this.tags.push(chipData[i].tag);
+      }
+    }
     //internalProjectData.email = this.user.userDB.email;
     internalProjectData.name = this.form.get('name').value;
     internalProjectData.description = this.form.get('desc').value;
-    internalProjectData.tags = this.form.get('tags').value;
+    //internalProjectData.tags = this.form.get('tags').value;
+
+    internalProjectData.tags = this.tags;
     internalProjectData.maxPrice = this.form.get('maxPrice').value;
     internalProjectData.minPrice = this.form.get('minPrice').value;
     internalProjectData.deliveryDate = d;

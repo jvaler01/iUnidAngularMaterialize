@@ -3,6 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../../models/User';
 import { ControllerService } from '../../services/controller.service';
+declare var $: any;
+declare var M: any;
 
 @Component({
   selector: 'app-register-user',
@@ -17,6 +19,13 @@ export class RegisterUserComponent implements OnInit {
     password: '',
     token: ''
   };
+  skillsTags:any = [];
+  coursesTags:any = [];
+  certificatesTags:any = [];
+  validSkills = false;
+  validCourses = false;
+  validCertificates = false;
+  valid = false;
   constructor(private router: Router,
               private controller: ControllerService) {
     this.form = new FormGroup({
@@ -40,6 +49,11 @@ export class RegisterUserComponent implements OnInit {
   }
 
   ngOnInit() {
+    $('.chips').chips();
+
+    $(document).ready(function(){
+      $('.tooltipped').tooltip();
+    });
   }
   noIgual( control: FormControl): any {
     let forma: any = this;
@@ -50,15 +64,72 @@ export class RegisterUserComponent implements OnInit {
     }
     return null;
   }
+  checkValid(){
+    if(this.validCourses && this.validCertificates && this.validSkills){
+      this.valid = true;
+    }
+  }
+  checkCourses(){
+    console.log("in");
+    let chipData= M.Chips.getInstance($('.chips-courses')).chipsData;
+    if( chipData.length !== 0) {
+      this.validCourses = true;
+    }else{
+      this.validCourses = false;
+    }
+    this.checkValid();
+  }
+  checkSkills(){
+    console.log("in");
+    let chipData= M.Chips.getInstance($('.chips-skills')).chipsData;
+    if( chipData.length !== 0) {
+      this.validSkills = true;
+    }else{
+      this.validSkills = false;
+    }
+    this.checkValid();
+  }
+  checkCertificates(){
+    console.log("in");
+    let chipData= M.Chips.getInstance($('.chips-certificates')).chipsData;
+    if( chipData.length !== 0) {
+      this.validCertificates = true;
+    }else{
+      this.validCertificates = false;
+    }
+    this.checkValid();
+  }
+
   sendData() {
+    let coursesData= M.Chips.getInstance($('.chips-courses')).chipsData;
+    if( coursesData.length !== 0) {
+      for (let i = 0; i < coursesData.length; i++){
+        this.coursesTags.push(coursesData[i].tag);
+      }
+    }
+    let skillsData= M.Chips.getInstance($('.chips-skills')).chipsData;
+    if( skillsData.length !== 0) {
+      for (let i = 0; i < skillsData.length; i++){
+        this.skillsTags.push(skillsData[i].tag);
+      }
+    }
+    let certificatesData= M.Chips.getInstance($('.chips-certificates')).chipsData;
+    if( certificatesData.length !== 0) {
+      for (let i = 0; i < certificatesData.length; i++){
+        this.certificatesTags.push(certificatesData[i].tag);
+      }
+    }
     let userData:any = {};
     userData.name = this.form.get('name').value + ' ' + this.form.get('lastName').value;
     userData.email = this.form.get('email').value;
     userData.description = this.form.get('desc').value;
     userData.password = this.form.get('password').value;
-    userData.courses = this.form.get('courses').value;
+    /*userData.courses = this.form.get('courses').value;
     userData.certificates = this.form.get('certificates').value;
-    userData.skills = this.form.get('skills').value;
+    userData.skills = this.form.get('skills').value;*/
+    userData.courses = this.coursesTags;
+    userData.certificates = this.certificatesTags;
+    userData.skills = this.skillsTags;
     userData.phone = this.form.get('phoneNumber').value;
     console.log(userData);
     this.controller.registerUser(userData).subscribe( data => {

@@ -3,6 +3,7 @@ import {ControllerService} from '../../../services/controller.service';
 import {min} from 'rxjs/operators';
 import {Router} from '@angular/router';
 declare var $: any;
+declare var M: any;
 
 @Component({
   selector: 'app-search-job',
@@ -70,19 +71,34 @@ export class SearchJobComponent implements OnInit {
     $(document).ready(function(){
       $('#counterOfferInput').range();
     });
+
+    $('.chips').chips();
+
+    $(document).ready(function(){
+      $('.tooltipped').tooltip();
+    });
   }
 
   takeData(data: any, option:string ){
+    this.tags = [];
+    var chipData= M.Chips.getInstance($('.chips-initial')).chipsData;
+    if( chipData.length !== 0) {
+      for (let i = 0; i < chipData.length; i++){
+        this.tags.push(chipData[i].tag);
+      }
+    }
     this.categ = data;
     console.log(data);
+    console.log(chipData);
+    console.log(this.tags);
     if(option === 'name'){
-      this.controller.getProjectsbyName(this.user.token, this.user.userDB.email, this.categ).subscribe( data => {
+      this.controller.getProjectsByName(this.user.token, this.user.userDB.email, this.categ).subscribe( data => {
         this.data = data;
         console.log(this.data);
       }, error => console.log(error));
     }
     if(option === 'category'){
-      this.controller.getProjectsbyCategory(this.user.token, this.user.userDB.email, this.categ).subscribe( data => {
+      this.controller.getProjectsByCategory(this.user.token, this.user.userDB.email, this.categ).subscribe( data => {
         this.data = data;
         console.log(this.data);
       }, error => console.log(error));
@@ -90,24 +106,13 @@ export class SearchJobComponent implements OnInit {
     if(option === 'tag'){
       //this.categ = this.categ.split(',');
       //console.log(this.categ);
-      this.controller.getProjectsbytag(this.user.token, this.user.userDB.email, this.tags).subscribe( data => {
+      this.controller.getProjectsByTag(this.user.token, this.user.userDB.email, this.tags).subscribe( data => {
         this.data = data;
         console.log(this.data);
       }, error => console.log(error));
     }
   }
 
-  pushTag(data:any){
-    // @ts-ignore
-    document.getElementById('byTag').value = "";
-    if(data !== ''){
-      this.tags.push(data);
-    }
-  }
-
-  deleteTag(index:any){
-    this.tags.splice(index, 1);
-  }
 
   joinProject(projectId: any){
     console.log(projectId);

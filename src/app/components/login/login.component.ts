@@ -60,6 +60,9 @@ export class LoginComponent implements OnInit {
         if (data.userDB.userType === 'USER_ROLE') {
           this.router.navigate( ['/iUnidUser']);
         }
+        if (data.userDB.userType === 'ADMIN_ROLE') {
+          this.router.navigate( ['/iUnidAdmin']);
+        }
       }
       if (data.companyDB) {
         localStorage.setItem('user', JSON.stringify(data));

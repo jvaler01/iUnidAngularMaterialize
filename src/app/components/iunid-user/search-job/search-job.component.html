@@ -7,14 +7,14 @@
         <div class="row">
           <div class="col s12 m12 l2" style="border-right: gray 1px solid">
             <div class="row">
-              <div class="input-field col s12">
+              <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Escribe el nombre del proyecto y pulsa la tecla Enter">
                 <input id="byName" type="text" data-length="10" (keyup.enter)="takeData(nameData.value, 'name')" #nameData>
                 <label for="byName">Por nombre</label>
               </div>
             </div>
 
 
-            <div class="input-field col s12">
+            <div class="input-field col s12 tooltipped" data-position="bottom" data-tooltip="Selecciona una categoría, la busqueda es automática">
               <select id="category" (change)="takeData(categData.value, 'category')" #categData>
                 <option value="" disabled selected>Categorías</option>
                 <option *ngFor="let option of options" [value]="option.value">{{ option.label }}</option>
@@ -26,11 +26,17 @@
 
             <div class="row">
               <div class="input-field col s12">
-                <input id="byTag" type="text" data-length="10" (keyup.enter)="pushTag(tagData.value)" #tagData>
-                <label for="byTag">Por tags</label>
-                <span *ngFor="let tag of tags; let i = index" class="new badge blue left" data-badge-caption="">{{ tag }}<div style="display: inline-block; border-radius: 50%; margin-left: 3px; background-color: #0acffe; width: 15px;" (click)="deleteTag(i)"><i class="fa fa-times" aria-hidden="true"></i></div></span>
-                <p *ngIf="tags.length > 0" class="btn" (click)="takeData(tags, 'tag')">></p>
-                <p *ngIf="tags.length === 0" class="btn disabled" disabled>></p>
+                <!--<input id="byTag" type="text" data-length="10" (keyup.enter)="pushTag(tagData.value)" #tagData>-->
+                <div id="chipData" class="chips chips-initial tooltipped" data-position="bottom" data-tooltip="Escribe un tag y pulsa la tecla enter para ir añadiendolos, cuando esten todos pulsa el botón >"></div>
+                <p class="grey-text text-lighten-1">Por tags</p>
+                <!--<span *ngFor="let tag of tags; let i = index" class="new badge blue left" data-badge-caption="">{{ tag }}<div style="display: inline-block; border-radius: 50%; margin-left: 3px; background-color: #0acffe; width: 15px;" (click)="deleteTag(i)"><i class="fa fa-times" aria-hidden="true"></i></div></span>-->
+                <!--<div class="chip" *ngFor="let tag of tags; let i = index">
+                  {{ tag }}
+                  <i class="close material-icons">close</i>
+                </div>-->
+                <p class="btn" (click)="takeData(0,'tag')">></p>
+                <!--<p *ngIf="tags.length > 0" class="btn" (click)="takeData(tags, 'tag')">></p>
+                <p *ngIf="tags.length === 0" class="btn disabled" disabled>></p>-->
               </div>
             </div>
 
@@ -48,7 +54,7 @@
                   <p>Descripción: {{ project.description }}</p>
                   <p>Fecha de entrega: {{ project.deliveryDate  | date }}</p>
                   <p>Recompensa: {{ project.minPrice }} - {{ project.maxPrice }}</p>
-                  <a href="#counterOfferModal" (click)="setCounterOfferData(project._id, project.minPrice, project.maxPrice)" class="btn text-white modal-trigger">Realizar Contra Oferta</a>
+                  <a *ngIf="project.counterOffer" href="#counterOfferModal" (click)="setCounterOfferData(project._id, project.minPrice, project.maxPrice)" class="btn text-white modal-trigger">Realizar Contra Oferta</a>
                   <button class="btn" (click)="joinProject(project._id)">Solicitar Entrar</button>
                 </li>
               </ul>

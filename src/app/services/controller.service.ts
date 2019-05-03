@@ -223,22 +223,6 @@ export class ControllerService {
     }));
   }
 
-  getProjectsIdsNames( token: any, email:any) {
-    let data = {
-      email: email
-    };
-    let body = JSON.stringify(data);
-    let headers = new HttpHeaders({
-      'Content-Type':'application/json',
-      'token': token
-    });
-    let url = `${this.apiUrl}obtainProjectNameAndId`;
-    return this.http.post(url, body, {headers}).pipe(map( res =>{
-      console.log(res);
-      return res;
-    }));
-  }
-
   getProjectsThatHeWorks( token: any, email:any) {
     let data = {
       email: email
@@ -255,7 +239,7 @@ export class ControllerService {
     }));
   }
 
-  getProjectsbyName( token: any, email:any , name: any) {
+  getProjectsByName( token: any, email:any , name: any) {
     let data = {
       email: email,
       name: name
@@ -272,7 +256,7 @@ export class ControllerService {
     }));
   }
 
-  getProjectsbyCategory( token: any, email:any , category: any) {
+  getProjectsByCategory( token: any, email:any , category: any) {
     let data = {
       email: email,
       category: category
@@ -289,7 +273,7 @@ export class ControllerService {
     }));
   }
 
-  getProjectsbytag( token: any, email:any , tags: any) {
+  getProjectsByTag( token: any, email:any , tags: any ) {
     let data = {
       email: email,
       tags: tags
@@ -300,6 +284,59 @@ export class ControllerService {
       'token': token
     });
     let url = `${this.apiUrl}obtainProjectTags`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  getUsersBySkills( token: any, email:any , skills: any ){
+    let data = {
+      email: email,
+      skills: skills
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}getUsersBySkills`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  getUsersByCertificates( token: any, email:any , certificates: any ){
+    let data = {
+      email: email,
+      certificates: certificates
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}getUsersByCertificates`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+
+
+  getUsersByCourses( token: any, email:any , courses: any ){
+    let data = {
+      email: email,
+      courses: courses
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}getUsersByCourses`;
     return this.http.post(url, body, {headers}).pipe(map( res =>{
       console.log(res);
       return res;
@@ -377,7 +414,6 @@ export class ControllerService {
     }));
   }
 
-
   counterOffer( token: any, email: any, projectId: any, price: any) {
     let data = {
       email: email,
@@ -390,6 +426,44 @@ export class ControllerService {
       'token': token
     });
     let url = `${this.apiUrl}counterOffer`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  acceptCounterOffer( token: any, email: any, projectId: any, price: any, userEmail: any ){
+    let data = {
+      email: email,
+      id: projectId,
+      userEmail: userEmail,
+      price: price
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}acceptCounterOffer`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  denyCounterOffer( token: any, email: any, projectId: any, price: any, userEmail: any ){
+    let data = {
+      email: email,
+      id: projectId,
+      userEmail: userEmail,
+      price: price
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}denyCounterOffer`;
     return this.http.post(url, body, {headers}).pipe(map( res =>{
       console.log(res);
       return res;
@@ -412,4 +486,5 @@ export class ControllerService {
       return res;
     }));
   }
+
 }

@@ -20,7 +20,7 @@
       </li>
     </ul>
   </li>
-  <li *ngIf="admin()"><a [routerLink]="[sidebarData.option.route]" class="waves-effect waves-teal white-text">{{ sidebarData.option.name }}</a></li>
+  <!--<li *ngIf="admin()"><a [routerLink]="[sidebarData.option5.route]" class="waves-effect waves-teal white-text">{{ sidebarData.option5.name }}</a></li>-->
   <li *ngIf="sidebarData.option3.name !== 'false'"><a [routerLink]="[sidebarData.option3.route]" class="waves-effect waves-teal white-text">{{ sidebarData.option3.name }}</a></li>
   <li *ngIf="sidebarData.option4.name !== 'false'"><a [routerLink]="[sidebarData.option4.route]" (click)="logout()" class="waves-effect waves-teal white-text">{{ sidebarData.option4.name }}</a></li>
 </ul>

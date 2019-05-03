@@ -45,11 +45,22 @@
             </div>
 
 
-            <div class="row">
+            <!--<div class="row">
               <div class="input-field col s12">
-                <input id="tags" type="text" class="" formControlName="tags" [ngClass]="{'invalid': form.get('tags').errors?.required }">
+                <input id="tags" type="text" class="">
                 <label for="tags">Tags</label>
                 <div *ngIf="form.get('tags').errors?.required" class="red-text">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>-->
+
+            <div class="row">
+              <div class="input-field col s12">
+                <div id="chipData" class="chips chips-initial tooltipped"
+                     data-position="bottom" data-tooltip="Escribe un tag y pulsa la tecla enter para ir añadiendolos" (keyup.enter)="checkTags()"></div>
+                <p class="grey-text text-lighten-1">Tags</p>
+                <div *ngIf="!valid" class="red-text">
                   Este campo es requerido
                 </div>
               </div>
@@ -118,7 +129,7 @@
             </div>
 
             <div class="center">
-              <button type="submit" class="waves-effect waves-light btn light-blue darken-4"  [ngClass]="{'disabled': !form.valid}">Crear</button>
+              <button type="submit" class="waves-effect waves-light btn light-blue darken-4"  [ngClass]="{'disabled': !form.valid, 'disabled': !valid }">Crear</button>
             </div>
           </form>
         </div>

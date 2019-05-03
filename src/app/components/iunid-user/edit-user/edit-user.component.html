@@ -11,7 +11,7 @@
             <div class="row">
               <div class="input-field col s12">
                 <input id="first_name" type="text" class="" formControlName="name" [ngClass]="{'invalid': form.get('name').errors?.required }">
-                <label for="first_name">Nombre</label>
+                <label for="first_name" class="active">Nombre</label>
                 <div *ngIf="form.get('name').errors?.required" class="red-text">
                   Este campo es requerido
                 </div>
@@ -23,7 +23,7 @@
             <div class="row">
               <div class="input-field col s12">
                 <input id="lastName" type="text" class="" formControlName="lastName" [ngClass]="{'invalid': form.get('lastName').errors?.required }">
-                <label for="lastName">Apellidos</label>
+                <label for="lastName" class="active">Apellidos</label>
                 <div *ngIf="form.get('lastName').errors?.required" class="red-text">
                   Este campo es requerido
                 </div>
@@ -37,7 +37,7 @@
               <div class="input-field col s12">
                 <textarea id="desc" class="materialize-textarea" formControlName="desc"
                           [ngClass]="{'invalid': !form.controls['desc'].valid, 'recomend': form.get('desc').value.length === 0}"></textarea>
-                <label for="desc">Descripción</label>
+                <label for="desc" class="active">Descripción</label>
                 <div *ngIf="!form.controls['desc'].valid" class="red-text">
                   Mínimo 50 caracteres
                 </div>
@@ -49,20 +49,43 @@
 
 
 
-            <div class="row">
+            <!--<div class="row">
               <div class="input-field col s12">
                 <input id="courses" type="text" class="" formControlName="courses">
                 <label for="courses">Cursos</label>
+              </div>
+            </div>-->
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <div id="coursesData" class="chips chips-courses tooltipped"
+                     data-position="bottom" data-tooltip="Escribe un curso y pulsa la tecla enter para ir añadiendolos" (keyup.enter)="checkCourses()"></div>
+                <p class="grey-text text-lighten-1">Cursos</p>
+                <div *ngIf="!validCourses" class="recomend-text">
+                  Este campo es recomendado
+                </div>
               </div>
             </div>
 
 
 
 
-            <div class="row">
+            <!--<div class="row">
               <div class="input-field col s12">
                 <input id="certificates" type="text" class="" formControlName="certificates">
                 <label for="certificates">Certificados</label>
+              </div>
+            </div>-->
+
+            <div class="row">
+              <div class="input-field col s12">
+                <div id="certificatesData" class="chips chips-certificates tooltipped"
+                     data-position="bottom" data-tooltip="Escribe un certificado y pulsa la tecla enter para ir añadiendolos" (keyup.enter)="checkCertificates()"></div>
+                <p class="grey-text text-lighten-1">Certificados</p>
+                <div *ngIf="!validCertificates" class="recomend-text">
+                  Este campo es recomendado
+                </div>
               </div>
             </div>
 
@@ -86,10 +109,21 @@
 
 
 
-            <div class="row">
+            <!--<div class="row">
               <div class="input-field col s12">
                 <input id="skills" type="text" class="" formControlName="skills">
                 <label for="skills">Habilidades</label>
+              </div>
+            </div>-->
+
+            <div class="row">
+              <div class="input-field col s12">
+                <div id="skillsData" class="chips chips-skills tooltipped"
+                     data-position="bottom" data-tooltip="Escribe una habilidad y pulsa la tecla enter para ir añadiendolos" (keyup.enter)="checkSkills()"></div>
+                <p class="grey-text text-lighten-1">Habilidades</p>
+                <div *ngIf="!validSkills" class="recomend-text">
+                  Este campo es recomendado
+                </div>
               </div>
             </div>
 
@@ -98,7 +132,7 @@
             <div class="row">
               <div class="input-field col s12">
                 <input id="phoneNumber" type="text" class="" formControlName="phoneNumber">
-                <label for="phoneNumber">Número de teléfono</label>
+                <label for="phoneNumber" class="active">Número de teléfono</label>
               </div>
             </div>
 

@@ -10,7 +10,7 @@
             <div class="row">
               <div class="input-field col s12">
                 <input id="first_name" type="text" class="" formControlName="name" [ngClass]="{'invalid': form.get('name').errors?.required }">
-                <label for="first_name">Nombre</label>
+                <label for="first_name" class="active">Nombre</label>
                 <div *ngIf="form.get('name').errors?.required" class="red-text">
                   Este campo es requerido
                 </div>
@@ -34,7 +34,7 @@
               <div class="input-field col s12">
                 <textarea id="desc" class="materialize-textarea" formControlName="desc"
                           [ngClass]="{'invalid': !form.controls['desc'].valid, 'invalid': form.get('desc').errors?.required}"></textarea>
-                <label for="desc">Descripción</label>
+                <label for="desc" class="active">Descripción</label>
                 <div *ngIf="!form.controls['desc'].valid" class="red-text">
                   Mínimo 50 caracteres
                 </div>
@@ -45,11 +45,23 @@
             </div>
 
 
-            <div class="row">
+            <!--<div class="row">
               <div class="input-field col s12">
                 <input id="tags" type="text" class="" formControlName="tags" [ngClass]="{'invalid': form.get('tags').errors?.required }">
                 <label for="tags">Tags</label>
                 <div *ngIf="form.get('tags').errors?.required" class="red-text">
+                  Este campo es requerido
+                </div>
+              </div>
+            </div>-->
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <div id="chipData" class="chips chips-initial tooltipped"
+                     data-position="bottom" data-tooltip="Escribe un tag y pulsa la tecla enter para ir añadiendolos" (keyup.enter)="checkTags()"></div>
+                <p class="grey-text text-lighten-1">Tags</p>
+                <div *ngIf="!valid" class="red-text">
                   Este campo es requerido
                 </div>
               </div>
@@ -78,7 +90,7 @@
             <div class="row">
               <div class="input-field col s12">
                 <input id="maxPrice" type="number" class="" formControlName="maxPrice" [ngClass]="{'invalid': form.get('maxPrice').errors?.required }">
-                <label for="maxPrice">Precio máximo</label>
+                <label for="maxPrice" class="active">Precio máximo</label>
                 <div *ngIf="form.get('maxPrice').errors?.required" class="red-text">
                   Este campo es requerido
                 </div>
@@ -90,7 +102,7 @@
             <div class="row">
               <div class="input-field col s12">
                 <input id="minPrice" type="number" class="" formControlName="minPrice" [ngClass]="{'invalid': form.get('minPrice').errors?.required }">
-                <label for="minPrice">Precio mínimo</label>
+                <label for="minPrice" class="active">Precio mínimo</label>
                 <div *ngIf="form.get('minPrice').errors?.required" class="red-text">
                   Este campo es requerido
                 </div>
@@ -100,7 +112,7 @@
             <div class="row">
               <div class="input-field col s12">
                 <input id="deliveryDate" type="text" class="datepicker" formControlName="deliveryDate">
-                <label for="deliveryDate" class="">Fecha de entrega</label>
+                <label for="deliveryDate" class="active">Fecha de entrega</label>
                 <div class="recomend-text">
                   Por defecto se pondrá un mes para la entrega.
                 </div>
@@ -118,7 +130,7 @@
             </div>
 
             <div class="center">
-              <button type="submit" class="waves-effect waves-light btn light-blue darken-4"  [ngClass]="{'disabled': !form.valid}">Guardar</button>
+              <button type="submit" class="waves-effect waves-light btn light-blue darken-4"  [ngClass]="{'disabled': !form.valid, 'disabled': !valid }">Guardar</button>
             </div>
           </form>
         </div>

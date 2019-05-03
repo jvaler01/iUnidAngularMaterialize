@@ -44,7 +44,7 @@
                   <div class="row">
                     <div class="col xl4">
                       <h5>Contra ofertas: </h5>
-                      <p style="word-break: break-all;" *ngFor="let pending of project.pendingAccepts">{{ pending }}<a class="waves-effect waves-light btn">Aceptar</a><a class="waves-effect waves-light btn red">Borrar</a></p>
+                      <p style="word-break: break-all;" *ngFor="let counterOffer of project.pendingCounterOffer">{{ counterOffer.offer }} - {{ counterOffer.user }}<a class="waves-effect waves-light btn" (click)="acceptCounterOffer( project._id, counterOffer.user, counterOffer.offer )">Aceptar</a><a class="waves-effect waves-light btn red" (click)="denyCounterOffer( project._id, counterOffer.user, counterOffer.offer )">Borrar</a></p>
                     </div>
                     <div class="col xl4">
                       <h5>Pendientes de aceptar: </h5>

@@ -38,7 +38,7 @@ export class SidebarComponent implements OnInit {
     this.sesionStatus.currenSesionStatus.subscribe(status => {
       console.log(status);
       if(localStorage.getItem('user')){
-        if(JSON.parse(localStorage.getItem('user')).userDB){
+        if(JSON.parse(localStorage.getItem('user')).userDB && JSON.parse(localStorage.getItem('user')).userDB.userType === 'USER_ROLE'){
           this.sidebarData = {
             option: {
               name: "Home",
@@ -88,58 +88,77 @@ export class SidebarComponent implements OnInit {
               route: ""
             },
           };
-        } if(JSON.parse(localStorage.getItem('user')).companyDB){
-        this.sidebarData = {
-          option: {
-            name: "Home",
-            route: "/iUnidCompany/home"
-          },
-          option2:[
-            {
-              name: "User",
-              values: [
-                {
-                  name: "Profile",
-                  route: "/iUnidCompany/companyProfile"
-                }
-                ,
-                {
-                  name: "Mis Proyectos",
-                  route: "/iUnidCompany/companyProjects"
-                }
-              ]
+        }
+        console.log(JSON.parse(localStorage.getItem('user')).userDB.userType);
+        if(JSON.parse(localStorage.getItem('user')).userDB && JSON.parse(localStorage.getItem('user')).userDB.userType === 'ADMIN_ROLE'){
+          this.sidebarData = {
+            option: {
+              name: "Admin",
+              route: "/iUnidAdmin/admin"
             },
-            {
-              name: "Trabajo",
-              values: [
-                {
-                  name: "Buscar Colaboradores",
-                  route: "/iUnidCompany/searchColaborators"
-                }
-                ,
-                {
-                  name: "Publicar Proyecto",
-                  route: "/iUnidCompany/uploadInt"
-                }
-                ,
-                {
-                  name: "Salas de Trabajo",
-                  route: "/iUnidCompany/lobby"
-                }
-              ]
+            option2:[],
+            option3: {
+              name: "Ayuda",
+              route: "/iUnidUser/help"
+            },
+            option4: {
+              name: "Logout",
+              route: ""
+            },
+          };
+        }
+        if(JSON.parse(localStorage.getItem('user')).companyDB){
+          this.sidebarData = {
+            option: {
+              name: "Home",
+              route: "/iUnidCompany/home"
+            },
+            option2:[
+              {
+                name: "User",
+                values: [
+                  {
+                    name: "Profile",
+                    route: "/iUnidCompany/companyProfile"
+                  }
+                  ,
+                  {
+                    name: "Mis Proyectos",
+                    route: "/iUnidCompany/companyProjects"
+                  }
+                ]
+              },
+              {
+                name: "Trabajo",
+                values: [
+                  {
+                    name: "Buscar Colaboradores",
+                    route: "/iUnidCompany/searchColaborators"
+                  }
+                  ,
+                  {
+                    name: "Publicar Proyecto",
+                    route: "/iUnidCompany/uploadInt"
+                  }
+                  ,
+                  {
+                    name: "Salas de Trabajo",
+                    route: "/iUnidCompany/lobby"
+                  }
+                ]
+              }
+            ],
+            option3: {
+              name: "Ayuda",
+              route: "/iUnidCompany/help"
+            },
+            option4: {
+              name: "Logout",
+              route: ""
             }
-          ],
-          option3: {
-            name: "Ayuda",
-            route: "/iUnidCompany/help"
-          },
-          option4: {
-            name: "Logout",
-            route: ""
-          },
-        };
-      }
-    } else {
+          };
+        }
+      } else {
         this.sidebarData = {
           option: {
             name: "Login",
@@ -178,17 +197,5 @@ export class SidebarComponent implements OnInit {
     localStorage.removeItem('user');
     localStorage.clear();
     this.router.navigate(['/login']);
-  }
-
-  admin() {
-    /*let role: any;
-    role = JSON.parse(localStorage.getItem('user')).usuario.role;
-    if(role === 'ADMIN_ROLE') {
-      return true;
-    } else{
-      return false;
-    }*/
-
-    return false;
   }
 }

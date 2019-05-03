@@ -81,25 +81,46 @@
 
 
 
-            <div class="row">
+            <!--<div class="row">
               <div class="input-field col s12">
                 <input id="courses" type="text" class="" formControlName="courses">
                 <label for="courses">Cursos</label>
                 <div *ngIf="form.get('courses').value.length === 0" [ngClass]="{'recomend-text': form.get('courses').value.length === 0}">
-                  Este campo es requerido
+                  Este campo es recomendado
+                </div>
+              </div>
+            </div>-->
+
+            <div class="row">
+              <div class="input-field col s12">
+                <div id="coursesData" class="chips chips-courses tooltipped"
+                     data-position="bottom" data-tooltip="Escribe un curso y pulsa la tecla enter para ir añadiendolos" (keyup.enter)="checkCourses()"></div>
+                <p class="grey-text text-lighten-1">Cursos</p>
+                <div *ngIf="!validCourses" class="recomend-text">
+                  Este campo es recomendado
                 </div>
               </div>
             </div>
 
 
 
-
-            <div class="row">
+            <!--<div class="row">
               <div class="input-field col s12">
                 <input id="certificates" type="text" class="" formControlName="certificates">
                 <label for="certificates">Certificados</label>
                 <div *ngIf="form.get('certificates').value.length === 0" [ngClass]="{'recomend-text': form.get('certificates').value.length === 0}">
-                  Este campo es requerido
+                  Este campo es recomendado
+                </div>
+              </div>
+            </div>-->
+
+            <div class="row">
+              <div class="input-field col s12">
+                <div id="certificatesData" class="chips chips-certificates tooltipped"
+                     data-position="bottom" data-tooltip="Escribe un certificado y pulsa la tecla enter para ir añadiendolos" (keyup.enter)="checkCertificates()"></div>
+                <p class="grey-text text-lighten-1">Certificados</p>
+                <div *ngIf="!validCertificates" class="recomend-text">
+                  Este campo es recomendado
                 </div>
               </div>
             </div>
@@ -124,12 +145,25 @@
 
 
 
-            <div class="row">
+            <!--<div class="row">
               <div class="input-field col s12">
                 <input id="skills" type="text" class="" formControlName="skills">
                 <label for="skills">Habilidades</label>
                 <div *ngIf="form.get('skills').value.length === 0" [ngClass]="{'recomend-text': form.get('skills').value.length === 0}">
-                  Este campo es requerido
+                  Este campo es recomendado
+                </div>
+              </div>
+            </div>-->
+
+
+
+            <div class="row">
+              <div class="input-field col s12">
+                <div id="skillsData" class="chips chips-skills tooltipped"
+                     data-position="bottom" data-tooltip="Escribe una habilidad y pulsa la tecla enter para ir añadiendolos" (keyup.enter)="checkSkills()"></div>
+                <p class="grey-text text-lighten-1">Habilidades</p>
+                <div *ngIf="!validSkills" class="recomend-text">
+                  Este campo es recomendado
                 </div>
               </div>
             </div>

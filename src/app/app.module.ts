@@ -36,6 +36,8 @@ import { EditUserComponent } from './components/iunid-user/edit-user/edit-user.c
 import { EditCompanyComponent } from './components/iunid-company/edit-company/edit-company.component';
 import { EditExternalComponent } from './components/projects/edit-external/edit-external.component';
 import { EditInternalComponent } from './components/projects/edit-internal/edit-internal.component';
+import { IunidAdminComponent } from './components/iunid-admin/iunid-admin.component';
+import { AdminPageComponent } from './components/iunid-admin/admin-page/admin-page.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { EditInternalComponent } from './components/projects/edit-internal/edit-
     EditUserComponent,
     EditCompanyComponent,
     EditExternalComponent,
-    EditInternalComponent
+    EditInternalComponent,
+    IunidAdminComponent,
+    AdminPageComponent
   ],
   imports: [
     BrowserModule,

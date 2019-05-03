@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 import {ControllerService} from '../../../services/controller.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 declare var $: any;
+declare var M: any;
 @Component({
   selector: 'app-register-internal',
   templateUrl: './register-internal.component.html',
@@ -11,6 +12,8 @@ declare var $: any;
 export class RegisterInternalComponent implements OnInit {
   form: FormGroup;
   user: any = {};
+  tags:any = [];
+  valid = false;
   options = [
     {
       value: "computer_science",
@@ -45,7 +48,7 @@ export class RegisterInternalComponent implements OnInit {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
       desc: new FormControl('', [Validators.required, Validators.minLength(50)]),
-      tags: new FormControl('', Validators.required),
+      tags: new FormControl(''),
       maxPrice: new FormControl('', Validators.required),
       minPrice: new FormControl('', Validators.required),
       deliveryDate: new FormControl(''),
@@ -73,6 +76,22 @@ export class RegisterInternalComponent implements OnInit {
         }
       });
     });
+
+    $('.chips').chips();
+
+    $(document).ready(function(){
+      $('.tooltipped').tooltip();
+    });
+  }
+
+  checkTags(){
+    console.log("in");
+    var chipData= M.Chips.getInstance($('.chips-initial')).chipsData;
+    if( chipData.length !== 0) {
+      this.valid = true;
+    }else{
+      this.valid = false;
+    }
   }
 
   sendData() {
@@ -95,10 +114,19 @@ export class RegisterInternalComponent implements OnInit {
 
       internalProjectData.email = this.user.companyDB.email;
     }
+    this.tags = [];
+    var chipData= M.Chips.getInstance($('.chips-initial')).chipsData;
+    if( chipData.length !== 0) {
+      for (let i = 0; i < chipData.length; i++){
+        this.tags.push(chipData[i].tag);
+      }
+    }
     //internalProjectData.email = this.user.userDB.email;
     internalProjectData.name = this.form.get('name').value;
     internalProjectData.description = this.form.get('desc').value;
-    internalProjectData.tags = this.form.get('tags').value;
+    //internalProjectData.tags = this.form.get('tags').value;
+
+    internalProjectData.tags = this.tags;
     internalProjectData.maxPrice = this.form.get('maxPrice').value;
     internalProjectData.minPrice = this.form.get('minPrice').value;
     internalProjectData.deliveryDate = d;
