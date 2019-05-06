@@ -44,16 +44,31 @@ export class RegisterCompanyComponent implements OnInit {
   sendData() {
     let companyData:any = {};
     companyData.name = this.form.get('name').value;
-    companyData.email = this.form.get('email').value;
     companyData.password = this.form.get('password').value;
     companyData.cif = this.form.get('cif').value;
     companyData.description = this.form.get('desc').value;
     companyData.contactEmail = this.form.get('contactEmail').value;
     companyData.img = ':)';
     console.log(companyData);
-    this.controller.registerCompany(companyData).subscribe( data => {
-      this.router.navigate( ['/login']);
-    }, error => console.log(error));
+    let userSesion = JSON.parse(localStorage.getItem('user'));
+    if(JSON.parse(localStorage.getItem('user'))){
+      companyData.userType = userSesion.userDB.userType;
+    } else {
+      companyData.userType = 'COMPANY_ROLE';
+    }
+    if(companyData.userType === 'COMPANY_ROLE') {
+      companyData.email = this.form.get('email').value;
+      this.controller.registerCompany(companyData).subscribe(data => {
+        this.router.navigate(['/login']);
+      }, error => console.log(error));
+    }else if(companyData.userType === 'ADMIN_ROLE'){
+      companyData.email = userSesion.userDB.email;
+      companyData.userEmail = this.form.get('email').value;
+      companyData.newUserType = 'COMPANY_ROLE';
+      this.controller.newUserOrCompany( userSesion.token, companyData).subscribe( data => {
+        this.router.navigate( ['**']);
+      }, error => console.log(error));
+    }
     console.log(this.form.value);
   }
 }

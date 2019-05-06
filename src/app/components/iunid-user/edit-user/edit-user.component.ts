@@ -142,9 +142,6 @@ export class EditUserComponent implements OnInit, OnDestroy {
     }
     let userData:any = {};
     userData.name = this.form.get('name').value + ' ' + this.form.get('lastName').value;
-    /*userData.courses = this.form.get('courses').value;
-    userData.certificates = this.form.get('certificates').value;
-    userData.skills = this.form.get('skills').value;*/
     userData.courses = this.coursesTags;
     userData.certificates = this.certificatesTags;
     userData.skills = this.skillsTags;
@@ -152,10 +149,17 @@ export class EditUserComponent implements OnInit, OnDestroy {
     console.log(userData);
     let userSesion = JSON.parse(localStorage.getItem('user'));
     userData.email = userSesion.userDB.email;
-    console.log(userData);
-    this.controller.editUser( userSesion.token, userData).subscribe( data => {
-      this.router.navigate( ['/iUnidUser/UserProfile']);
-    }, error => console.log(error));
+    userData.userType = userSesion.userDB.userType;
+    console.log(userSesion);
+    if(userData.userType === 'USER_ROLE'){
+      this.controller.editUser( userSesion.token, userData).subscribe( data => {
+        this.router.navigate( ['/iUnidUser/UserProfile']);
+      }, error => console.log(error));
+    }else if(userData.userType === 'ADMIN_ROLE'){
+      this.controller.editUserAdmin( userSesion.token, userData).subscribe( data => {
+        this.router.navigate( ['**']);
+      }, error => console.log(error));
+    }
 
     localStorage.removeItem('dataUser');
     console.log(this.form.value);

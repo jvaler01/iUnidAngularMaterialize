@@ -132,9 +132,17 @@ export class RegisterUserComponent implements OnInit {
     userData.skills = this.skillsTags;
     userData.phone = this.form.get('phoneNumber').value;
     console.log(userData);
-    this.controller.registerUser(userData).subscribe( data => {
-      this.router.navigate( ['/login']);
-    }, error => console.log(error));
+    let userSesion = JSON.parse(localStorage.getItem('user'));
+    userData.userType = userSesion.userDB.userType;
+    if(userData.userType === 'USER_ROLE') {
+      this.controller.registerUser(userData).subscribe(data => {
+        this.router.navigate(['/login']);
+      }, error => console.log(error));
+    }else if(userData.userType === 'ADMIN_ROLE'){
+      this.controller.newUserOrCompany( userSesion.token, userData).subscribe( data => {
+        this.router.navigate( ['**']);
+      }, error => console.log(error));
+    }
     console.log(this.form.value);
   }
 }

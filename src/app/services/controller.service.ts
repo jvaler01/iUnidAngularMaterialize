@@ -324,8 +324,6 @@ export class ControllerService {
     }));
   }
 
-
-
   getUsersByCourses( token: any, email:any , courses: any ){
     let data = {
       email: email,
@@ -481,6 +479,80 @@ export class ControllerService {
       'token': token
     });
     let url = `${this.apiUrl}closeProject`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  //--- ADMIN ----
+
+  getUsers(token: any, email: any, userType: any) {
+    let data = {
+      email: email,
+      userType: userType
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}getUsers`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  editUserAdmin( token: any, user: User) {
+    let body = JSON.stringify(user);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}editUserAdmin`;
+    return this.http.put(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  editCompanyAdmin( token: any, company: Company) {
+    let body = JSON.stringify(company);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}editCompanyAdmin`;
+    return this.http.put(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  newUserOrCompany( token: any, data: any ) {
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}newUser`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  deleteUserOrCompanyAdmin( token: any, email: any ){
+    let data = {
+      email: email
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}deleteAccount`;
     return this.http.post(url, body, {headers}).pipe(map( res =>{
       console.log(res);
       return res;

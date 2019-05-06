@@ -38,11 +38,17 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
     console.log(companyData);
     let companySesion = JSON.parse(localStorage.getItem('user'));
     companyData.email = companySesion.companyDB.email;
+    companyData.userType = companyData.companyDB.userType;
     console.log(companyData);
-    this.controller.editCompany(companySesion.token, companyData).subscribe( data => {
-      this.router.navigate( ['/iUnidCompany/CompanyProfile']);
-    }, error => console.log(error));
-
+    if(companyData.userType === 'COMPANY_ROLE') {
+      this.controller.editCompany(companySesion.token, companyData).subscribe(data => {
+        this.router.navigate(['/iUnidCompany/CompanyProfile']);
+      }, error => console.log(error));
+    } else if(companyData.userType === 'ADMIN_ROLE') {
+      this.controller.editCompanyAdmin(companySesion.token, companyData).subscribe(data => {
+        this.router.navigate(['**']);
+      }, error => console.log(error));
+    }
     localStorage.removeItem('dataCompany');
     console.log(this.form.value);
   }

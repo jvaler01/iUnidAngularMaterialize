@@ -37,7 +37,12 @@ export class LoginComponent implements OnInit {
     });
     if(localStorage.getItem('user')){
       if(JSON.parse(localStorage.getItem('user')).userDB){
-        this.router.navigate( ['/iUnidUser']);
+        if (JSON.parse(localStorage.getItem('user')).userDB.userType === 'USER_ROLE') {
+          this.router.navigate( ['/iUnidUser']);
+        }
+        if (JSON.parse(localStorage.getItem('user')).userDB.userType === 'ADMIN_ROLE') {
+          this.router.navigate( ['/iUnidAdmin']);
+        }
       } else {
         this.router.navigate( ['/iUnidCompany']);
       }
