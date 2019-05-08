@@ -34,15 +34,33 @@ export class AdminPageComponent implements OnInit {
   }
 
   editUser(index){
+    localStorage.setItem('dataUser', JSON.stringify(this.usersDB[index]));
+    this.router.navigate( ['/iUnidAdmin/editUser']);
   }
 
   deleteUser(index){
-
+    console.log(this.usersDB[index]);
+    this.controller.deleteUserOrCompanyAdmin(this.user.token, this.user.userDB.email, this.usersDB[index].email, this.user.userDB.userType).subscribe( data => {
+      console.log(data);
+      this.router.navigate(['**']);
+    }, error => {
+      console.log(error);
+      this.router.navigate( ['errors']);
+    });
   }
 
   editCompany(index){
+    localStorage.setItem('dataCompany', JSON.stringify(this.companiesDB[index]));
+    this.router.navigate( ['/iUnidAdmin/editCompany']);
   }
 
   deleteCompany(index){
+    this.controller.deleteUserOrCompanyAdmin(this.user.token, this.user.userDB.email, this.companiesDB[index].email, this.user.userDB.userType).subscribe( data => {
+      console.log(data);
+      this.router.navigate(['**']);
+    }, error => {
+      console.log(error);
+      this.router.navigate( ['errors']);
+    });
   }
 }

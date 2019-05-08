@@ -7,51 +7,81 @@
         <div class="row">
 
 
-          <div class="tab_container center" style="text-align: justify !important">
+          <div class="tab_container">
             <input class="tab_input" id="tab1" type="radio" name="tabs" checked>
-            <label class="tab_label" for="tab1"><span>Usuarios<a [routerLink]="['/iUnidAdmin/newUser']" class="btn-floating waves-effect waves-light  teal darken-1 btn-small" style="float: left;"><i class="fas fa-plus"></i></a></span></label>
+            <label class="tab_label" for="tab1"><span>Usuarios<a [routerLink]="['/iUnidAdmin/newUser']" class="btn-floating waves-effect waves-light  teal darken-1 btn-small" style="float: right;"><i class="fas fa-plus"></i></a></span></label>
 
             <input class="tab_input" id="tab2" type="radio" name="tabs">
             <label class="tab_label" for="tab2"><span>Empresas<a [routerLink]="['/iUnidAdmin/newCompany']" class="btn-floating waves-effect waves-light  teal darken-1 btn-small" style="float: right;"><i class="fas fa-plus"></i></a></span></label>
 
+            <input class="tab_input" id="tab3" type="radio" name="tabs">
+            <label class="tab_label" for="tab3"><span>Admins<a [routerLink]="['/iUnidAdmin/newAdmin']" class="btn-floating waves-effect waves-light  teal darken-1 btn-small" style="float: right;"><i class="fas fa-plus"></i></a></span></label>
 
             <section id="content1" class="tab-content tab_section">
-              <ul class="collection">
-                <li class="collection-item">
-                  <div class="row center" style="margin-top: 15px">
-                    <div class="col m3 ">Nombre</div>
-                    <div class="col m3 ">Email</div>
-                    <div class="col m3 ">Editar</div>
-                    <div class="col m3 ">Borrar</div>
-                  </div>
-                </li>
-                <li class="collection-item" *ngFor="let user of usersDB; let i = index">
-                  <div class="row center" style="margin-top: 15px">
-                    <div class="col m3 ">{{ user.name }}</div>
-                    <div class="col m3 ">{{ user.email }}</div>
-                    <div class="col m3 "><a (click)="editUser(i)" class="btn-floating waves-effect waves-light amber darken-3 btn-small"><i class="fas fa-edit"></i></a></div>
-                    <div class="col m3 "><a (click)="deleteUser(i)" class="btn-floating waves-effect waves-light red btn-small"><i class="fas fa-trash-alt"></i></a></div>
+              <ul>
+                <li *ngFor="let user of usersDB; let i = index">
+                  <div *ngIf="user.userType !== 'ADMIN_ROLE'">
+                    <ul class="collection">
+                      <li class="collection-item">
+                        <div class="row" style="margin-top: 15px">
+                          <div class="row" style="margin-left: 15px">
+                            <div class="col m6"><span class="bold_text">Nombre: </span>{{ user.name }}</div>
+                            <div class="col m6"><span class="bold_text">Email: </span>{{ user.email }}</div>
+                          </div>
+                          <div class="row" style="margin-left: 15px">
+                            <div class="col m6"><span class="bold_text">Editar: </span><a (click)="editUser(i)" class="btn-floating waves-effect waves-light amber darken-3 btn-small"><i class="fas fa-edit"></i></a></div>
+                            <div class="col m6"><span class="bold_text">Borrar: </span><a (click)="deleteUser(i)" class="btn-floating waves-effect waves-light red btn-small"><i class="fas fa-trash-alt"></i></a></div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </li>
               </ul>
             </section>
 
             <section id="content2" class="tab-content tab_section">
-              <ul class="collection">
-                <li class="collection-item">
-                  <div class="row center" style="margin-top: 15px">
-                    <div class="col m3 ">Nombre</div>
-                    <div class="col m3 ">Email</div>
-                    <div class="col m3 ">Editar</div>
-                    <div class="col m3 ">Borrar</div>
+              <ul>
+                <li *ngFor="let company of companiesDB; let i = index">
+                  <div>
+                    <ul class="collection">
+                      <li class="collection-item">
+                        <div class="row" style="margin-top: 15px">
+                          <div class="row" style="margin-left: 15px">
+                            <div class="col m6"><span class="bold_text">Nombre: </span>{{ company.name }}</div>
+                            <div class="col m6"><span class="bold_text">Email: </span>{{ company.email }}</div>
+                          </div>
+                          <div class="row" style="margin-left: 15px">
+                            <div class="col m6"><span class="bold_text">Editar: </span><a (click)="editCompany(i)" class="btn-floating waves-effect waves-light amber darken-3 btn-small"><i class="fas fa-edit"></i></a></div>
+                            <div class="col m6"><span class="bold_text">Borrar: </span><a (click)="deleteCompany(i)" class="btn-floating waves-effect waves-light red btn-small"><i class="fas fa-trash-alt"></i></a></div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </li>
-                <li class="collection-item" *ngFor="let company of companiesDB; let i = index">
-                  <div class="row center" style="margin-top: 15px">
-                    <div class="col m3 ">{{ company.name }}</div>
-                    <div class="col m3 ">{{ company.email }}</div>
-                    <div class="col m3 "><a (click)="editCompany(i)" class="btn-floating waves-effect waves-light amber darken-3 btn-small"><i class="fas fa-edit"></i></a></div>
-                    <div class="col m3 "><a (click)="deleteCompany(i)" class="btn-floating waves-effect waves-light red btn-small"><i class="fas fa-trash-alt"></i></a></div>
+              </ul>
+            </section>
+
+
+
+            <section id="content3" class="tab-content tab_section">
+              <ul>
+                <li *ngFor="let user of usersDB; let i = index">
+                  <div *ngIf="user.userType === 'ADMIN_ROLE'">
+                    <ul class="collection">
+                      <li class="collection-item">
+                        <div class="row" style="margin-top: 15px">
+                          <div class="row" style="margin-left: 15px">
+                            <div class="col m6"><span class="bold_text">Nombre: </span>{{ user.name }}</div>
+                            <div class="col m6"><span class="bold_text">Email: </span>{{ user.email }}</div>
+                          </div>
+                          <div class="row" style="margin-left: 15px">
+                            <div class="col m6"><span class="bold_text">Borrar: </span><a (click)="deleteUser(i)" class="btn-floating waves-effect waves-light red btn-small"><i class="fas fa-trash-alt"></i></a></div>
+                          </div>
+                        </div>
+                      </li>
+                    </ul>
                   </div>
                 </li>
               </ul>

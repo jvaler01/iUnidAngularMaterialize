@@ -38,6 +38,7 @@ import { EditExternalComponent } from './components/projects/edit-external/edit-
 import { EditInternalComponent } from './components/projects/edit-internal/edit-internal.component';
 import { IunidAdminComponent } from './components/iunid-admin/iunid-admin.component';
 import { AdminPageComponent } from './components/iunid-admin/admin-page/admin-page.component';
+import { RegisterAdminComponent } from './components/iunid-admin/register-admin/register-admin.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +69,8 @@ import { AdminPageComponent } from './components/iunid-admin/admin-page/admin-pa
     EditExternalComponent,
     EditInternalComponent,
     IunidAdminComponent,
-    AdminPageComponent
+    AdminPageComponent,
+    RegisterAdminComponent
   ],
   imports: [
     BrowserModule,

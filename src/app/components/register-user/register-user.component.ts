@@ -121,7 +121,6 @@ export class RegisterUserComponent implements OnInit {
     }
     let userData:any = {};
     userData.name = this.form.get('name').value + ' ' + this.form.get('lastName').value;
-    userData.email = this.form.get('email').value;
     userData.description = this.form.get('desc').value;
     userData.password = this.form.get('password').value;
     /*userData.courses = this.form.get('courses').value;
@@ -135,10 +134,14 @@ export class RegisterUserComponent implements OnInit {
     let userSesion = JSON.parse(localStorage.getItem('user'));
     userData.userType = userSesion.userDB.userType;
     if(userData.userType === 'USER_ROLE') {
+      userData.email = this.form.get('email').value;
       this.controller.registerUser(userData).subscribe(data => {
         this.router.navigate(['/login']);
       }, error => console.log(error));
     }else if(userData.userType === 'ADMIN_ROLE'){
+      userData.userEmail = this.form.get('email').value;
+      userData.email = userSesion.userDB.email;
+      userData.newUserType = 'USER_ROLE';
       this.controller.newUserOrCompany( userSesion.token, userData).subscribe( data => {
         this.router.navigate( ['**']);
       }, error => console.log(error));

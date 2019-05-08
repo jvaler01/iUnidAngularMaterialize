@@ -119,9 +119,9 @@ export class ProjectsPageComponent implements OnInit {
     this.controller.acceptPendingRequest(this.user.token, email, projectId, userEmail).subscribe( data => {
       console.log(data);
       if(JSON.parse(localStorage.getItem('user')).userDB){
-        this.router.navigate( ['userProjects']);
+        this.router.navigate( ['/iUnidUser/userProjects']);
       } else {
-        this.router.navigate( ['companyProjects']);
+        this.router.navigate( ['/iUnidCompany/companyProjects']);
       }
     }, error => {
       console.log(error);
@@ -202,9 +202,9 @@ export class ProjectsPageComponent implements OnInit {
     this.controller.denyCounterOffer(this.user.token, email, projectId, userEmail, price).subscribe( data => {
       console.log(data);
       if(JSON.parse(localStorage.getItem('user')).userDB){
-        this.router.navigate( ['userProjects']);
+        this.router.navigate( ['/iUnidUser/userProjects']);
       } else {
-        this.router.navigate( ['companyProjects']);
+        this.router.navigate( ['/iUnidCompany/companyProjects']);
       }
     }, error => {
       console.log(error);

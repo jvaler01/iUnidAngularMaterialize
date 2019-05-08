@@ -156,6 +156,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
         this.router.navigate( ['/iUnidUser/UserProfile']);
       }, error => console.log(error));
     }else if(userData.userType === 'ADMIN_ROLE'){
+      userData.userEmail = this.data.email;
       this.controller.editUserAdmin( userSesion.token, userData).subscribe( data => {
         this.router.navigate( ['**']);
       }, error => console.log(error));

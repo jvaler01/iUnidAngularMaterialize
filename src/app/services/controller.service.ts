@@ -543,16 +543,18 @@ export class ControllerService {
     }));
   }
 
-  deleteUserOrCompanyAdmin( token: any, email: any ){
+  deleteUserOrCompanyAdmin( token: any, email: any, userEmail: any, userType: any ){
     let data = {
-      email: email
+      email: email,
+      userEmail: userEmail,
+      userType: userType
     };
     let body = JSON.stringify(data);
     let headers = new HttpHeaders({
       'Content-Type':'application/json',
       'token': token
     });
-    let url = `${this.apiUrl}deleteAccount`;
+    let url = `${this.apiUrl}removeAccount`;
     return this.http.post(url, body, {headers}).pipe(map( res =>{
       console.log(res);
       return res;

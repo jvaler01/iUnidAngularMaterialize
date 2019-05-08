@@ -1,11 +1,10 @@
 
-
 *,
 *:after,
 *:before {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  -webkit-box-sizing: border-box !important;
+  -moz-box-sizing: border-box !important;
+  box-sizing: border-box !important;
 }
 
 .clearfix:before,
@@ -37,7 +36,7 @@
   font-weight: 700;
   font-size: 14px;
   display: inline-block;
-  width: 50%;
+  width: 33.3%;
   padding: 1em;
   color: black;
   cursor: pointer;
@@ -109,4 +108,8 @@ label .fa {
 }
 .link {
   text-align:center;
+}
+
+.bold_text{
+  font-weight: bold;
 }
