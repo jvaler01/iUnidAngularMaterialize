@@ -423,7 +423,7 @@ export class ControllerService {
       'Content-Type':'application/json',
       'token': token
     });
-    let url = `${this.apiUrl}counterOffer`;
+    let url = `${this.apiUrl}addingCounterOffer`;
     return this.http.post(url, body, {headers}).pipe(map( res =>{
       console.log(res);
       return res;
@@ -449,7 +449,7 @@ export class ControllerService {
     }));
   }
 
-  denyCounterOffer( token: any, email: any, projectId: any, price: any, userEmail: any ){
+  denyCounterOffer( token: any, email: any, projectId: any, userEmail: any, price: any ){
     let data = {
       email: email,
       id: projectId,

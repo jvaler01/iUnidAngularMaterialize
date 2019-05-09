@@ -28,7 +28,7 @@
 
           <section id="content1" class="tab-content tab_section">
             <ul class="collapsible">
-              <li *ngFor="let project of data.internalProjects">
+              <li *ngFor="let project of data.internalProjects; let i = index">
                 <div *ngIf="project.state === 'Open'" class="collapsible-header">{{ project.name }}</div>
                 <div *ngIf="project.state === 'Open'" class="collapsible-body">
                   <a href="#deleteModal" (click)="setProjectId(project._id)" class="btn btn-floating text-white left red darken-4 modal-trigger">
@@ -52,10 +52,10 @@
                     </div>
                     <div class="col xl4">
                       <h5>Trabajadores: </h5>
-                      <p style="word-break: break-all;" *ngFor="let user of project.users">{{ user }}<a class="waves-effect waves-light btn">Pagar</a><a (click)="kickPerson(project._id ,user)" class="waves-effect waves-light btn red">Echar</a></p>
+                      <p style="word-break: break-all;" *ngFor="let user of project.users">{{ user.userEmail }}<a class="waves-effect waves-light btn" [ngClass]="{'disabled': user.userPay }">Pagar</a><a (click)="kickPerson(project._id ,user)" class="waves-effect waves-light btn red">Echar</a></p>
                     </div>
                   </div>
-                  <p><a (click)="closeProject( project._id )" class="waves-effect waves-light btn light-blue darken-4">Cerrar Proyecto</a></p>
+                  <p><a (click)="closeProject( project._id, i )" class="waves-effect waves-light btn light-blue darken-4">Cerrar Proyecto</a></p>
                 </div>
               </li>
             </ul>
