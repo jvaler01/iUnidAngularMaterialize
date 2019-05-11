@@ -89,7 +89,6 @@ export class SidebarComponent implements OnInit {
             },
           };
         }
-        console.log(JSON.parse(localStorage.getItem('user')).userDB.userType);
         if(JSON.parse(localStorage.getItem('user')).userDB && JSON.parse(localStorage.getItem('user')).userDB.userType === 'ADMIN_ROLE'){
           this.sidebarData = {
             option: {

@@ -485,6 +485,43 @@ export class ControllerService {
     }));
   }
 
+  payUser( token: any, amount: any, userEmail: any, projectId: any){
+    let data = {
+      amount: amount,
+      email: userEmail,
+      id: projectId
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}buy`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  evaluateUser( token: any, email: any, projectId: any, userEmail: any, score: any ){
+    let data = {
+      email: email,
+      projectId: projectId,
+      userEmail: userEmail,
+      score: score
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}addScore`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
   //--- ADMIN ----
 
   getUsers(token: any, email: any, userType: any) {

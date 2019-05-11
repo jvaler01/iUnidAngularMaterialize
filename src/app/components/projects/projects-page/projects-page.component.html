@@ -40,7 +40,7 @@
                   <p>Catergoria: {{ project.category }}</p>
                   <p>Descripción: {{ project.description }}</p>
                   <p>Fecha de entrega: {{ project.deliveryDate  | date }}</p>
-                  <p>Recompensa: {{ project.maxPrice }} - {{ project.minPrice }}</p>
+                  <p>Recompensa: {{ project.minPrice }} - {{ project.maxPrice }}</p>
                   <div class="row">
                     <div class="col xl4">
                       <h5>Contra ofertas: </h5>
@@ -52,7 +52,10 @@
                     </div>
                     <div class="col xl4">
                       <h5>Trabajadores: </h5>
-                      <p style="word-break: break-all;" *ngFor="let user of project.users">{{ user.userEmail }}<a class="waves-effect waves-light btn" [ngClass]="{'disabled': user.userPay }">Pagar</a><a (click)="kickPerson(project._id ,user)" class="waves-effect waves-light btn red">Echar</a></p>
+                      <p style="word-break: break-all;" *ngFor="let user of project.users">{{ user.userEmail }}<a class="waves-effect waves-light btn modal-trigger yellow accent-2 purple-text" href="#payModal"
+                      [ngClass]="{'disabled': user.userPay }"
+                      (click)="setPayData(project._id, project.minPrice, project.maxPrice, user.userOffer, user.userEmail)"><i class="fas fa-euro-sign"></i></a><a (click)="kickPerson(project._id ,user)" class="waves-effect waves-light btn red"><i class="fas fa-hand-middle-finger"></i></a>
+                      <a *ngIf="user.userPay" href="#evaluateModal" (click)="setEvaluateUser(project._id ,user)" class="waves-effect waves-light btn modal-trigger"><i class="fas fa-thumbs-up"></i></a></p>
                     </div>
                   </div>
                   <p><a (click)="closeProject( project._id, i )" class="waves-effect waves-light btn light-blue darken-4">Cerrar Proyecto</a></p>
@@ -96,6 +99,47 @@
   </div>
   <div class="modal-footer">
     <a (click)="deleteProject(projectId)" class="btn waves-effect waves-green">Si</a>
+    <a class="modal-close btn waves-effect waves-green" style="margin-left: 5px;">No</a>
+  </div>
+</div>
+
+<div id="payModal" class="modal">
+  <div class="modal-content">
+    <h4>Pagar</h4>
+    <div *ngIf="userOffer === 0">
+      <p class="range-field" style="margin-top: 20px">
+        <input type="range" (change)="payDataInput(payData.value)" id="payDataInput" min="{{ minPrice }}" max="{{ maxPrice }}" #payData/>
+      </p>
+      <p>
+        Precio del proyecto: {{ minPrice }} - {{ maxPrice }}
+      </p>
+      <p>
+        Precio seleccionado: {{ payValue }}
+      </p>
+    </div>
+    <div *ngIf="userOffer !== 0">
+      Precio seleccionado: {{ payValue }}
+    </div>
+  </div>
+  <div class="modal-footer">
+    <a (click)="sendPay()" class="btn waves-effect waves-green">Enviar</a>
+    <a class="modal-close btn waves-effect waves-green" style="margin-left: 5px;">Cancelar</a>
+  </div>
+</div>
+
+
+<div id="evaluateModal" class="modal">
+  <div class="modal-content">
+    <h4>Valorar persona</h4>
+    <p class="range-field" style="margin-top: 20px">
+      <input type="range" (change)="evaluateInput(evaluateData.value)" id="evaluateDataInput" min="0" max="100" #evaluateData/>
+    </p>
+    <p>
+      Valor seleccionado: {{ evaluateValue }}
+    </p>
+  </div>
+  <div class="modal-footer">
+    <a (click)="sendEvaluate()" class="btn waves-effect waves-green">Si</a>
     <a class="modal-close btn waves-effect waves-green" style="margin-left: 5px;">No</a>
   </div>
 </div>

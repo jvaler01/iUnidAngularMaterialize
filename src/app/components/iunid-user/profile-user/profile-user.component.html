@@ -26,10 +26,10 @@
                   </div>
                   <div class="col xl6">
                     <h5>{{ data.user.email }}</h5>
-                    <h5 *ngIf="data.user.score">Valoración: {{ data.user.score + '%' }}</h5>
-                    <h5 *ngIf="!data.user.score">Valoración: 0%</h5>
+                    <h5 *ngIf="data.average !== null">Valoración: {{ data.average + '%' }}</h5>
+                    <h5 *ngIf="data.average === null">Valoración: 0%</h5>
                     <div class="progress">
-                      <div class="determinate" [style.width]="data.user.score + '%'"></div>
+                      <div class="determinate" [style.width]="data.average + '%'"></div>
                     </div>
                   </div>
                 </div>

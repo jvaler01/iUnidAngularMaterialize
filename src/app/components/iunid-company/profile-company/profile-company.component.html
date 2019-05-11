@@ -28,10 +28,11 @@
                   <div class="col xl6">
                     <h5>{{ data.company.email }}</h5>
                     <h5>Contact email - {{ data.company.contactEmail }}</h5>
-                    <h5 *ngIf="data.company.score">Valoración: {{ data.company.score + '%' }}</h5>
-                    <h5 *ngIf="!data.company.score">Valoración: 0%</h5>
+
+                    <h5 *ngIf="data.average !== null">Valoración: {{ data.average + '%' }}</h5>
+                    <h5 *ngIf="data.average === null">Valoración: 0%</h5>
                     <div class="progress">
-                      <div class="determinate" [style.width]="data.company.score + '%'"></div>
+                      <div class="determinate" [style.width]="data.average + '%'"></div>
                     </div>
                   </div>
                 </div>

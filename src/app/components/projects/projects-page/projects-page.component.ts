@@ -17,6 +17,12 @@ export class ProjectsPageComponent implements OnInit {
   user: any = {};
   data: any = {};
   projectId;
+  minPrice;
+  maxPrice;
+  payValue = 0;
+  userOffer = 0;
+  evaluateValue = 0;
+  userEmail: "";
   constructor( private router: Router,
                private controller: ControllerService ) {
     // this.data = this.data1;
@@ -60,7 +66,13 @@ export class ProjectsPageComponent implements OnInit {
       $('.modal').modal();
     });
 
+    $(document).ready(function(){
+      $('#payDataInput').range();
+    });
 
+    $(document).ready(function(){
+      $('#evaluateDataInput').range();
+    });
   }
 
   load(param: string) {
@@ -288,5 +300,70 @@ export class ProjectsPageComponent implements OnInit {
       console.log(this.data1);
       this.data = this.data1;
     }, error => console.log(error));
+  }
+
+  setPayData(projectId: any, minPrice: any, maxPrice: any, userOffer: any, userEmail: any){
+    this.projectId = projectId;
+    this.minPrice = minPrice;
+    this.maxPrice = maxPrice;
+    this.payValue = 0;
+    this.userOffer = userOffer;
+    this.userEmail = userEmail;
+    console.log(this.userOffer);
+    console.log(userOffer);
+    if(userOffer !== 0){
+      this.payValue = this.userOffer;
+    }
+    console.log(this.payValue);
+  }
+
+  payDataInput(pay: any){
+    this.payValue = pay;
+  }
+
+  sendPay(){
+    console.log(this.projectId);
+    console.log(this.payValue);
+    let email: any;
+    if(JSON.parse(localStorage.getItem('user')).userDB){
+      email = this.user.userDB.email
+    } else {
+      email = this.user.companyDB.email
+    }
+    console.log(this.userEmail)
+    // @ts-ignore
+    this.controller.payUser(this.user.token, this.payValue, this.userEmail, this.projectId).subscribe( data => {
+      console.log(data);
+      let datahref = data;
+      // @ts-ignore
+      window.open(datahref.data)
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  setEvaluateUser(projectId: any, userEmail: any){
+    this.projectId = projectId;
+    this.userEmail = userEmail;
+  }
+
+  sendEvaluate(){
+    let email: any;
+    if(JSON.parse(localStorage.getItem('user')).userDB){
+      email = this.user.userDB.email
+    } else {
+      email = this.user.companyDB.email
+    }
+    // @ts-ignore
+    this.controller.evaluateUser(this.user.token, email, this.projectId, this.userEmail.userEmail, this.evaluateValue ).subscribe( data => {
+      console.log(data);
+
+    }, error => {
+      console.log(error);
+    });
+  }
+
+  evaluateInput(evaluateData: any){
+    this.evaluateValue = evaluateData;
   }
 }

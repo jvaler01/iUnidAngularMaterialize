@@ -123,22 +123,19 @@ export class RegisterUserComponent implements OnInit {
     userData.name = this.form.get('name').value + ' ' + this.form.get('lastName').value;
     userData.description = this.form.get('desc').value;
     userData.password = this.form.get('password').value;
-    /*userData.courses = this.form.get('courses').value;
-    userData.certificates = this.form.get('certificates').value;
-    userData.skills = this.form.get('skills').value;*/
     userData.courses = this.coursesTags;
     userData.certificates = this.certificatesTags;
     userData.skills = this.skillsTags;
     userData.phone = this.form.get('phoneNumber').value;
     console.log(userData);
     let userSesion = JSON.parse(localStorage.getItem('user'));
-    userData.userType = userSesion.userDB.userType;
-    if(userData.userType === 'USER_ROLE') {
+    if(!JSON.parse(localStorage.getItem('user'))) {
       userData.email = this.form.get('email').value;
       this.controller.registerUser(userData).subscribe(data => {
         this.router.navigate(['/login']);
       }, error => console.log(error));
-    }else if(userData.userType === 'ADMIN_ROLE'){
+    }else if(JSON.parse(localStorage.getItem('user'))){
+      userData.userType = userSesion.userDB.userType;
       userData.userEmail = this.form.get('email').value;
       userData.email = userSesion.userDB.email;
       userData.newUserType = 'USER_ROLE';
