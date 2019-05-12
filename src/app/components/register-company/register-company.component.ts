@@ -22,6 +22,7 @@ export class RegisterCompanyComponent implements OnInit {
       repeatPassword: new FormControl(),
       desc: new FormControl('', Validators.minLength(50)),
       contactEmail: new FormControl('', Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')),
+      img: new FormControl()
     });
     this.form.controls['repeatPassword'].setValidators([
       Validators.required,
@@ -42,6 +43,7 @@ export class RegisterCompanyComponent implements OnInit {
   }
 
   sendData() {
+    console.log(this.form.get('img'));
     let companyData:any = {};
     companyData.name = this.form.get('name').value;
     companyData.password = this.form.get('password').value;
@@ -59,7 +61,11 @@ export class RegisterCompanyComponent implements OnInit {
     if(companyData.userType === 'COMPANY_ROLE') {
       companyData.email = this.form.get('email').value;
       this.controller.registerCompany(companyData).subscribe(data => {
-        this.router.navigate(['/login']);
+        if(data.err){
+          alert(data.err);
+        }else{
+          this.router.navigate(['/login']);
+        }
       }, error => console.log(error));
     }else if(companyData.userType === 'ADMIN_ROLE'){
       companyData.email = userSesion.userDB.email;

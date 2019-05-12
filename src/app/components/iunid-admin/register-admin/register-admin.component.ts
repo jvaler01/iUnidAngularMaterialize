@@ -61,7 +61,10 @@ export class RegisterAdminComponent implements OnInit {
     userData.newUserType = 'ADMIN_ROLE';
     this.controller.newUserOrCompany( userSesion.token, userData).subscribe( data => {
       this.router.navigate( ['**']);
-    }, error => console.log(error));
+    }, error => {
+      console.log(error);
+      this.router.navigate( ['/errors']);
+    });
     console.log(this.form.value);
   }
 }

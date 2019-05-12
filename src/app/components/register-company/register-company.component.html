@@ -5,7 +5,7 @@
         <h3 class="center-align" style="margin-top: -10px !important;">Registro de Compañia</h3>
         <hr>
         <div class="row">
-          <form [formGroup]="form" class="col s8 offset-s2" (ngSubmit)="sendData()">
+          <form [formGroup]="form" class="col s8 offset-s2" (ngSubmit)="sendData()" enctype="multipart/form-data">
 
 
             <div class="row">
@@ -91,7 +91,7 @@
             <div class="file-field input-field">
               <div class="btn light-blue darken-4">
                 <span>Foto</span>
-                <input type="file">
+                <input type="file" formControlName="img">
               </div>
               <div class="file-path-wrapper">
                 <input class="file-path validate" type="text">

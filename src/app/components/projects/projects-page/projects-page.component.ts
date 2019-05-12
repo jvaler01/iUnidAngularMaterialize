@@ -10,8 +10,9 @@ declare var $: any;
 })
 export class ProjectsPageComponent implements OnInit {
 
-  data1: any = [];
-  data2: any = [];
+  projects: any = [];
+  projectsThatHeWorks: any = [];
+  client = true;
   email: string;
   type: string;
   user: any = {};
@@ -35,8 +36,8 @@ export class ProjectsPageComponent implements OnInit {
       this.type = 'user';
 
       this.controller.getProjectsThatHeWorks(this.user.token, this.email).subscribe( data => {
-        this.data2 = data;
-        console.log(this.data2);
+        this.projectsThatHeWorks = data;
+        console.log(this.projectsThatHeWorks);
       }, error => console.log(error));
 
     } else if(this.user.companyDB){
@@ -46,9 +47,9 @@ export class ProjectsPageComponent implements OnInit {
     }
 
     this.controller.getProjects(this.user.token, this.email).subscribe( data => {
-      this.data1 = data;
-      console.log(this.data1);
-      this.data = this.data1;
+      this.projects = data;
+      console.log(this.projects);
+      this.data = this.projects;
     }, error => console.log(error));
   }
 
@@ -78,11 +79,13 @@ export class ProjectsPageComponent implements OnInit {
   load(param: string) {
     if(param === 'client'){
       this.data = null;
-      this.data = this.data1
+      this.data = this.projects;
+      this.client = true;
     }
     if(param === 'employer'){
       this.data = null;
-      this.data = this.data2
+      this.data = this.projectsThatHeWorks;
+      this.client = false;
     }
   }
 
@@ -285,8 +288,8 @@ export class ProjectsPageComponent implements OnInit {
       this.type = 'user';
 
       this.controller.getProjectsThatHeWorks(this.user.token, this.email).subscribe( data => {
-        this.data2 = data;
-        console.log(this.data2);
+        this.projectsThatHeWorks = data;
+        console.log(this.projectsThatHeWorks);
       }, error => console.log(error));
 
     } else if(this.user.companyDB){
@@ -296,9 +299,9 @@ export class ProjectsPageComponent implements OnInit {
     }
 
     this.controller.getProjects(this.user.token, this.email).subscribe( data => {
-      this.data1 = data;
-      console.log(this.data1);
-      this.data = this.data1;
+      this.projects = data;
+      console.log(this.projects);
+      this.data = this.projects;
     }, error => console.log(error));
   }
 

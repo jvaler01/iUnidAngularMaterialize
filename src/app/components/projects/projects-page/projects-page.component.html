@@ -31,31 +31,49 @@
               <li *ngFor="let project of data.internalProjects; let i = index">
                 <div *ngIf="project.state === 'Open'" class="collapsible-header">{{ project.name }}</div>
                 <div *ngIf="project.state === 'Open'" class="collapsible-body">
-                  <a href="#deleteModal" (click)="setProjectId(project._id)" class="btn btn-floating text-white left red darken-4 modal-trigger">
+                  <a *ngIf="client" href="#deleteModal" (click)="setProjectId(project._id)" class="btn btn-floating text-white left red darken-4 modal-trigger">
                     <i class="far fa-trash-alt"></i>
                   </a>
-                  <a (click)="editInt(project)" class="btn btn-floating text-white right">
+                  <a *ngIf="client" (click)="editInt(project)" class="btn btn-floating text-white right">
                     <i class="fas fa-edit"></i>
                   </a>
-                  <p>Catergoria: {{ project.category }}</p>
-                  <p>Descripción: {{ project.description }}</p>
-                  <p>Fecha de entrega: {{ project.deliveryDate  | date }}</p>
-                  <p>Recompensa: {{ project.minPrice }} - {{ project.maxPrice }}</p>
-                  <div class="row">
-                    <div class="col xl4">
+                  <p><span class="bold_text">Catergoria:</span> {{ project.category }}</p>
+                  <p><span class="bold_text">Descripción:</span> {{ project.description }}</p>
+                  <p><span class="bold_text">Fecha de entrega:</span> {{ project.deliveryDate  | date }}</p>
+                  <p><span class="bold_text">Recompensa:</span> {{ project.minPrice }} - {{ project.maxPrice }}</p>
+                  <div class="row" *ngIf="client">
+                    <div class="col xl12">
                       <h5>Contra ofertas: </h5>
-                      <p style="word-break: break-all;" *ngFor="let counterOffer of project.pendingCounterOffer">{{ counterOffer.offer }} - {{ counterOffer.user }}<a class="waves-effect waves-light btn" (click)="acceptCounterOffer( project._id, counterOffer.user, counterOffer.offer )">Aceptar</a><a class="waves-effect waves-light btn red" (click)="denyCounterOffer( project._id, counterOffer.user, counterOffer.offer )">Borrar</a></p>
+                      <p *ngIf="project.pendingCounterOffer.length === 0">No hay contra ofertas</p>
+                      <p style="word-break: break-all; margin-top: 5px" *ngFor="let counterOffer of project.pendingCounterOffer">{{ counterOffer.offer }} - {{ counterOffer.user }}<a style="margin-left: 5px" class="waves-effect waves-light btn" (click)="acceptCounterOffer( project._id, counterOffer.user, counterOffer.offer )">Aceptar</a><a style="margin-left: 5px" class="waves-effect waves-light btn red" (click)="denyCounterOffer( project._id, counterOffer.user, counterOffer.offer )">Borrar</a></p>
                     </div>
-                    <div class="col xl4">
+                  </div>
+                  <div class="row" *ngIf="client">
+                    <div class="col xl12">
                       <h5>Pendientes de aceptar: </h5>
-                      <p style="word-break: break-all;" *ngFor="let pending of project.pendingAccepts">{{ pending }}<a (click)="acceptPending( project._id ,pending)" class="waves-effect waves-light btn">Aceptar</a><a (click)="denyPending( project._id ,pending)"  class="waves-effect waves-light btn red">Borrar</a></p>
+                      <p *ngIf="project.pendingAccepts.length === 0">No hay pendientes de aceptar</p>
+                      <p style="word-break: break-all; margin-top: 5px" *ngFor="let pending of project.pendingAccepts">{{ pending }}<a style="margin-left: 5px" (click)="acceptPending( project._id ,pending)" class="waves-effect waves-light btn">Aceptar</a><a style="margin-left: 5px" (click)="denyPending( project._id ,pending)"  class="waves-effect waves-light btn red">Borrar</a></p>
                     </div>
-                    <div class="col xl4">
+                  </div>
+                  <div class="row" *ngIf="client">
+                    <div class="col xl12">
                       <h5>Trabajadores: </h5>
-                      <p style="word-break: break-all;" *ngFor="let user of project.users">{{ user.userEmail }}<a class="waves-effect waves-light btn modal-trigger yellow accent-2 purple-text" href="#payModal"
-                      [ngClass]="{'disabled': user.userPay }"
-                      (click)="setPayData(project._id, project.minPrice, project.maxPrice, user.userOffer, user.userEmail)"><i class="fas fa-euro-sign"></i></a><a (click)="kickPerson(project._id ,user)" class="waves-effect waves-light btn red"><i class="fas fa-hand-middle-finger"></i></a>
-                      <a *ngIf="user.userPay" href="#evaluateModal" (click)="setEvaluateUser(project._id ,user)" class="waves-effect waves-light btn modal-trigger"><i class="fas fa-thumbs-up"></i></a></p>
+                      <p *ngIf="project.users.length === 0">No hay trabajadores</p>
+                      <p style="word-break: break-all; margin-top: 5px" *ngFor="let user of project.users">{{ user.userEmail }}
+                        <a style="margin-left: 5px" class="waves-effect waves-light btn modal-trigger green darken-2" href="#payModal"
+                        [ngClass]="{'disabled': user.userPay }"
+                        (click)="setPayData(project._id, project.minPrice, project.maxPrice, user.userOffer, user.userEmail)">Pagar</a>
+                        <a style="margin-left: 5px" [ngClass]="{'disabled': user.userPay }" (click)="kickPerson(project._id ,user)" class="waves-effect waves-light btn red">Echar</a>
+                        <a style="margin-left: 5px" *ngIf="user.userPay" href="#evaluateModal" (click)="setEvaluateUser(project._id ,user)"
+                         class="waves-effect waves-light btn modal-trigger">Valorar</a></p>
+                    </div>
+                  </div>
+                  <div class="row" *ngIf="!client">
+                    <div class="col xl12">
+                      <h5>Trabajadores: </h5>
+                      <p style="word-break: break-all; margin-top: 5px" *ngFor="let user of project.users">{{ user.userEmail }}
+                        <a style="margin-left: 5px" href="#evaluateModal" (click)="setEvaluateUser(project._id ,user)"
+                           class="waves-effect waves-light btn modal-trigger">Valorar</a></p>
                     </div>
                   </div>
                   <p><a (click)="closeProject( project._id, i )" class="waves-effect waves-light btn light-blue darken-4">Cerrar Proyecto</a></p>
@@ -69,10 +87,18 @@
               <li *ngFor="let project of data.internalProjects">
                 <div *ngIf="project.state === 'Close'" class="collapsible-header">{{ project.name }}</div>
                 <div *ngIf="project.state === 'Close'" class="collapsible-body">
-                  <p>Catergoria: {{ project.category }}</p>
-                  <p>Descripción: {{ project.description }}</p>
-                  <p>Fecha de entrega: {{ project.deliveryDate  | date }}</p>
-                  <p>Recompensa: {{ project.maxPrice }} - {{ project.minPrice }}</p>
+                  <p><span class="bold_text">Catergoria:</span> {{ project.category }}</p>
+                  <p><span class="bold_text">Descripción:</span> {{ project.description }}</p>
+                  <p><span class="bold_text">Fecha de entrega:</span> {{ project.deliveryDate  | date }}</p>
+                  <p><span class="bold_text">Recompensa:</span> {{ project.minPrice }} - {{ project.maxPrice }}</p>
+                  <div class="row">
+                    <div class="col xl12">
+                      <h5>Trabajadores: </h5>
+                      <p style="word-break: break-all; margin-top: 5px" *ngFor="let user of project.users">{{ user.userEmail }}
+                        <a style="margin-left: 5px" *ngIf="user.userPay" href="#evaluateModal" (click)="setEvaluateUser(project._id ,user)"
+                           class="waves-effect waves-light btn modal-trigger">Valorar</a></p>
+                    </div>
+                  </div>
                 </div>
               </li>
             </ul>
