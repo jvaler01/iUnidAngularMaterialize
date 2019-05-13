@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {User} from '../../../models/User';
 import {Router} from '@angular/router';
 import {ControllerService} from '../../../services/controller.service';
+import {ErrorServiceService} from '../../../services/error-service.service';
 declare var $: any;
 declare var M: any;
 
@@ -13,6 +14,7 @@ declare var M: any;
 })
 export class RegisterAdminComponent implements OnInit {
   form: FormGroup;
+  data: any = {};
   user: User = {
     email: '',
     password: '',
@@ -20,6 +22,7 @@ export class RegisterAdminComponent implements OnInit {
   };
   valid = false;
   constructor(private router: Router,
+              private messageService: ErrorServiceService,
               private controller: ControllerService) {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required,
@@ -60,10 +63,17 @@ export class RegisterAdminComponent implements OnInit {
     userData.email = userSesion.userDB.email;
     userData.newUserType = 'ADMIN_ROLE';
     this.controller.newUserOrCompany( userSesion.token, userData).subscribe( data => {
-      this.router.navigate( ['**']);
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else {
+        this.router.navigate(['**']);
+      }
     }, error => {
       console.log(error);
-      this.router.navigate( ['/errors']);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
     });
     console.log(this.form.value);
   }

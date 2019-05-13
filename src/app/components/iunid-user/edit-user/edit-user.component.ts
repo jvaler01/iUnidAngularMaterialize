@@ -3,6 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {User} from '../../../models/User';
 import {Router} from '@angular/router';
 import {ControllerService} from '../../../services/controller.service';
+import {ErrorServiceService} from '../../../services/error-service.service';
 declare var $: any;
 declare var M: any;
 
@@ -25,6 +26,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
   validCertificates = false;
   valid = false;
   constructor(private router: Router,
+              private messageService: ErrorServiceService,
               private controller: ControllerService) {
     this.data = JSON.parse(localStorage.getItem('dataUser'));
     console.log("this.user");
@@ -153,13 +155,33 @@ export class EditUserComponent implements OnInit, OnDestroy {
     console.log(userSesion);
     if(userData.userType === 'USER_ROLE'){
       this.controller.editUser( userSesion.token, userData).subscribe( data => {
-        this.router.navigate( ['/iUnidUser/UserProfile']);
-      }, error => console.log(error));
+        this.data = data;
+        if(this.data.err){
+          this.messageService.takeMessage(this.data.err.message);
+          this.router.navigate( ['/error']);
+        }else {
+          this.router.navigate(['/iUnidUser/UserProfile']);
+        }
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
     }else if(userData.userType === 'ADMIN_ROLE'){
       userData.userEmail = this.data.email;
       this.controller.editUserAdmin( userSesion.token, userData).subscribe( data => {
-        this.router.navigate( ['**']);
-      }, error => console.log(error));
+        this.data = data;
+        if(this.data.err){
+          this.messageService.takeMessage(this.data.err.message);
+          this.router.navigate( ['/error']);
+        }else {
+          this.router.navigate(['**']);
+        }
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
     }
 
     localStorage.removeItem('dataUser');

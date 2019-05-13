@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ControllerService} from '../../../services/controller.service';
+import {ErrorServiceService} from '../../../services/error-service.service';
 
 @Component({
   selector: 'app-edit-company',
@@ -14,6 +15,7 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
   };
   company: any = {};
   constructor(private router: Router,
+              private messageService: ErrorServiceService,
               private controller: ControllerService) {
     this.data = JSON.parse(localStorage.getItem('dataCompany'));
     this.company.name = this.data.name;
@@ -41,15 +43,35 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
     if(companySesion.companyDB) {
       companyData.email = companySesion.companyDB.email;
       this.controller.editCompany(companySesion.token, companyData).subscribe(data => {
-        this.router.navigate(['/iUnidCompany/CompanyProfile']);
-      }, error => console.log(error));
+        this.data = data;
+        if(this.data.err){
+          this.messageService.takeMessage(this.data.err.message);
+          this.router.navigate( ['/error']);
+        }else {
+          this.router.navigate(['/iUnidCompany/CompanyProfile']);
+        }
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
     } else if(companySesion.userDB) {
       companyData.email = companySesion.userDB.email;
       companyData.userType = companySesion.userDB.userType;
       companyData.userEmail = this.data.email;
       this.controller.editCompanyAdmin(companySesion.token, companyData).subscribe(data => {
-        this.router.navigate(['**']);
-      }, error => console.log(error));
+        this.data = data;
+        if(this.data.err){
+          this.messageService.takeMessage(this.data.err.message);
+          this.router.navigate( ['/error']);
+        }else {
+          this.router.navigate(['**']);
+        }
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
     }
     localStorage.removeItem('dataCompany');
     console.log(this.form.value);

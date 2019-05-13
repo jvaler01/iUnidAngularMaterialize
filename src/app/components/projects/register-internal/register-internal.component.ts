@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {ControllerService} from '../../../services/controller.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {ErrorServiceService} from '../../../services/error-service.service';
 declare var $: any;
 declare var M: any;
 @Component({
@@ -12,6 +13,7 @@ declare var M: any;
 export class RegisterInternalComponent implements OnInit {
   form: FormGroup;
   user: any = {};
+  data: any = {};
   tags:any = [];
   valid = false;
   options = [
@@ -41,6 +43,7 @@ export class RegisterInternalComponent implements OnInit {
     }
   ];
   constructor(private router: Router,
+              private messageService: ErrorServiceService,
               private controller: ControllerService) {
     this.user = JSON.parse(localStorage.getItem('user'));
     console.log("this.user");
@@ -138,12 +141,22 @@ export class RegisterInternalComponent implements OnInit {
     this.controller.createInternalProject(this.user.token, internalProjectData).subscribe( data => {
       // localStorage.setItem('user', JSON.stringify(data));
       // this.router.navigate( ['/iUnidCompany']);
-      if(JSON.parse(localStorage.getItem('user')).userDB){
-        this.router.navigate( ['/iUnidUser/userProfile']);
-      }else{
-        this.router.navigate( ['/iUnidCompany/companyProfile']);
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else {
+        if (JSON.parse(localStorage.getItem('user')).userDB) {
+          this.router.navigate(['/iUnidUser/userProfile']);
+        } else {
+          this.router.navigate(['/iUnidCompany/companyProfile']);
+        }
       }
-    }, error => console.log(error));
+    }, error => {
+      console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
     console.log(this.form.value);
   }
 }

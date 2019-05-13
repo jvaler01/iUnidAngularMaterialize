@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ControllerService} from '../../../services/controller.service';
 import {MessagesService} from '../../../services/sockets/messages.service';
 import {Router} from '@angular/router';
+import {ErrorServiceService} from '../../../services/error-service.service';
 declare  var $: any;
 
 @Component({
@@ -20,6 +21,7 @@ export class ProfileCompanyComponent implements OnInit {
   projectId;
   constructor( private controller: ControllerService,
                private router: Router,
+               private messageService: ErrorServiceService,
                private messages: MessagesService) {
 
     //this.messages.getData().subscribe(data=>console.log(data));
@@ -30,9 +32,18 @@ export class ProfileCompanyComponent implements OnInit {
 
     this.controller.getCompany(this.user.token, this.user.companyDB.email).subscribe( data => {
       this.data = data;
-      console.log(this.data);
-      this.contactsCont = Object.keys(this.data.company.contacts[0]).length;
-    }, error => console.log(error));
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else {
+        console.log(this.data);
+        this.contactsCont = Object.keys(this.data.company.contacts[0]).length;
+      }
+    }, error => {
+      console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
   }
 
   ngOnInit() {
@@ -60,11 +71,18 @@ export class ProfileCompanyComponent implements OnInit {
     console.log(userEmail);
     this.controller.deleteUserOrCompany(this.user.token, userEmail).subscribe( data => {
       console.log(data);
-      localStorage.clear();
-      this.router.navigate(['/login']);
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else {
+        localStorage.clear();
+        this.router.navigate(['/login']);
+      }
     }, error => {
       console.log(error);
-      this.router.navigate( ['errors']);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
     });
   }
 
@@ -76,10 +94,17 @@ export class ProfileCompanyComponent implements OnInit {
     console.log(projectId);
     this.controller.deleteExternalProject(this.user.token, projectId, this.user.companyDB.email).subscribe( data => {
       console.log(data);
-      this.router.navigate(['/companyProfile']);
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else {
+        this.router.navigate(['/companyProfile']);
+      }
     }, error => {
       console.log(error);
-      this.router.navigate( ['errors']);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
     });
   }
 }

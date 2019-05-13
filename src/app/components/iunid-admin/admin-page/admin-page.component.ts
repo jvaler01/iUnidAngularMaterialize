@@ -49,6 +49,7 @@ export class AdminPageComponent implements OnInit {
     console.log(this.usersDB[index]);
     this.controller.deleteUserOrCompanyAdmin(this.user.token, this.user.userDB.email, this.usersDB[index].email, this.user.userDB.userType).subscribe( data => {
       console.log(data);
+      this.data = data;
       if(this.data.err){
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
@@ -70,6 +71,7 @@ export class AdminPageComponent implements OnInit {
   deleteCompany(index){
     this.controller.deleteUserOrCompanyAdmin(this.user.token, this.user.userDB.email, this.companiesDB[index].email, this.user.userDB.userType).subscribe( data => {
       console.log(data);
+      this.data = data;
       if(this.data.err){
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);

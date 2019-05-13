@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ControllerService} from '../../../services/controller.service';
+import {ErrorServiceService} from '../../../services/error-service.service';
+import {Router} from '@angular/router';
 declare var $: any;
 declare var M: any;
 @Component({
@@ -14,7 +16,9 @@ export class SearchColaboratorComponent implements OnInit {
   skills:any = [];
   courses:any = [];
   certificates:any = [];
-  constructor( private controller: ControllerService ) {
+  constructor( private messageService: ErrorServiceService,
+               private router: Router,
+               private controller: ControllerService ) {
     this.user = JSON.parse(localStorage.getItem('user'));
     console.log("this.user");
     console.log(this.user.token);
@@ -67,24 +71,48 @@ export class SearchColaboratorComponent implements OnInit {
       //console.log(this.categ);
       this.controller.getUsersBySkills(this.user.token, this.user.companyDB.email, this.skills).subscribe( data => {
         this.data = data;
+        if(this.data.err){
+          this.messageService.takeMessage(this.data.err.message);
+          this.router.navigate( ['/error']);
+        }
         console.log(this.data);
-      }, error => console.log(error));
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
     }
     if(option === 'certificates'){
       //this.categ = this.categ.split(',');
       //console.log(this.categ);
       this.controller.getUsersByCertificates(this.user.token, this.user.companyDB.email, this.certificates).subscribe( data => {
         this.data = data;
+        if(this.data.err){
+          this.messageService.takeMessage(this.data.err.message);
+          this.router.navigate( ['/error']);
+        }
         console.log(this.data);
-      }, error => console.log(error));
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
     }
     if(option === 'courses'){
       //this.categ = this.categ.split(',');
       //console.log(this.categ);
       this.controller.getUsersByCourses(this.user.token, this.user.companyDB.email, this.courses).subscribe( data => {
         this.data = data;
+        if(this.data.err){
+          this.messageService.takeMessage(this.data.err.message);
+          this.router.navigate( ['/error']);
+        }
         console.log(this.data);
-      }, error => console.log(error));
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
     }
   }
 
@@ -93,8 +121,16 @@ export class SearchColaboratorComponent implements OnInit {
     console.log(projectId);
     this.controller.joinProject(this.user.token, this.user.companyDB.email, projectId).subscribe( data => {
       this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }
       console.log(this.data);
-    }, error => console.log(error));
+    }, error => {
+      console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
   }
 
 }

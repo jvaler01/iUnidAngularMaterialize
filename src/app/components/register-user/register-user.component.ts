@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '../../models/User';
 import { ControllerService } from '../../services/controller.service';
+import {ErrorServiceService} from '../../services/error-service.service';
 declare var $: any;
 declare var M: any;
 
@@ -14,6 +15,7 @@ declare var M: any;
 export class RegisterUserComponent implements OnInit {
 
   form: FormGroup;
+  data: any = {};
   user: User = {
     email: '',
     password: '',
@@ -27,6 +29,7 @@ export class RegisterUserComponent implements OnInit {
   validCertificates = false;
   valid = false;
   constructor(private router: Router,
+              private messageService: ErrorServiceService,
               private controller: ControllerService) {
     this.form = new FormGroup({
       name: new FormControl('', Validators.required),
@@ -132,16 +135,36 @@ export class RegisterUserComponent implements OnInit {
     if(!JSON.parse(localStorage.getItem('user'))) {
       userData.email = this.form.get('email').value;
       this.controller.registerUser(userData).subscribe(data => {
-        this.router.navigate(['/login']);
-      }, error => console.log(error));
+        this.data = data;
+        if(this.data.err){
+          this.messageService.takeMessage(this.data.err.message);
+          this.router.navigate( ['/error']);
+        }else {
+          this.router.navigate(['/login']);
+        }
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
     }else if(JSON.parse(localStorage.getItem('user'))){
       userData.userType = userSesion.userDB.userType;
       userData.userEmail = this.form.get('email').value;
       userData.email = userSesion.userDB.email;
       userData.newUserType = 'USER_ROLE';
       this.controller.newUserOrCompany( userSesion.token, userData).subscribe( data => {
-        this.router.navigate( ['**']);
-      }, error => console.log(error));
+        this.data = data;
+        if(this.data.err){
+          this.messageService.takeMessage(this.data.err.message);
+          this.router.navigate( ['/error']);
+        }else {
+          this.router.navigate(['**']);
+        }
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
     }
     console.log(this.form.value);
   }

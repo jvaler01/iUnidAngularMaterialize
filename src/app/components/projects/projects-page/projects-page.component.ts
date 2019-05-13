@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ControllerService} from '../../../services/controller.service';
 import {Router} from '@angular/router';
+import {ErrorServiceService} from '../../../services/error-service.service';
 declare var $: any;
 
 @Component({
@@ -25,6 +26,7 @@ export class ProjectsPageComponent implements OnInit {
   evaluateValue = 0;
   userEmail: "";
   constructor( private router: Router,
+               private messageService: ErrorServiceService,
                private controller: ControllerService ) {
     // this.data = this.data1;
     this.user = JSON.parse(localStorage.getItem('user'));
@@ -37,8 +39,16 @@ export class ProjectsPageComponent implements OnInit {
 
       this.controller.getProjectsThatHeWorks(this.user.token, this.email).subscribe( data => {
         this.projectsThatHeWorks = data;
+        if(this.projectsThatHeWorks.err){
+          this.messageService.takeMessage(this.projectsThatHeWorks.err.message);
+          this.router.navigate( ['/error']);
+        }
         console.log(this.projectsThatHeWorks);
-      }, error => console.log(error));
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
 
     } else if(this.user.companyDB){
       console.log(this.user.companyDB.email);
@@ -49,8 +59,16 @@ export class ProjectsPageComponent implements OnInit {
     this.controller.getProjects(this.user.token, this.email).subscribe( data => {
       this.projects = data;
       console.log(this.projects);
-      this.data = this.projects;
-    }, error => console.log(error));
+      if(this.projects.err){
+        this.messageService.takeMessage(this.projects.err.message);
+        this.router.navigate( ['/error']);
+      }
+      //this.data = this.projects;
+    }, error => {
+      console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
   }
 
   ngOnInit() {
@@ -113,17 +131,23 @@ export class ProjectsPageComponent implements OnInit {
     }
     this.controller.deleteInternalProject(this.user.token, projectId, email).subscribe( data => {
       console.log(data);
-
-      this.refreshData();
-      $('#deleteModal').modal('close');
-      if(JSON.parse(localStorage.getItem('user')).userDB){
-        this.router.navigate( ['/iUnidUser/userProjects']);
-      } else {
-        this.router.navigate( ['/iUnidCompany/companyProjects']);
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else {
+        this.refreshData();
+        $('#deleteModal').modal('close');
+        if (JSON.parse(localStorage.getItem('user')).userDB) {
+          this.router.navigate(['/iUnidUser/userProjects']);
+        } else {
+          this.router.navigate(['/iUnidCompany/companyProjects']);
+        }
       }
     }, error => {
       console.log(error);
-      this.router.navigate( ['errors']);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
     });
   }
 
@@ -136,17 +160,23 @@ export class ProjectsPageComponent implements OnInit {
     }
     this.controller.acceptPendingRequest(this.user.token, email, projectId, userEmail).subscribe( data => {
       console.log(data);
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else {
+        this.refreshData();
 
-      this.refreshData();
-
-      if(JSON.parse(localStorage.getItem('user')).userDB){
-        this.router.navigate( ['/iUnidUser/userProjects']);
-      } else {
-        this.router.navigate( ['/iUnidCompany/companyProjects']);
+        if (JSON.parse(localStorage.getItem('user')).userDB) {
+          this.router.navigate(['/iUnidUser/userProjects']);
+        } else {
+          this.router.navigate(['/iUnidCompany/companyProjects']);
+        }
       }
     }, error => {
       console.log(error);
-      this.router.navigate( ['errors']);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
     });
   }
 
@@ -159,17 +189,23 @@ export class ProjectsPageComponent implements OnInit {
     }
     this.controller.denyPendingRequest(this.user.token, email, projectId, userEmail).subscribe( data => {
       console.log(data);
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else {
+        this.refreshData();
 
-      this.refreshData();
-
-      if(JSON.parse(localStorage.getItem('user')).userDB){
-        this.router.navigate( ['/iUnidUser/userProjects']);
-      } else {
-        this.router.navigate( ['/iUnidCompany/companyProjects']);
+        if (JSON.parse(localStorage.getItem('user')).userDB) {
+          this.router.navigate(['/iUnidUser/userProjects']);
+        } else {
+          this.router.navigate(['/iUnidCompany/companyProjects']);
+        }
       }
     }, error => {
       console.log(error);
-      this.router.navigate( ['errors']);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
     });
   }
 
@@ -181,9 +217,9 @@ export class ProjectsPageComponent implements OnInit {
     } else {
       email = this.user.companyDB.email
     }
-    for(let i = 0; i < this.data.internalProjects[index].users.length; i++){
-      console.log(this.data.internalProjects[index].users[i]);
-      if(this.data.internalProjects[index].users[i].userPay === false){
+    for(let i = 0; i < this.projects.internalProjects[index].users.length; i++){
+      console.log(this.projects.internalProjects[index].users[i]);
+      if(this.projects.internalProjects[index].users[i].userPay === false){
         canClose = false;
         break;
       }
@@ -194,17 +230,23 @@ export class ProjectsPageComponent implements OnInit {
     }else{
       this.controller.closeProject(this.user.token, email, projectId).subscribe( data => {
         console.log(data);
+        this.data = data;
+        if(this.data.err){
+          this.messageService.takeMessage(this.data.err.message);
+          this.router.navigate( ['/error']);
+        }else {
+          this.refreshData();
 
-        this.refreshData();
-
-        if(JSON.parse(localStorage.getItem('user')).userDB){
-          this.router.navigate( ['/iUnidUser/userProjects']);
-        } else {
-          this.router.navigate( ['/iUnidCompany/companyProjects']);
+          if (JSON.parse(localStorage.getItem('user')).userDB) {
+            this.router.navigate(['/iUnidUser/userProjects']);
+          } else {
+            this.router.navigate(['/iUnidCompany/companyProjects']);
+          }
         }
       }, error => {
         console.log(error);
-        this.router.navigate( ['errors']);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
       });
     }
   }
@@ -221,17 +263,23 @@ export class ProjectsPageComponent implements OnInit {
     }
     this.controller.acceptCounterOffer(this.user.token, email, projectId, price, userEmail ).subscribe( data => {
       console.log(data);
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else {
+        this.refreshData();
 
-      this.refreshData();
-
-      if(JSON.parse(localStorage.getItem('user')).userDB){
-        this.router.navigate( ['/iUnidUser/userProjects']);
-      } else {
-        this.router.navigate( ['/iUnidCompany/companyProjects']);
+        if (JSON.parse(localStorage.getItem('user')).userDB) {
+          this.router.navigate(['/iUnidUser/userProjects']);
+        } else {
+          this.router.navigate(['/iUnidCompany/companyProjects']);
+        }
       }
     }, error => {
       console.log(error);
-      this.router.navigate( ['errors']);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
     });
   }
 
@@ -244,17 +292,23 @@ export class ProjectsPageComponent implements OnInit {
     }
     this.controller.denyCounterOffer(this.user.token, email, projectId, userEmail, price).subscribe( data => {
       console.log(data);
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else {
+        this.refreshData();
 
-      this.refreshData();
-
-      if(JSON.parse(localStorage.getItem('user')).userDB){
-        this.router.navigate( ['/iUnidUser/userProjects']);
-      } else {
-        this.router.navigate( ['/iUnidCompany/companyProjects']);
+        if (JSON.parse(localStorage.getItem('user')).userDB) {
+          this.router.navigate(['/iUnidUser/userProjects']);
+        } else {
+          this.router.navigate(['/iUnidCompany/companyProjects']);
+        }
       }
     }, error => {
       console.log(error);
-      this.router.navigate( ['errors']);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
     });
   }
 
@@ -267,17 +321,23 @@ export class ProjectsPageComponent implements OnInit {
     }
     this.controller.kickPerson(this.user.token, email, projectId, userEmail).subscribe( data => {
       console.log(data);
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else {
+        this.refreshData();
 
-      this.refreshData();
-
-      if(JSON.parse(localStorage.getItem('user')).userDB){
-        this.router.navigate( ['/iUnidUser/userProjects']);
-      } else {
-        this.router.navigate( ['/iUnidCompany/companyProjects']);
+        if (JSON.parse(localStorage.getItem('user')).userDB) {
+          this.router.navigate(['/iUnidUser/userProjects']);
+        } else {
+          this.router.navigate(['/iUnidCompany/companyProjects']);
+        }
       }
     }, error => {
       console.log(error);
-      this.router.navigate( ['errors']);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
     });
   }
 
@@ -289,8 +349,16 @@ export class ProjectsPageComponent implements OnInit {
 
       this.controller.getProjectsThatHeWorks(this.user.token, this.email).subscribe( data => {
         this.projectsThatHeWorks = data;
+        if(this.projectsThatHeWorks.err){
+          this.messageService.takeMessage(this.projectsThatHeWorks.err.message);
+          this.router.navigate( ['/error']);
+        }
         console.log(this.projectsThatHeWorks);
-      }, error => console.log(error));
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
 
     } else if(this.user.companyDB){
       console.log(this.user.companyDB.email);
@@ -300,9 +368,17 @@ export class ProjectsPageComponent implements OnInit {
 
     this.controller.getProjects(this.user.token, this.email).subscribe( data => {
       this.projects = data;
+      if(this.projects.err){
+        this.messageService.takeMessage(this.projects.err.message);
+        this.router.navigate( ['/error']);
+      }
       console.log(this.projects);
-      this.data = this.projects;
-    }, error => console.log(error));
+      //this.data = this.projects;
+    }, error => {
+      console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
   }
 
   setPayData(projectId: any, minPrice: any, maxPrice: any, userOffer: any, userEmail: any){
@@ -333,15 +409,23 @@ export class ProjectsPageComponent implements OnInit {
     } else {
       email = this.user.companyDB.email
     }
-    console.log(this.userEmail)
+    console.log(this.userEmail);
     // @ts-ignore
     this.controller.payUser(this.user.token, this.payValue, this.userEmail, this.projectId).subscribe( data => {
       console.log(data);
-      let datahref = data;
-      // @ts-ignore
-      window.open(datahref.data)
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else{
+        let datahref = data;
+        // @ts-ignore
+        window.open(datahref.data)
+      }
     }, error => {
       console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
     });
   }
 
@@ -360,9 +444,15 @@ export class ProjectsPageComponent implements OnInit {
     // @ts-ignore
     this.controller.evaluateUser(this.user.token, email, this.projectId, this.userEmail.userEmail, this.evaluateValue ).subscribe( data => {
       console.log(data);
-
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }
     }, error => {
       console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
     });
   }
 

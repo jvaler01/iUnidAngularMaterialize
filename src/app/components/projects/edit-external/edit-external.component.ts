@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {ControllerService} from '../../../services/controller.service';
+import {ErrorServiceService} from '../../../services/error-service.service';
 
 @Component({
   selector: 'app-edit-external',
@@ -14,6 +15,7 @@ export class EditExternalComponent implements OnInit, OnDestroy {
   data: any = {};
   project: any = {};
   constructor(private router: Router,
+              private messageService: ErrorServiceService,
               private controller: ControllerService) {
 
     this.user = JSON.parse(localStorage.getItem('user'));
@@ -52,12 +54,22 @@ export class EditExternalComponent implements OnInit, OnDestroy {
     this.controller.editExternalProject(this.user.token, externalProjectData).subscribe( data => {
       // localStorage.setItem('user', JSON.stringify(data));
       // this.router.navigate( ['/iUnidCompany']);
-      if(JSON.parse(localStorage.getItem('user')).userDB){
-        this.router.navigate( ['/iUnidUser/userProfile']);
-      }else{
-        this.router.navigate( ['/iUnidCompany/companyProfile']);
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else {
+        if (JSON.parse(localStorage.getItem('user')).userDB) {
+          this.router.navigate(['/iUnidUser/userProfile']);
+        } else {
+          this.router.navigate(['/iUnidCompany/companyProfile']);
+        }
       }
-    }, error => console.log(error));
+    }, error => {
+      console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
     console.log(this.form.value);
   }
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ControllerService} from '../../../services/controller.service';
 import {min} from 'rxjs/operators';
 import {Router} from '@angular/router';
+import {ErrorServiceService} from '../../../services/error-service.service';
 declare var $: any;
 declare var M: any;
 
@@ -46,6 +47,7 @@ export class SearchJobComponent implements OnInit {
   maxPrice;
   counterOfferValue = 0;
   constructor( private router: Router,
+               private messageService: ErrorServiceService,
               private controller: ControllerService ) {
     this.user = JSON.parse(localStorage.getItem('user'));
     console.log("this.user");
@@ -94,22 +96,46 @@ export class SearchJobComponent implements OnInit {
     if(option === 'name'){
       this.controller.getProjectsByName(this.user.token, this.user.userDB.email, this.categ).subscribe( data => {
         this.data = data;
+        if(this.data.err){
+          this.messageService.takeMessage(this.data.err.message);
+          this.router.navigate( ['/error']);
+        }
         console.log(this.data);
-      }, error => console.log(error));
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
     }
     if(option === 'category'){
       this.controller.getProjectsByCategory(this.user.token, this.user.userDB.email, this.categ).subscribe( data => {
         this.data = data;
+        if(this.data.err){
+          this.messageService.takeMessage(this.data.err.message);
+          this.router.navigate( ['/error']);
+        }
         console.log(this.data);
-      }, error => console.log(error));
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
     }
     if(option === 'tag'){
       //this.categ = this.categ.split(',');
       //console.log(this.categ);
       this.controller.getProjectsByTag(this.user.token, this.user.userDB.email, this.tags).subscribe( data => {
         this.data = data;
+        if(this.data.err){
+          this.messageService.takeMessage(this.data.err.message);
+          this.router.navigate( ['/error']);
+        }
         console.log(this.data);
-      }, error => console.log(error));
+      }, error => {
+        console.log(error);
+        this.messageService.takeMessage(error.err.message);
+        this.router.navigate( ['/error']);
+      });
     }
   }
 
@@ -118,8 +144,16 @@ export class SearchJobComponent implements OnInit {
     console.log(projectId);
     this.controller.joinProject(this.user.token, this.user.userDB.email, projectId).subscribe( data => {
       this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }
       console.log(this.data);
-    }, error => console.log(error));
+    }, error => {
+      console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
   }
 
   setCounterOfferData(projectId: any, minPrice: any, maxPrice: any){
@@ -144,14 +178,21 @@ export class SearchJobComponent implements OnInit {
     }
     this.controller.counterOffer(this.user.token, email, this.projectId, this.counterOfferValue).subscribe( data => {
       console.log(data);
-      if(JSON.parse(localStorage.getItem('user')).userDB){
-        this.router.navigate( ['userProjects']);
-      } else {
-        this.router.navigate( ['companyProjects']);
+      this.data = data;
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }else{
+        if(JSON.parse(localStorage.getItem('user')).userDB){
+          this.router.navigate( ['userProjects']);
+        } else {
+          this.router.navigate( ['companyProjects']);
+        }
       }
     }, error => {
       console.log(error);
-      this.router.navigate( ['errors']);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
     });
   }
 }

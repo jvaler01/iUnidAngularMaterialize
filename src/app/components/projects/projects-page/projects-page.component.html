@@ -28,7 +28,7 @@
 
           <section id="content1" class="tab-content tab_section">
             <ul class="collapsible">
-              <li *ngFor="let project of data.internalProjects; let i = index">
+              <li *ngFor="let project of projects.internalProjects; let i = index">
                 <div *ngIf="project.state === 'Open'" class="collapsible-header">{{ project.name }}</div>
                 <div *ngIf="project.state === 'Open'" class="collapsible-body">
                   <a *ngIf="client" href="#deleteModal" (click)="setProjectId(project._id)" class="btn btn-floating text-white left red darken-4 modal-trigger">
@@ -71,6 +71,7 @@
                   <div class="row" *ngIf="!client">
                     <div class="col xl12">
                       <h5>Trabajadores: </h5>
+                      <p *ngIf="project.users.length === 0">No hay trabajadores</p>
                       <p style="word-break: break-all; margin-top: 5px" *ngFor="let user of project.users">{{ user.userEmail }}
                         <a style="margin-left: 5px" href="#evaluateModal" (click)="setEvaluateUser(project._id ,user)"
                            class="waves-effect waves-light btn modal-trigger">Valorar</a></p>
@@ -84,7 +85,7 @@
 
           <section id="content2" class="tab-content tab_section">
             <ul class="collapsible">
-              <li *ngFor="let project of data.internalProjects">
+              <li *ngFor="let project of projects.internalProjects">
                 <div *ngIf="project.state === 'Close'" class="collapsible-header">{{ project.name }}</div>
                 <div *ngIf="project.state === 'Close'" class="collapsible-body">
                   <p><span class="bold_text">Catergoria:</span> {{ project.category }}</p>
@@ -94,6 +95,7 @@
                   <div class="row">
                     <div class="col xl12">
                       <h5>Trabajadores: </h5>
+                      <p *ngIf="project.users.length === 0">No hay trabajadores</p>
                       <p style="word-break: break-all; margin-top: 5px" *ngFor="let user of project.users">{{ user.userEmail }}
                         <a style="margin-left: 5px" *ngIf="user.userPay" href="#evaluateModal" (click)="setEvaluateUser(project._id ,user)"
                            class="waves-effect waves-light btn modal-trigger">Valorar</a></p>
