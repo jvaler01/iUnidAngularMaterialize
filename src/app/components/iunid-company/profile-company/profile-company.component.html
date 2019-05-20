@@ -16,7 +16,8 @@
           <div class="card-content">
             <div class="row">
               <div class="col m3 center">
-                <img class="mt-4" src="assets/img/company-avatar.svg" style="max-width: 100px; width: 100%;">
+                <!--<img class="mt-4" src="assets/img/company-avatar.svg" style="max-width: 100px; width: 100%;">-->
+                <img class="mt-4" [src]="'http://localhost:3000/img/company/'+ data.company.img" style="max-width: 100px; width: 100%;">
               </div>
               <div class="col m9">
 

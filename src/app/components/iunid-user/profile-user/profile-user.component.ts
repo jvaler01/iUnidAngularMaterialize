@@ -27,9 +27,10 @@ export class ProfileUserComponent implements OnInit {
     console.log("this.user");
     console.log(this.user.token);
     console.log(this.user.userDB.email);
-
     this.controller.getUser(this.user.token, this.user.userDB.email).subscribe( data => {
       this.data = data;
+      //this.data.user.img = 'image-155.jpg';
+      this.data.user.img = 'image-1558206345623.jpg';
       if(this.data.err){
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);

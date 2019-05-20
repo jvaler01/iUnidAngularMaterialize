@@ -91,21 +91,18 @@
 
 
 
-            <!-- FOTO TODO -->
-            <!-- -->
-            <!-- -->
             <div class="file-field input-field">
               <div class="btn light-blue darken-4">
                 <span>Foto</span>
-                <input type="file">
+                <input (change)="selectionImage($event.target.files[0])" type="file" name="img">
               </div>
               <div class="file-path-wrapper">
                 <input class="file-path validate" type="text">
               </div>
             </div>
-            <!-- -->
-            <!-- -->
-            <!-- FOTO TODO -->
+            <!--<div class="center">
+              <button type="button" (click)="saveImg()" class="waves-effect waves-light btn light-blue darken-4">Img</button>
+            </div>-->
 
 
 
@@ -143,6 +140,10 @@
               <button type="submit" class="waves-effect waves-light btn light-blue darken-4" [ngClass]="{'disabled': !form.valid}">Guardar</button>
             </div>
           </form>
+
+          <div *ngFor="let asdf of html">
+            {{asdf}}
+          </div>
         </div>
       </div>
     </div>

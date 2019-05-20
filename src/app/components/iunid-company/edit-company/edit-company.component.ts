@@ -14,6 +14,7 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
   data: any = {
   };
   company: any = {};
+  imageUpload: File = null;
   constructor(private router: Router,
               private messageService: ErrorServiceService,
               private controller: ControllerService) {
@@ -30,8 +31,24 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
   }
+  selectionImage( file: File ) {
+    if ( !file ) {
+      this.imageUpload = null;
+      return;
+    }
 
+    if ( file.type.indexOf('image') < 0 ) {
+      this.imageUpload = null;
+      return;
+    }
+
+    this.imageUpload = file;
+    console.log(this.imageUpload)
+  }
   sendData() {
+    if(this.imageUpload !== null){
+      this.saveImg();
+    }
     let companyData:any = {};
     companyData.name = this.form.get('name').value;
     companyData.description = this.form.get('desc').value;
@@ -77,6 +94,12 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
     console.log(this.form.value);
   }
 
+  saveImg(){
+    this.controller.saveImg(this.imageUpload).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
+  }
 
   ngOnDestroy(): void {
     localStorage.removeItem('dataCompany');

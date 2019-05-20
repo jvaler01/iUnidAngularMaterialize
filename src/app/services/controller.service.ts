@@ -4,6 +4,8 @@ import { HttpHeaders } from '@angular/common/http';
 import {User} from '../models/user';
 import {map} from 'rxjs/operators';
 import {Company} from '../models/Company';
+import {reject, resolve} from 'q';
+import {compilePipeFromMetadata} from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -181,7 +183,10 @@ export class ControllerService {
     }));
   }
 
-  editUser( token: any, user: User) {
+  editUser( token: any, user: User, file: File) {
+
+
+
     let body = JSON.stringify(user);
     let headers = new HttpHeaders({
       'Content-Type':'application/json',
@@ -189,6 +194,16 @@ export class ControllerService {
     });
     let url = `${this.apiUrl}editUser`;
     return this.http.put(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  saveImg(file: File){
+    let url = `${this.apiUrl}uploadfile`;
+    let formData = new FormData();
+    formData.append("image", file, file.name);
+    return this.http.post(url, formData ).pipe(map( res =>{
       console.log(res);
       return res;
     }));

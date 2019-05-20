@@ -13,6 +13,7 @@ export class RegisterCompanyComponent implements OnInit {
   form: FormGroup;
   data: any = {
   };
+  imageUpload: File = null;
   constructor(private router: Router,
               private messageService: ErrorServiceService,
               private controller: ControllerService) {
@@ -36,6 +37,20 @@ export class RegisterCompanyComponent implements OnInit {
 
   ngOnInit() {
   }
+  selectionImage( file: File ) {
+    if ( !file ) {
+      this.imageUpload = null;
+      return;
+    }
+
+    if ( file.type.indexOf('image') < 0 ) {
+      this.imageUpload = null;
+      return;
+    }
+
+    this.imageUpload = file;
+    console.log(this.imageUpload)
+  }
   noIgual( control: FormControl): any {
     let forma: any = this;
     if ( control.value !== forma.controls['password'].value) {
@@ -47,6 +62,9 @@ export class RegisterCompanyComponent implements OnInit {
   }
 
   sendData() {
+    if(this.imageUpload !== null){
+      this.saveImg();
+    }
     console.log(this.form.get('img'));
     let companyData:any = {};
     companyData.name = this.form.get('name').value;
@@ -100,5 +118,11 @@ export class RegisterCompanyComponent implements OnInit {
       });
     }
     console.log(this.form.value);
+  }
+  saveImg(){
+    this.controller.saveImg(this.imageUpload).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
   }
 }

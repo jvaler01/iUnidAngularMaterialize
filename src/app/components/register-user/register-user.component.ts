@@ -28,6 +28,7 @@ export class RegisterUserComponent implements OnInit {
   validCourses = false;
   validCertificates = false;
   valid = false;
+  imageUpload: File = null;
   constructor(private router: Router,
               private messageService: ErrorServiceService,
               private controller: ControllerService) {
@@ -67,6 +68,20 @@ export class RegisterUserComponent implements OnInit {
     }
     return null;
   }
+  selectionImage( file: File ) {
+    if ( !file ) {
+      this.imageUpload = null;
+      return;
+    }
+
+    if ( file.type.indexOf('image') < 0 ) {
+      this.imageUpload = null;
+      return;
+    }
+
+    this.imageUpload = file;
+    console.log(this.imageUpload)
+  }
   checkValid(){
     if(this.validCourses && this.validCertificates && this.validSkills){
       this.valid = true;
@@ -104,6 +119,9 @@ export class RegisterUserComponent implements OnInit {
   }
 
   sendData() {
+    if(this.imageUpload !== null){
+      this.saveImg();
+    }
     let coursesData= M.Chips.getInstance($('.chips-courses')).chipsData;
     if( coursesData.length !== 0) {
       for (let i = 0; i < coursesData.length; i++){
@@ -167,5 +185,11 @@ export class RegisterUserComponent implements OnInit {
       });
     }
     console.log(this.form.value);
+  }
+  saveImg(){
+    this.controller.saveImg(this.imageUpload).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
   }
 }

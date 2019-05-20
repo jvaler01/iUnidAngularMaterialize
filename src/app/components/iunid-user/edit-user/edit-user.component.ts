@@ -25,6 +25,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
   validCourses = false;
   validCertificates = false;
   valid = false;
+  imageUpload: File = null;
   constructor(private router: Router,
               private messageService: ErrorServiceService,
               private controller: ControllerService) {
@@ -87,6 +88,22 @@ export class EditUserComponent implements OnInit, OnDestroy {
       data: coursesTags,
     });
   }
+
+  selectionImage( file: File ) {
+    if ( !file ) {
+      this.imageUpload = null;
+      return;
+    }
+
+    if ( file.type.indexOf('image') < 0 ) {
+      this.imageUpload = null;
+      return;
+    }
+
+    this.imageUpload = file;
+    console.log(this.imageUpload)
+  }
+
   checkValid(){
     if(this.validCourses && this.validCertificates && this.validSkills){
       this.valid = true;
@@ -124,6 +141,11 @@ export class EditUserComponent implements OnInit, OnDestroy {
   }
 
   sendData() {
+    //console.log(this.imageUpload.name);
+    if(this.imageUpload !== null){
+      this.saveImg();
+    }
+
     let coursesData= M.Chips.getInstance($('.chips-courses')).chipsData;
     if( coursesData.length !== 0) {
       for (let i = 0; i < coursesData.length; i++){
@@ -152,9 +174,10 @@ export class EditUserComponent implements OnInit, OnDestroy {
     let userSesion = JSON.parse(localStorage.getItem('user'));
     userData.email = userSesion.userDB.email;
     userData.userType = userSesion.userDB.userType;
+
     console.log(userSesion);
     if(userData.userType === 'USER_ROLE'){
-      this.controller.editUser( userSesion.token, userData).subscribe( data => {
+      this.controller.editUser( userSesion.token, userData, this.imageUpload).subscribe( data => {
         this.data = data;
         if(this.data.err){
           this.messageService.takeMessage(this.data.err.message);
@@ -185,7 +208,14 @@ export class EditUserComponent implements OnInit, OnDestroy {
     }
 
     localStorage.removeItem('dataUser');
-    console.log(this.form.value);
+    //console.log(this.form.value);
+  }
+
+  saveImg(){
+    this.controller.saveImg(this.imageUpload).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
   }
 
   ngOnDestroy(): void {
