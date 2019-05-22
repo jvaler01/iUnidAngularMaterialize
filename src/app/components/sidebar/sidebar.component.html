@@ -8,7 +8,7 @@
 
 
 
-  <li><a [routerLink]="[sidebarData.option.route]" class="waves-effect waves-teal white-text">{{ sidebarData.option.name }}</a></li>
+  <li><a [routerLink]="[sidebarData.option.route]" class="collapsible-header waves-effect waves-teal white-text">{{ sidebarData.option.name }}</a></li>
   <li class="no-padding" *ngFor="let option of sidebarData.option2">
     <ul class="collapsible collapsible-accordion">
       <li class="light-blue darken-3"><a class="collapsible-header waves-effect waves-teal white-text">{{ option.name }}</a>

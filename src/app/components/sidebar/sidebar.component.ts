@@ -41,15 +41,15 @@ export class SidebarComponent implements OnInit {
         if(JSON.parse(localStorage.getItem('user')).userDB && JSON.parse(localStorage.getItem('user')).userDB.userType === 'USER_ROLE'){
           this.sidebarData = {
             option: {
-              name: "Home",
+              name: "Inicio",
               route: "/iUnidUser/home"
             },
             option2:[
               {
-                name: "User",
+                name: "Usuario",
                 values: [
                   {
-                    name: "Profile",
+                    name: "Perfil",
                     route: "/iUnidUser/userProfile"
                   }
                   ,
@@ -84,7 +84,7 @@ export class SidebarComponent implements OnInit {
               route: "/iUnidUser/help"
             },
             option4: {
-              name: "Logout",
+              name: "Cerrar Sesión",
               route: ""
             },
           };
@@ -101,7 +101,7 @@ export class SidebarComponent implements OnInit {
               route: "/iUnidUser/help"
             },
             option4: {
-              name: "Logout",
+              name: "Cerrar Sesión",
               route: ""
             },
           };
@@ -109,15 +109,15 @@ export class SidebarComponent implements OnInit {
         if(JSON.parse(localStorage.getItem('user')).companyDB){
           this.sidebarData = {
             option: {
-              name: "Home",
+              name: "Inicio",
               route: "/iUnidCompany/home"
             },
             option2:[
               {
-                name: "User",
+                name: "Empresa",
                 values: [
                   {
-                    name: "Profile",
+                    name: "Perfil",
                     route: "/iUnidCompany/companyProfile"
                   }
                   ,
@@ -152,7 +152,7 @@ export class SidebarComponent implements OnInit {
               route: "/iUnidCompany/help"
             },
             option4: {
-              name: "Logout",
+              name: "Cerrar Sesión",
               route: ""
             }
           };
@@ -160,7 +160,7 @@ export class SidebarComponent implements OnInit {
       } else {
         this.sidebarData = {
           option: {
-            name: "Login",
+            name: "Iniciar Sesión",
             route: "login"
           },
           option2:[
