@@ -62,8 +62,10 @@ export class RegisterCompanyComponent implements OnInit {
   }
 
   sendData() {
+    let companySesion2 = JSON.parse(localStorage.getItem('user'));
+    let email2 = companySesion2.companyDB.email;
     if(this.imageUpload !== null){
-      this.saveImg();
+      this.saveImg(email2);
     }
     console.log(this.form.get('img'));
     let companyData:any = {};
@@ -119,8 +121,8 @@ export class RegisterCompanyComponent implements OnInit {
     }
     console.log(this.form.value);
   }
-  saveImg(){
-    this.controller.saveImg(this.imageUpload).subscribe(
+  saveImg(email: any){
+    this.controller.saveImg(this.imageUpload, email).subscribe(
       (res) => console.log(res),
       (err) => console.log(err)
     );

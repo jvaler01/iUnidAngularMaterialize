@@ -46,8 +46,10 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
     console.log(this.imageUpload)
   }
   sendData() {
+    let companySesion2 = JSON.parse(localStorage.getItem('user'));
+    let email2 = companySesion2.companyDB.email;
     if(this.imageUpload !== null){
-      this.saveImg();
+      this.saveImg(email2);
     }
     let companyData:any = {};
     companyData.name = this.form.get('name').value;
@@ -94,8 +96,8 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
     console.log(this.form.value);
   }
 
-  saveImg(){
-    this.controller.saveImg(this.imageUpload).subscribe(
+  saveImg(email: any){
+    this.controller.saveImg(this.imageUpload, email).subscribe(
       (res) => console.log(res),
       (err) => console.log(err)
     );

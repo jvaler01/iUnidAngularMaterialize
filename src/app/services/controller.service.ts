@@ -199,10 +199,11 @@ export class ControllerService {
     }));
   }
 
-  saveImg(file: File){
+  saveImg(file: File, email: any){
     let url = `${this.apiUrl}uploadfile`;
     let formData = new FormData();
     formData.append("image", file, file.name);
+    formData.set("email", email);
     return this.http.post(url, formData ).pipe(map( res =>{
       console.log(res);
       return res;

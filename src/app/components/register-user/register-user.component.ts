@@ -119,8 +119,10 @@ export class RegisterUserComponent implements OnInit {
   }
 
   sendData() {
+    let userSesion2 = JSON.parse(localStorage.getItem('user'));
+    let email2 = userSesion2.userDB.email;
     if(this.imageUpload !== null){
-      this.saveImg();
+      this.saveImg(email2);
     }
     let coursesData= M.Chips.getInstance($('.chips-courses')).chipsData;
     if( coursesData.length !== 0) {
@@ -186,8 +188,8 @@ export class RegisterUserComponent implements OnInit {
     }
     console.log(this.form.value);
   }
-  saveImg(){
-    this.controller.saveImg(this.imageUpload).subscribe(
+  saveImg(email: any){
+    this.controller.saveImg(this.imageUpload, email).subscribe(
       (res) => console.log(res),
       (err) => console.log(err)
     );

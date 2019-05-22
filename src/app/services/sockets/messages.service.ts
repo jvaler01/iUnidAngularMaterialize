@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import * as io from 'socket.io-client';
 
 @Injectable({
@@ -8,18 +8,29 @@ import * as io from 'socket.io-client';
 export class MessagesService {
   observable:Observable<any>;
   socket;
+  private data1 = new BehaviorSubject({});
+  data = this.data1.asObservable();
   constructor() {
-    //this.socket=io('http://localhost:3000');
+    this.socket=io('http://localhost:3000',{transports: ['websocket']});
 
   }
-  getData():Observable<string> {
-    return this.observable = new Observable((observer) => {
-      this.socket.on('message', (data) => {
-        console.log("conectado con el servidor");
-        observer.next(data);
+  chatInit(email: string, id: string){
+    console.log(id);
+    this.socket.emit('user', {email: email, id: "5ce59eda6c5d0a1dace5e048"})
+  }
+
+  chatLoad(){
+    /*let observable = new Observable<{}>(observer=>{
+      this.socket.on('messages', (data)=>{
         console.log(data);
-        console.log(observer);
+        observer.next(data);
       });
     });
+    return observable;*/
+    this.socket.on('messages', (data)=>{
+      console.log(data);
+      this.data1.next(data);
+    });
+    return this.data;
   }
 }

@@ -15,10 +15,15 @@
             </thead>
 
             <tbody>
-            <tr>
-              <td>Logo de proyecto Pepicar 2</td>
+            <tr *ngFor="let project of projectsThatHeWorks.internalProjects">
+              <td>{{ project.name }}</td>
               <td>2</td>
-              <td><a [routerLink]="['/iUnidUser/chat']"  class="waves-effect waves-light btn light-blue darken-4">Entrar</a></td>
+              <td><a (click)="joinChat(project._id)" class="waves-effect waves-light btn light-blue darken-4">Entrar</a></td>
+            </tr>
+            <tr *ngFor="let project of projects.internalProjects">
+              <td>{{ project.name }}</td>
+              <td>2</td>
+              <td><a (click)="joinChat(project._id)"  class="waves-effect waves-light btn light-blue darken-4">Entrar</a></td>
             </tr>
             </tbody>
           </table>

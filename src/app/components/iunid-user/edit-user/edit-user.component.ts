@@ -142,8 +142,11 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
   sendData() {
     //console.log(this.imageUpload.name);
+
+    let userSesion2 = JSON.parse(localStorage.getItem('user'));
+    let email2 = userSesion2.userDB.email;
     if(this.imageUpload !== null){
-      this.saveImg();
+      this.saveImg(email2);
     }
 
     let coursesData= M.Chips.getInstance($('.chips-courses')).chipsData;
@@ -211,8 +214,8 @@ export class EditUserComponent implements OnInit, OnDestroy {
     //console.log(this.form.value);
   }
 
-  saveImg(){
-    this.controller.saveImg(this.imageUpload).subscribe(
+  saveImg(email: any){
+    this.controller.saveImg(this.imageUpload, email).subscribe(
       (res) => console.log(res),
       (err) => console.log(err)
     );
