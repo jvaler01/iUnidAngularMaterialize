@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import {ControllerService} from '../../../services/controller.service';
-import {MessagesService} from '../../../services/sockets/messages.service';
 import {Router} from '@angular/router';
 import {ErrorServiceService} from '../../../services/error-service.service';
 declare  var $: any;
@@ -20,8 +19,7 @@ export class ProfileCompanyComponent implements OnInit {
   projectId;
   constructor( private controller: ControllerService,
                private router: Router,
-               private messageService: ErrorServiceService,
-               private messages: MessagesService) {
+               private messageService: ErrorServiceService) {
 
     //this.messages.getData().subscribe(data=>console.log(data));
     this.user = JSON.parse(localStorage.getItem('user'));
@@ -66,20 +64,22 @@ export class ProfileCompanyComponent implements OnInit {
     this.router.navigate( ['/iUnidCompany/editExt']);
   }
 
-
   deleteUser(userEmail: any){
     console.log(userEmail);
     this.controller.deleteUserOrCompany(this.user.token, userEmail).subscribe( data => {
       console.log(data);
       this.data = data;
       if(this.data.err){
+        $('#deleteModal').modal('close');
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
       }else {
+        $('#deleteModal').modal('close');
         localStorage.clear();
         this.router.navigate(['/login']);
       }
     }, error => {
+      $('#deleteModal').modal('close');
       console.log(error);
       this.messageService.takeMessage(error.err.message);
       this.router.navigate( ['/error']);
@@ -96,6 +96,7 @@ export class ProfileCompanyComponent implements OnInit {
       console.log(data);
       this.data = data;
       if(this.data.err){
+        $('#deleteProjectModal').modal('close');
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
       } else {
@@ -105,6 +106,7 @@ export class ProfileCompanyComponent implements OnInit {
 
     }, error => {
       console.log(error);
+      $('#deleteProjectModal').modal('close');
       this.messageService.takeMessage(error.err.message);
       this.router.navigate( ['/error']);
     });

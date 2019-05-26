@@ -18,12 +18,13 @@
             <tr *ngFor="let project of projectsThatHeWorks.internalProjects">
               <td>{{ project.name }}</td>
               <td>{{ project.users.length }}</td>
-              <td><a (click)="joinChat(project.idConversation)" class="waves-effect waves-light btn light-blue darken-4">Entrar</a></td>
+              <td><a *ngIf="project.state !== 'Close'" (click)="joinChat(project.idConversation, project.name)"  class="waves-effect waves-light btn light-blue darken-4">Entrar</a>
+                <a *ngIf="project.state === 'Close'"  class="waves-effect waves-light btn light-blue darken-4 disabled">Entrar</a></td>
             </tr>
             <tr *ngFor="let project of projects.internalProjects">
               <td>{{ project.name }}</td>
               <td>{{ project.users.length }}</td>
-              <td><a *ngIf="project.state !== 'Close'" (click)="joinChat(project.idConversation)"  class="waves-effect waves-light btn light-blue darken-4">Entrar</a>
+              <td><a *ngIf="project.state !== 'Close'" (click)="joinChat(project.idConversation, project.name)"  class="waves-effect waves-light btn light-blue darken-4">Entrar</a>
               <a *ngIf="project.state === 'Close'"  class="waves-effect waves-light btn light-blue darken-4 disabled">Entrar</a></td>
             </tr>
             </tbody>

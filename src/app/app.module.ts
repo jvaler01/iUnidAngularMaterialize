@@ -28,8 +28,6 @@ import { RegisterInternalComponent } from './components/projects/register-intern
 import { RegisterExternalComponent } from './components/projects/register-external/register-external.component';
 import { SearchColaboratorComponent } from './components/iunid-company/search-colaborator/search-colaborator.component';
 import { ProfileCompanyComponent } from './components/iunid-company/profile-company/profile-company.component';
-import { HomeUserComponent } from './components/iunid-user/home-user/home-user.component';
-import { HomeCompanyComponent } from './components/iunid-company/home-company/home-company.component';
 import { LobbyRoomComponent } from './components/lobby/lobby-room/lobby-room.component';
 import { ChatRoomComponent } from './components/lobby/chat-room/chat-room.component';
 import { EditUserComponent } from './components/iunid-user/edit-user/edit-user.component';
@@ -60,8 +58,6 @@ import { RegisterAdminComponent } from './components/iunid-admin/register-admin/
     RegisterExternalComponent,
     SearchColaboratorComponent,
     ProfileCompanyComponent,
-    HomeUserComponent,
-    HomeCompanyComponent,
     LobbyRoomComponent,
     ChatRoomComponent,
     EditUserComponent,

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ErrorServiceService} from '../../services/error-service.service';
+declare var $: any;
 
 @Component({
   selector: 'app-errors',
@@ -18,6 +19,9 @@ export class ErrorsComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(document).ready(function() {
+      $('.collapsible').collapsible();
+    });
   }
 
 }

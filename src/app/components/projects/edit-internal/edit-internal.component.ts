@@ -63,6 +63,7 @@ export class EditInternalComponent implements OnInit, OnDestroy {
     this.project.deliveryDate = this.data.deliveryDate;
     this.project.counteroffer = this.data.counteroffer;
     this.project.category = this.data.category;
+    this.project.counterOffer = this.data.counterOffer;
     this.form = new FormGroup({
       name: new FormControl(this.project.name, Validators.required),
       desc: new FormControl(this.project.desc, [Validators.required, Validators.minLength(50)]),

@@ -63,8 +63,9 @@ export class LobbyRoomComponent implements OnInit {
   }
 
 
-  joinChat(chatId: any){
+  joinChat(chatId: any, projectName: any){
     localStorage.setItem("chatID", chatId);
+    localStorage.setItem("projectName", projectName);
     this.router.navigate( ['/iUnidUser/chat']);
   }
 }

@@ -374,14 +374,18 @@ export class ProjectsPageComponent implements OnInit {
       this.data = data;
       if(this.data.err){
         this.messageService.takeMessage(this.data.err.message);
+        $('#payModal').modal('close');
         this.router.navigate( ['/error']);
       }else{
         let datahref = data;
         // @ts-ignore
-        window.open(datahref.data)
+        window.open(datahref.data);
+        $('#payModal').modal('close');
+        this.refreshData();
       }
     }, error => {
       console.log(error);
+      $('#payModal').modal('close');
       this.messageService.takeMessage(error.err.message);
       this.router.navigate( ['/error']);
     });
@@ -405,6 +409,7 @@ export class ProjectsPageComponent implements OnInit {
       this.data = data;
       if(this.data.err){
         this.messageService.takeMessage(this.data.err.message);
+        $('#evaluateModal').modal('close');
         this.router.navigate( ['/error']);
       }else {
         $('#evaluateModal').modal('close');
@@ -412,6 +417,7 @@ export class ProjectsPageComponent implements OnInit {
       }
     }, error => {
       console.log(error);
+      $('#evaluateModal').modal('close');
       this.messageService.takeMessage(error.err.message);
       this.router.navigate( ['/error']);
     });

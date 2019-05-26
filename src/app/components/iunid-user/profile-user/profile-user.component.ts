@@ -81,14 +81,17 @@ export class ProfileUserComponent implements OnInit {
       console.log(data);
       this.data = data;
       if(this.data.err){
+        $('#deleteModal').modal('close');
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
       }else{
+        $('#deleteModal').modal('close');
         localStorage.clear();
         this.router.navigate(['/login']);
       }
     }, error => {
       console.log(error);
+      $('#deleteModal').modal('close');
       this.messageService.takeMessage(error.err.message);
       this.router.navigate( ['/error']);
     });
@@ -104,6 +107,7 @@ export class ProfileUserComponent implements OnInit {
 
       this.data = data;
       if(this.data.err){
+        $('#deleteProjectModal').modal('close');
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
       }else {
@@ -111,6 +115,7 @@ export class ProfileUserComponent implements OnInit {
         $('#deleteProjectModal').modal('close');
       }
     }, error => {
+      $('#deleteProjectModal').modal('close');
       this.messageService.takeMessage(error.err.message);
       this.router.navigate( ['/error']);
     });
@@ -137,6 +142,7 @@ export class ProfileUserComponent implements OnInit {
     console.log(idProject);
     this.controller.acceptOffer(this.user.token, this.user.userDB.email, idProject).subscribe( data =>{
       if(this.project.err){
+        $('#projectModal').modal('close');
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
       } else {
@@ -145,6 +151,7 @@ export class ProfileUserComponent implements OnInit {
       }
     },error => {
       console.log(error);
+      $('#projectModal').modal('close');
       this.messageService.takeMessage(error.err.message);
       this.router.navigate( ['/error']);
     });
@@ -154,6 +161,7 @@ export class ProfileUserComponent implements OnInit {
     console.log(idProject);
     this.controller.denyOffer(this.user.token, this.user.userDB.email, idProject).subscribe( data =>{
       if(this.project.err){
+        $('#projectModal').modal('close');
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
       } else {
@@ -162,6 +170,7 @@ export class ProfileUserComponent implements OnInit {
       }
     },error => {
       console.log(error);
+      $('#projectModal').modal('close');
       this.messageService.takeMessage(error.err.message);
       this.router.navigate( ['/error']);
     });

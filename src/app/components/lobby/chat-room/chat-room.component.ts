@@ -11,10 +11,10 @@ declare var $: any;
 })
 export class ChatRoomComponent implements OnInit, OnDestroy {
   chatId: any;
+  projectName: any;
   user: any = {};
   email: string;
   chatInit: any;
-  messageData: any;
   messageArray:any = [];
   messageArrayLength = false;
   cont = 0;
@@ -36,6 +36,7 @@ export class ChatRoomComponent implements OnInit, OnDestroy {
       this.email = this.user.companyDB.email;
     }
     this.chatId = localStorage.getItem("chatID");
+    this.projectName = localStorage.getItem("projectName");
     console.log(this.chatId);
     this.controller.getDeliveries(this.chatId).subscribe(data => {
       this.delivs = data;
