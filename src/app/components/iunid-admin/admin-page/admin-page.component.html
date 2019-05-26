@@ -68,7 +68,7 @@
             <section id="content3" class="tab-content tab_section">
               <ul>
                 <li *ngFor="let user of usersDB; let i = index">
-                  <div *ngIf="user.userType === 'ADMIN_ROLE'">
+                  <div *ngIf="user.userType === 'ADMIN_ROLE' && user.email !== email">
                     <ul class="collection">
                       <li class="collection-item">
                         <div class="row" style="margin-top: 15px">

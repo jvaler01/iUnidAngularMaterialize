@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import {ControllerService} from '../../../services/controller.service';
-import {MessagesService} from '../../../services/sockets/messages.service';
 import {ErrorServiceService} from '../../../services/error-service.service';
 declare  var $: any;
 @Component({
@@ -18,26 +17,38 @@ export class ProfileUserComponent implements OnInit {
     }
   };
   projectId;
+  checkProjectRequestError:any;
+  projectRequest:any = {
+    messages:{}
+  };
+  project: any = {
+    internalProject: {}
+  };
   constructor( private controller: ControllerService,
                private router: Router,
-               private messageService: ErrorServiceService,
-               private messages: MessagesService) {
+               private messageService: ErrorServiceService) {
     //this.messages.getData().subscribe(data=>console.log(data));
     this.user = JSON.parse(localStorage.getItem('user'));
-    console.log("this.user");
-    console.log(this.user.token);
-    console.log(this.user.userDB.email);
     this.controller.getUser(this.user.token, this.user.userDB.email).subscribe( data => {
       this.data = data;
-      //this.data.user.img = 'image-155.jpg';
-      this.data.user.img = 'image-1558281501964.jpg';
       if(this.data.err){
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
       }
-      console.log(this.data);
     }, error => {
       console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
+    this.controller.getUserMessages(this.user.token, this.user.userDB.email).subscribe( data => {
+      this.checkProjectRequestError = data;
+      if(this.checkProjectRequestError.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }
+      this.projectRequest = data;
+      this.checkProjectRequestError = this.projectRequest.messages.pendingMessages.length;
+    }, error => {
       this.messageService.takeMessage(error.err.message);
       this.router.navigate( ['/error']);
     });
@@ -50,6 +61,7 @@ export class ProfileUserComponent implements OnInit {
     $(document).ready(function(){
       $('.modal').modal();
     });
+    $('.dropdown-trigger').dropdown();
   }
 
   edit(){
@@ -89,14 +101,96 @@ export class ProfileUserComponent implements OnInit {
   deleteProject(projectId: any){
     console.log(projectId);
     this.controller.deleteExternalProject(this.user.token, projectId, this.user.userDB.email).subscribe( data => {
-      console.log(data);
+
       this.data = data;
       if(this.data.err){
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
       }else {
-        this.router.navigate(['/userProfile']);
+        this.refreshData();
+        $('#deleteProjectModal').modal('close');
       }
+    }, error => {
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
+  }
+
+  showProject(idProject: any){
+    console.log(idProject);
+    this.controller.getProjectsById(this.user.token, this.user.userDB.email, idProject).subscribe( data =>{
+      this.project = data;
+      if(this.project.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }
+      console.log(this.project);
+      $('#projectModal').modal('open');
+    },error => {
+      console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
+  }
+
+  acceptOffer(idProject: any){
+    console.log(idProject);
+    this.controller.acceptOffer(this.user.token, this.user.userDB.email, idProject).subscribe( data =>{
+      if(this.project.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      } else {
+        this.refreshData();
+        $('#projectModal').modal('close');
+      }
+    },error => {
+      console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
+  }
+
+  denyOffer(idProject: any){
+    console.log(idProject);
+    this.controller.denyOffer(this.user.token, this.user.userDB.email, idProject).subscribe( data =>{
+      if(this.project.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      } else {
+        this.refreshData();
+        $('#projectModal').modal('close');
+      }
+    },error => {
+      console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
+  }
+
+  refreshData(){
+    this.controller.getUser(this.user.token, this.user.userDB.email).subscribe( data => {
+      this.data = data;
+      console.log(this.data);
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }
+      console.log(this.data);
+    }, error => {
+      console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
+    this.controller.getUserMessages(this.user.token, this.user.userDB.email).subscribe( data => {
+      this.checkProjectRequestError = data;
+      if(this.checkProjectRequestError.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
+      }
+      this.projectRequest = data;
+      this.checkProjectRequestError = this.projectRequest.messages.pendingMessages.length;
+      console.log(this.checkProjectRequestError);
+      console.log(this.projectRequest);
     }, error => {
       console.log(error);
       this.messageService.takeMessage(error.err.message);

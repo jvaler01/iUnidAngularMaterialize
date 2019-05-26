@@ -10,6 +10,7 @@ import {ErrorServiceService} from '../../../services/error-service.service';
 })
 export class AdminPageComponent implements OnInit {
   user: any = {};
+  email: any = "";
   data: any = {};
   usersDB: any = [];
   companiesDB: any = [];
@@ -20,7 +21,7 @@ export class AdminPageComponent implements OnInit {
     console.log("this.user");
     console.log(this.user.token);
     console.log(this.user.userDB.email);
-
+    this.email = this.user.userDB.email;
     this.controller.getUsers(this.user.token, this.user.userDB.email, this.user.userDB.userType).subscribe( data => {
       this.data = data;
       if(this.data.err){

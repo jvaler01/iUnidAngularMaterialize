@@ -12,7 +12,7 @@
             <div class="row">
               <div class="input-field col s12">
                 <input id="first_name" type="text" class="" formControlName="name" [ngClass]="{'invalid': form.get('name').errors?.required }">
-                <label for="first_name" active>Nombre</label>
+                <label for="first_name" class="active">Nombre</label>
                 <div *ngIf="form.get('name').errors?.required" class="red-text">
                   Este campo es requerido
                 </div>
@@ -25,7 +25,7 @@
               <div class="input-field col s12">
                 <textarea id="desc" class="materialize-textarea" formControlName="desc"
                           [ngClass]="{'invalid': !form.controls['desc'].valid }"></textarea>
-                <label for="desc" active>Descripción</label>
+                <label for="desc" class="active">Descripción</label>
                 <div *ngIf="!form.controls['desc'].valid" class="red-text">
                   Mínimo 50 caracteres
                 </div>

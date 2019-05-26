@@ -45,6 +45,7 @@ export class EditInternalComponent implements OnInit, OnDestroy {
 
   data: any = {};
   project: any = {};
+  fileUpload: File = null;
   constructor(private router: Router,
               private messageService: ErrorServiceService,
               private controller: ControllerService) {
@@ -110,6 +111,16 @@ export class EditInternalComponent implements OnInit, OnDestroy {
     });
   }
 
+  selectionFile( file: File ) {
+    if (!file) {
+      this.fileUpload = null;
+      return;
+    }
+
+    this.fileUpload = file;
+    console.log(this.fileUpload)
+  }
+
   checkTags(){
     console.log("in");
     var chipData= M.Chips.getInstance($('.chips-initial')).chipsData;
@@ -159,7 +170,6 @@ export class EditInternalComponent implements OnInit, OnDestroy {
     internalProjectData.counterOffer = this.form.get('counteroffer').value;
     internalProjectData.category = this.form.get('category').value;
     internalProjectData.initialDate = new Date();
-    internalProjectData.files = ':(';
     internalProjectData.id = this.project.id;
     console.log(internalProjectData);
     this.controller.editInternalProject(this.user.token, internalProjectData).subscribe( data => {
@@ -171,10 +181,13 @@ export class EditInternalComponent implements OnInit, OnDestroy {
         this.router.navigate( ['/error']);
       }else {
         console.log(data);
+        if(this.fileUpload !== null) {
+          this.saveFile(this.data.project._id);
+        }
         if (JSON.parse(localStorage.getItem('user')).userDB) {
-          this.router.navigate(['/iUnidUser/userProfile']);
+          this.router.navigate(['/iUnidUser/userProjects']);
         } else {
-          this.router.navigate(['/iUnidCompany/companyProfile']);
+          this.router.navigate(['/iUnidCompany/companyProjects']);
         }
       }
     }, error => {
@@ -183,6 +196,13 @@ export class EditInternalComponent implements OnInit, OnDestroy {
       this.router.navigate( ['/error']);
     });
     console.log(this.form.value);
+  }
+
+  saveFile(id: any){
+    this.controller.saveFileProject(this.fileUpload, id).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
   }
 
   ngOnDestroy(): void {

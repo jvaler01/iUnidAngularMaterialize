@@ -4,8 +4,6 @@ import { HttpHeaders } from '@angular/common/http';
 import {User} from '../models/user';
 import {map} from 'rxjs/operators';
 import {Company} from '../models/Company';
-import {reject, resolve} from 'q';
-import {compilePipeFromMetadata} from '@angular/compiler';
 
 @Injectable({
   providedIn: 'root'
@@ -167,6 +165,22 @@ export class ControllerService {
     }));
   }
 
+  getUserMessages( token: any, email:any ) {
+    let data = {
+      email: email
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}showMessagesCollaborator`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
   getCompany( token: any, email:any ) {
     let data = {
       email: email
@@ -183,7 +197,7 @@ export class ControllerService {
     }));
   }
 
-  editUser( token: any, user: User, file: File) {
+  editUser( token: any, user: User) {
 
 
 
@@ -200,7 +214,7 @@ export class ControllerService {
   }
 
   saveImg(file: File, email: any){
-    let url = `${this.apiUrl}uploadfile`;
+    let url = `${this.apiUrl}uploadImage`;
     let formData = new FormData();
     formData.append("image", file, file.name);
     formData.set("email", email);
@@ -208,6 +222,25 @@ export class ControllerService {
       console.log(res);
       return res;
     }));
+  }
+
+  saveFileProject(file: File, id: any){
+    let url = `${this.apiUrl}uploadFile`;
+    let formData = new FormData();
+    formData.append("myFile", file, file.name);
+    formData.set("id", id);
+    return this.http.post(url, formData ).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  async saveFile(file: File, id: any): Promise<any> {
+    let url = `${this.apiUrl}uploadFileChat`;
+    let formData = new FormData();
+    formData.append("myFile", file, file.name);
+    formData.set("id", id);
+    return this.http.post(url, formData ).toPromise();
   }
 
   editCompany( token: any, company: Company) {
@@ -233,6 +266,39 @@ export class ControllerService {
       'token': token
     });
     let url = `${this.apiUrl}obtainAllProjects`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  getProjectsById( token: any, email:any, id: any) {
+    let data = {
+      email: email,
+      id: id
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}obtainProjectsById`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  getProjectsNameAndId( token: any, email:any) {
+    let data = {
+      email: email
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}obtainProjectNameAndId`;
     return this.http.post(url, body, {headers}).pipe(map( res =>{
       console.log(res);
       return res;
@@ -374,6 +440,24 @@ export class ControllerService {
     }));
   }
 
+  sendMessageCollaborator( token: any, projectId:any , userEmail: any, email: any) {
+    let data = {
+      email: email,
+      userEmail: userEmail,
+      id: projectId
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}sendMessageCollaborator`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
   acceptPendingRequest( token: any, email: any, projectId: any, userEmail: any) {
     let data = {
       email: email,
@@ -392,6 +476,23 @@ export class ControllerService {
     }));
   }
 
+  acceptOffer( token: any, email: any, projectId: any) {
+    let data = {
+      email: email,
+      id: projectId
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}acceptPendingRequestCollaborator`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
   denyPendingRequest( token: any, email: any, projectId: any, userEmail: any) {
     let data = {
       email: email,
@@ -404,6 +505,23 @@ export class ControllerService {
       'token': token
     });
     let url = `${this.apiUrl}denyPendingRequest`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  denyOffer( token: any, email: any, projectId: any) {
+    let data = {
+      email: email,
+      id: projectId
+    };
+    let body = JSON.stringify(data);
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json',
+      'token': token
+    });
+    let url = `${this.apiUrl}denyPendingRequestCollaborator`;
     return this.http.post(url, body, {headers}).pipe(map( res =>{
       console.log(res);
       return res;
@@ -536,6 +654,44 @@ export class ControllerService {
       console.log(res);
       return res;
     }));
+  }
+
+  getDeliveries(chatId: any){
+    let id = chatId;
+    let data = {
+      id: id
+    };
+    let headers = new HttpHeaders({
+      'Content-Type':'application/json'
+    });
+    let body = JSON.stringify(data);
+    let url = `${this.apiUrl}getDeliveriesById`;
+    return this.http.post(url, body, {headers}).pipe(map( res =>{
+      console.log(res);
+      return res;
+    }));
+  }
+
+  downloadReport(file){
+    // Create url
+    let url = `${this.apiUrl}download`;
+    var body = { filename: file };
+
+    return this.http.post(url, body, {
+      responseType: "blob",
+      headers: new HttpHeaders().append("Content-Type", "application/json")
+    });
+  }
+
+  downloadFile(file){
+    // Create url
+    let url = `${this.apiUrl}downloadFile`;
+    var body = { filename: file };
+
+    return this.http.post(url, body, {
+      responseType: "blob",
+      headers: new HttpHeaders().append("Content-Type", "application/json")
+    });
   }
 
   //--- ADMIN ----

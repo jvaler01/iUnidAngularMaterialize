@@ -62,11 +62,7 @@ export class RegisterCompanyComponent implements OnInit {
   }
 
   sendData() {
-    let companySesion2 = JSON.parse(localStorage.getItem('user'));
-    let email2 = companySesion2.companyDB.email;
-    if(this.imageUpload !== null){
-      this.saveImg(email2);
-    }
+
     console.log(this.form.get('img'));
     let companyData:any = {};
     companyData.name = this.form.get('name').value;
@@ -84,6 +80,7 @@ export class RegisterCompanyComponent implements OnInit {
     }
     if(companyData.userType === 'COMPANY_ROLE') {
       companyData.email = this.form.get('email').value;
+
       this.controller.registerCompany(companyData).subscribe(data => {
         this.data = data;
         if(this.data.err){
@@ -93,6 +90,9 @@ export class RegisterCompanyComponent implements OnInit {
           if(this.data.err){
             alert(this.data.err);
           }else{
+            if(this.imageUpload !== null){
+              this.saveImg(companyData.email);
+            }
             this.router.navigate(['/login']);
           }
         }
@@ -105,6 +105,9 @@ export class RegisterCompanyComponent implements OnInit {
       companyData.email = userSesion.userDB.email;
       companyData.userEmail = this.form.get('email').value;
       companyData.newUserType = 'COMPANY_ROLE';
+      if(this.imageUpload !== null){
+        this.saveImg(companyData.userEmail);
+      }
       this.controller.newUserOrCompany( userSesion.token, companyData).subscribe( data => {
         this.data = data;
         if(this.data.err){

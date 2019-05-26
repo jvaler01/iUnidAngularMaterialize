@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ControllerService} from '../../../services/controller.service';
 import {Router} from '@angular/router';
 import {ErrorServiceService} from '../../../services/error-service.service';
+import { saveAs } from "file-saver";
 declare var $: any;
 
 @Component({
@@ -30,10 +31,7 @@ export class ProjectsPageComponent implements OnInit {
                private controller: ControllerService ) {
     // this.data = this.data1;
     this.user = JSON.parse(localStorage.getItem('user'));
-    console.log("this.user");
-    console.log(this.user.token);
     if (this.user.userDB) {
-      console.log(this.user.userDB.email);
       this.email = this.user.userDB.email;
       this.type = 'user';
 
@@ -45,18 +43,17 @@ export class ProjectsPageComponent implements OnInit {
         }
         console.log(this.projectsThatHeWorks);
       }, error => {
-        console.log(error);
         this.messageService.takeMessage(error.err.message);
         this.router.navigate( ['/error']);
       });
 
     } else if(this.user.companyDB){
-      console.log(this.user.companyDB.email);
       this.email = this.user.companyDB.email;
       this.type = 'company';
     }
 
     this.controller.getProjects(this.user.token, this.email).subscribe( data => {
+      this.data = data;
       this.projects = data;
       console.log(this.projects);
       if(this.projects.err){
@@ -65,7 +62,6 @@ export class ProjectsPageComponent implements OnInit {
       }
       //this.data = this.projects;
     }, error => {
-      console.log(error);
       this.messageService.takeMessage(error.err.message);
       this.router.navigate( ['/error']);
     });
@@ -95,12 +91,12 @@ export class ProjectsPageComponent implements OnInit {
   }
 
   load(param: string) {
-    if(param === 'client'){
+    if(param === 'employer'){
       this.data = null;
       this.data = this.projects;
       this.client = true;
     }
-    if(param === 'employer'){
+    if(param === 'worker'){
       this.data = null;
       this.data = this.projectsThatHeWorks;
       this.client = false;
@@ -138,11 +134,6 @@ export class ProjectsPageComponent implements OnInit {
       }else {
         this.refreshData();
         $('#deleteModal').modal('close');
-        if (JSON.parse(localStorage.getItem('user')).userDB) {
-          this.router.navigate(['/iUnidUser/userProjects']);
-        } else {
-          this.router.navigate(['/iUnidCompany/companyProjects']);
-        }
       }
     }, error => {
       console.log(error);
@@ -166,12 +157,6 @@ export class ProjectsPageComponent implements OnInit {
         this.router.navigate( ['/error']);
       }else {
         this.refreshData();
-
-        if (JSON.parse(localStorage.getItem('user')).userDB) {
-          this.router.navigate(['/iUnidUser/userProjects']);
-        } else {
-          this.router.navigate(['/iUnidCompany/companyProjects']);
-        }
       }
     }, error => {
       console.log(error);
@@ -195,12 +180,6 @@ export class ProjectsPageComponent implements OnInit {
         this.router.navigate( ['/error']);
       }else {
         this.refreshData();
-
-        if (JSON.parse(localStorage.getItem('user')).userDB) {
-          this.router.navigate(['/iUnidUser/userProjects']);
-        } else {
-          this.router.navigate(['/iUnidCompany/companyProjects']);
-        }
       }
     }, error => {
       console.log(error);
@@ -236,12 +215,6 @@ export class ProjectsPageComponent implements OnInit {
           this.router.navigate( ['/error']);
         }else {
           this.refreshData();
-
-          if (JSON.parse(localStorage.getItem('user')).userDB) {
-            this.router.navigate(['/iUnidUser/userProjects']);
-          } else {
-            this.router.navigate(['/iUnidCompany/companyProjects']);
-          }
         }
       }, error => {
         console.log(error);
@@ -269,12 +242,6 @@ export class ProjectsPageComponent implements OnInit {
         this.router.navigate( ['/error']);
       }else {
         this.refreshData();
-
-        if (JSON.parse(localStorage.getItem('user')).userDB) {
-          this.router.navigate(['/iUnidUser/userProjects']);
-        } else {
-          this.router.navigate(['/iUnidCompany/companyProjects']);
-        }
       }
     }, error => {
       console.log(error);
@@ -299,11 +266,6 @@ export class ProjectsPageComponent implements OnInit {
       }else {
         this.refreshData();
 
-        if (JSON.parse(localStorage.getItem('user')).userDB) {
-          this.router.navigate(['/iUnidUser/userProjects']);
-        } else {
-          this.router.navigate(['/iUnidCompany/companyProjects']);
-        }
       }
     }, error => {
       console.log(error);
@@ -328,11 +290,6 @@ export class ProjectsPageComponent implements OnInit {
       }else {
         this.refreshData();
 
-        if (JSON.parse(localStorage.getItem('user')).userDB) {
-          this.router.navigate(['/iUnidUser/userProjects']);
-        } else {
-          this.router.navigate(['/iUnidCompany/companyProjects']);
-        }
       }
     }, error => {
       console.log(error);
@@ -368,6 +325,7 @@ export class ProjectsPageComponent implements OnInit {
 
     this.controller.getProjects(this.user.token, this.email).subscribe( data => {
       this.projects = data;
+      this.data = data;
       if(this.projects.err){
         this.messageService.takeMessage(this.projects.err.message);
         this.router.navigate( ['/error']);
@@ -448,6 +406,9 @@ export class ProjectsPageComponent implements OnInit {
       if(this.data.err){
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
+      }else {
+        $('#evaluateModal').modal('close');
+        this.refreshData();
       }
     }, error => {
       console.log(error);
@@ -458,5 +419,19 @@ export class ProjectsPageComponent implements OnInit {
 
   evaluateInput(evaluateData: any){
     this.evaluateValue = evaluateData;
+  }
+
+  download(file: string) {
+    console.log("RECIBO: " + file);
+    let filename = file;
+    this.controller.downloadFile(filename).subscribe(
+      data => {
+        saveAs(data, filename);
+      },
+      err => {
+        alert("Problem while downloading the file.");
+        console.error(err);
+      }
+    );
   }
 }

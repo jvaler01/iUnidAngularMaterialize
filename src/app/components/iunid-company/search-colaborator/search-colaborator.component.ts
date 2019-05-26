@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ControllerService} from '../../../services/controller.service';
 import {ErrorServiceService} from '../../../services/error-service.service';
 import {Router} from '@angular/router';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 declare var $: any;
 declare var M: any;
 @Component({
@@ -10,25 +11,39 @@ declare var M: any;
   styleUrls: ['./search-colaborator.component.css']
 })
 export class SearchColaboratorComponent implements OnInit {
-
+  form: FormGroup;
   user: any = {};
   data: any = {};
   skills:any = [];
   courses:any = [];
   certificates:any = [];
+  companyProjects:any;
+  colaboratorId: any;
   constructor( private messageService: ErrorServiceService,
                private router: Router,
                private controller: ControllerService ) {
+    this.form = new FormGroup({
+      idProject: new FormControl('0', Validators.pattern('[^0]+')),
+    });
     this.user = JSON.parse(localStorage.getItem('user'));
     console.log("this.user");
     console.log(this.user.token);
     console.log(this.user.companyDB.email);
-
-
+    this.controller.getProjectsNameAndId(this.user.token, this.user.companyDB.email).subscribe(data =>{
+      // @ts-ignore
+      this.companyProjects = data.internalProjects;
+      console.log(this.companyProjects)
+    }, error =>{
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
   }
 
   ngOnInit() {
 
+    $(document).ready(function(){
+      $('select').formSelect();
+    });
     $(document).ready(function() {
       $('.collapsible').collapsible();
     });
@@ -37,6 +52,9 @@ export class SearchColaboratorComponent implements OnInit {
 
     $(document).ready(function(){
       $('.tooltipped').tooltip();
+    });
+    $(document).ready(function(){
+      $('.modal').modal();
     });
   }
 
@@ -65,7 +83,6 @@ export class SearchColaboratorComponent implements OnInit {
     console.log(this.skills);
     console.log(this.certificates);
     console.log(this.courses);
-    console.log(data);
     if(option === 'skills'){
       //this.categ = this.categ.split(',');
       //console.log(this.categ);
@@ -116,14 +133,20 @@ export class SearchColaboratorComponent implements OnInit {
     }
   }
 
-
-  joinProject(projectId: any){
-    console.log(projectId);
-    this.controller.joinProject(this.user.token, this.user.companyDB.email, projectId).subscribe( data => {
+  setColaboratorId(id: string){
+    this.colaboratorId = id;
+  }
+  sendColaboratorRequest(){
+    this.controller.sendMessageCollaborator(this.user.token, this.form.get("idProject").value, this.colaboratorId, this.user.companyDB.email).subscribe( data => {
       this.data = data;
       if(this.data.err){
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
+      } else {
+        $(document).ready(function(){
+          $('.modal').modal('close');
+
+        });
       }
       console.log(this.data);
     }, error => {
@@ -132,5 +155,4 @@ export class SearchColaboratorComponent implements OnInit {
       this.router.navigate( ['/error']);
     });
   }
-
 }

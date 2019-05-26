@@ -8,8 +8,8 @@
 
 
 
-  <li><a [routerLink]="[sidebarData.option.route]" class="collapsible-header waves-effect waves-teal white-text">{{ sidebarData.option.name }}</a></li>
-  <li class="no-padding" *ngFor="let option of sidebarData.option2">
+  <!--<li><a [routerLink]="[sidebarData.option.route]" class="collapsible-header waves-effect waves-teal white-text">{{ sidebarData.option.name }}</a></li>-->
+  <li class="no-padding" *ngFor="let option of sidebarData.option1">
     <ul class="collapsible collapsible-accordion">
       <li class="light-blue darken-3"><a class="collapsible-header waves-effect waves-teal white-text">{{ option.name }}</a>
         <div class="collapsible-body">
@@ -20,7 +20,7 @@
       </li>
     </ul>
   </li>
-  <li *ngIf="sidebarData.option3.name !== 'false'"><a [routerLink]="[sidebarData.option3.route]" class="waves-effect waves-teal white-text">{{ sidebarData.option3.name }}</a></li>
-  <li *ngIf="sidebarData.option4.name !== 'false'"><a [routerLink]="[sidebarData.option4.route]" (click)="logout()" class="waves-effect waves-teal white-text">{{ sidebarData.option4.name }}</a></li>
+  <li *ngIf="sidebarData.option2.name !== 'false'"><a [routerLink]="[sidebarData.option2.route]" class="waves-effect waves-teal white-text">{{ sidebarData.option2.name }}</a></li>
+  <li *ngIf="sidebarData.option3.name !== 'false'"><a [routerLink]="[sidebarData.option3.route]" (click)="logout()" class="waves-effect waves-teal white-text">{{ sidebarData.option3.name }}</a></li>
 </ul>
 

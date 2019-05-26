@@ -36,6 +36,18 @@
                 </div>
               </div>
             </div>
+            <div class="row">
+              <div class="col s12 center">
+                <!-- Dropdown Trigger -->
+                <a  class='dropdown-trigger btn'
+                    [ngClass]="{'disabled': checkProjectRequestError === 0}"
+                    style="margin-left: 5px" data-target='dropdown1'>Te buscan para estos proyectos!</a>
+                <!-- Dropdown Structure -->
+                <ul id='dropdown1' class='dropdown-content'>
+                  <li *ngFor="let project of projectRequest.messages.pendingMessages"><a (click)="showProject(project.ProjectId)">{{ project.ProjectName }}</a></li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -132,5 +144,20 @@
   <div class="modal-footer">
     <a (click)="deleteProject(projectId)" class="btn waves-effect waves-green">Si</a>
     <a class="modal-close btn waves-effect waves-green" style="margin-left: 5px;">No</a>
+  </div>
+</div>
+
+<div id="projectModal" class="modal">
+  <div class="modal-content">
+    <h4>{{ project.internalProject.name }}</h4>
+    <p>{{ project.internalProject.description }}</p>
+    <p>{{ project.internalProject.deliveryDate | date }}</p>
+    <p>{{ project.internalProject.minPrice }}€ - {{ project.internalProject.maxPrice }}€</p>
+    <hr>
+    <button class="btn" style="margin-right: 5px" (click)="acceptOffer(project.internalProject._id)">Aceptar</button>
+    <button class="btn red" (click)="denyOffer(project.internalProject._id)">Rechazar</button>
+  </div>
+  <div class="modal-footer">
+    <a class="modal-close waves-effect waves-green btn-flat">Cerrar</a>
   </div>
 </div>

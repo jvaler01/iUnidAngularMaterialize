@@ -1,36 +1,67 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import * as io from 'socket.io-client';
-
 @Injectable({
   providedIn: 'root'
 })
 export class MessagesService {
-  observable:Observable<any>;
   socket;
-  private data1 = new BehaviorSubject({});
-  data = this.data1.asObservable();
+  uploader;
+  private loadMessagesObservable = new BehaviorSubject({});
+  private newMessageObservable = new BehaviorSubject({});
+  private show = new BehaviorSubject(false);
+  loadMessages = this.loadMessagesObservable.asObservable();
+  newMessageData = this.newMessageObservable.asObservable();
+  showData = this.show.asObservable();
   constructor() {
     this.socket=io('http://localhost:3000',{transports: ['websocket']});
 
   }
   chatInit(email: string, id: string){
     console.log(id);
-    this.socket.emit('user', {email: email, id: "5ce59eda6c5d0a1dace5e048"})
+    this.socket=io('http://localhost:3000',{transports: ['websocket']});
+
+    this.socket.emit('user', {email: email, id: id})
   }
 
   chatLoad(){
-    /*let observable = new Observable<{}>(observer=>{
-      this.socket.on('messages', (data)=>{
-        console.log(data);
-        observer.next(data);
-      });
-    });
-    return observable;*/
     this.socket.on('messages', (data)=>{
       console.log(data);
-      this.data1.next(data);
+      this.loadMessagesObservable.next(data);
     });
-    return this.data;
+    return this.loadMessages;
+  }
+
+  closeSocket(){
+    this.socket.disconnect();
+  }
+
+  /*newMessage(){
+    this.socket.on('chat message', (data)=>{
+      this.newMessageObservable.next(data);
+      //this.show.next(true);
+    });
+    return this.newMessageData;
+  }*/
+
+  getMessages = () => {
+    return Observable.create((observer) => {
+      this.socket.on('chat message', (message) => {
+        observer.next(message);
+      });
+    });
+  };
+
+  getFiles = () => {
+    return Observable.create((observer) => {
+      this.socket.on('chatDelivery', (message) => {
+        observer.next(message);
+      });
+    });
+  };
+
+  sendMessage(message: any){
+    console.log(message);
+    this.socket.emit('chat message', message);
   }
 }

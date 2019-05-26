@@ -87,6 +87,7 @@ export class RegisterUserComponent implements OnInit {
       this.valid = true;
     }
   }
+
   checkCourses(){
     console.log("in");
     let chipData= M.Chips.getInstance($('.chips-courses')).chipsData;
@@ -97,6 +98,7 @@ export class RegisterUserComponent implements OnInit {
     }
     this.checkValid();
   }
+
   checkSkills(){
     console.log("in");
     let chipData= M.Chips.getInstance($('.chips-skills')).chipsData;
@@ -107,6 +109,7 @@ export class RegisterUserComponent implements OnInit {
     }
     this.checkValid();
   }
+
   checkCertificates(){
     console.log("in");
     let chipData= M.Chips.getInstance($('.chips-certificates')).chipsData;
@@ -119,11 +122,6 @@ export class RegisterUserComponent implements OnInit {
   }
 
   sendData() {
-    let userSesion2 = JSON.parse(localStorage.getItem('user'));
-    let email2 = userSesion2.userDB.email;
-    if(this.imageUpload !== null){
-      this.saveImg(email2);
-    }
     let coursesData= M.Chips.getInstance($('.chips-courses')).chipsData;
     if( coursesData.length !== 0) {
       for (let i = 0; i < coursesData.length; i++){
@@ -160,6 +158,9 @@ export class RegisterUserComponent implements OnInit {
           this.messageService.takeMessage(this.data.err.message);
           this.router.navigate( ['/error']);
         }else {
+          if(this.imageUpload !== null){
+            this.saveImg(userData.email);
+          }
           this.router.navigate(['/login']);
         }
       }, error => {
@@ -172,6 +173,9 @@ export class RegisterUserComponent implements OnInit {
       userData.userEmail = this.form.get('email').value;
       userData.email = userSesion.userDB.email;
       userData.newUserType = 'USER_ROLE';
+      if(this.imageUpload !== null){
+        this.saveImg(userData.userEmail);
+      }
       this.controller.newUserOrCompany( userSesion.token, userData).subscribe( data => {
         this.data = data;
         if(this.data.err){
@@ -188,6 +192,7 @@ export class RegisterUserComponent implements OnInit {
     }
     console.log(this.form.value);
   }
+
   saveImg(email: any){
     this.controller.saveImg(this.imageUpload, email).subscribe(
       (res) => console.log(res),

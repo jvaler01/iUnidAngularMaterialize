@@ -10,14 +10,14 @@ declare  var $: any;
 })
 export class SidebarComponent implements OnInit {
   sidebarData = {
-    option: {
-      name: "Login",
-      route: "login"
-    },
-    option2:[
+    option1:[
       {
-        name: "Registro",
+        name: "Opciones",
         values: [
+          {
+            name: "Login",
+            route: "login"
+          },
           {
             name: "Usuario",
             route: "regUser"
@@ -30,8 +30,8 @@ export class SidebarComponent implements OnInit {
         ]
       }
     ],
-    option3: { name: "false", route: "false" },
-    option4: { name: "false", route: "false"  }
+    option2: { name: "false", route: "false" },
+    option3: { name: "false", route: "false"  }
     };
   constructor( private router: Router,
                private sesionStatus: SesionStatusService) {
@@ -40,11 +40,7 @@ export class SidebarComponent implements OnInit {
       if(localStorage.getItem('user')){
         if(JSON.parse(localStorage.getItem('user')).userDB && JSON.parse(localStorage.getItem('user')).userDB.userType === 'USER_ROLE'){
           this.sidebarData = {
-            option: {
-              name: "Inicio",
-              route: "/iUnidUser/home"
-            },
-            option2:[
+            option1:[
               {
                 name: "Usuario",
                 values: [
@@ -79,11 +75,11 @@ export class SidebarComponent implements OnInit {
                 ]
               }
             ],
-            option3: {
+            option2: {
               name: "Ayuda",
               route: "/iUnidUser/help"
             },
-            option4: {
+            option3: {
               name: "Cerrar Sesión",
               route: ""
             },
@@ -91,16 +87,12 @@ export class SidebarComponent implements OnInit {
         }
         if(JSON.parse(localStorage.getItem('user')).userDB && JSON.parse(localStorage.getItem('user')).userDB.userType === 'ADMIN_ROLE'){
           this.sidebarData = {
-            option: {
+            option1:[],
+            option2: {
               name: "Admin",
               route: "/iUnidAdmin/admin"
             },
-            option2:[],
             option3: {
-              name: "Ayuda",
-              route: "/iUnidUser/help"
-            },
-            option4: {
               name: "Cerrar Sesión",
               route: ""
             },
@@ -108,11 +100,7 @@ export class SidebarComponent implements OnInit {
         }
         if(JSON.parse(localStorage.getItem('user')).companyDB){
           this.sidebarData = {
-            option: {
-              name: "Inicio",
-              route: "/iUnidCompany/home"
-            },
-            option2:[
+            option1:[
               {
                 name: "Empresa",
                 values: [
@@ -147,11 +135,11 @@ export class SidebarComponent implements OnInit {
                 ]
               }
             ],
-            option3: {
+            option2: {
               name: "Ayuda",
               route: "/iUnidCompany/help"
             },
-            option4: {
+            option3: {
               name: "Cerrar Sesión",
               route: ""
             }
@@ -159,14 +147,14 @@ export class SidebarComponent implements OnInit {
         }
       } else {
         this.sidebarData = {
-          option: {
-            name: "Iniciar Sesión",
-            route: "login"
-          },
-          option2:[
+          option1:[
             {
-              name: "Registro",
+              name: "Opciones",
               values: [
+                {
+                  name: "Login",
+                  route: "login"
+                },
                 {
                   name: "Usuario",
                   route: "regUser"
@@ -179,8 +167,8 @@ export class SidebarComponent implements OnInit {
               ]
             }
           ],
-          option3: { name: "false", route: "false" },
-          option4: { name: "false", route: "false"  }
+          option2: { name: "false", route: "false" },
+          option3: { name: "false", route: "false"  }
         };
       }
     });

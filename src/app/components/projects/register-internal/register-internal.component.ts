@@ -42,6 +42,8 @@ export class RegisterInternalComponent implements OnInit {
       label: "Otros"
     }
   ];
+
+  fileUpload: File = null;
   constructor(private router: Router,
               private messageService: ErrorServiceService,
               private controller: ControllerService) {
@@ -97,6 +99,16 @@ export class RegisterInternalComponent implements OnInit {
     }
   }
 
+  selectionFile( file: File ) {
+    if (!file) {
+      this.fileUpload = null;
+      return;
+    }
+
+    this.fileUpload = file;
+    console.log(this.fileUpload)
+  }
+
   sendData() {
     console.log(this.form);
 
@@ -136,20 +148,24 @@ export class RegisterInternalComponent implements OnInit {
     internalProjectData.counterOffer = this.form.get('counteroffer').value;
     internalProjectData.category = this.form.get('category').value;
     internalProjectData.initialDate = new Date();
-    internalProjectData.files = ':(';
     console.log(internalProjectData);
     this.controller.createInternalProject(this.user.token, internalProjectData).subscribe( data => {
       // localStorage.setItem('user', JSON.stringify(data));
       // this.router.navigate( ['/iUnidCompany']);
       this.data = data;
+      console.log(this.data);
+      console.log(this.data.internalProject._id);
       if(this.data.err){
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
       }else {
+        if(this.fileUpload !== null) {
+          this.saveFile(this.data.internalProject._id);
+        }
         if (JSON.parse(localStorage.getItem('user')).userDB) {
-          this.router.navigate(['/iUnidUser/userProfile']);
+          this.router.navigate(['/iUnidUser/userProjects']);
         } else {
-          this.router.navigate(['/iUnidCompany/companyProfile']);
+          this.router.navigate(['/iUnidCompany/companyProjects']);
         }
       }
     }, error => {
@@ -158,5 +174,12 @@ export class RegisterInternalComponent implements OnInit {
       this.router.navigate( ['/error']);
     });
     console.log(this.form.value);
+  }
+
+  saveFile(id: any){
+    this.controller.saveFileProject(this.fileUpload, id).subscribe(
+      (res) => console.log(res),
+      (err) => console.log(err)
+    );
   }
 }

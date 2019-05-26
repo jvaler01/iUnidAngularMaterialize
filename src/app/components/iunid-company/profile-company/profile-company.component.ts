@@ -17,7 +17,6 @@ export class ProfileCompanyComponent implements OnInit {
       'name':''
     }
   };
-  contactsCont : number;
   projectId;
   constructor( private controller: ControllerService,
                private router: Router,
@@ -32,12 +31,12 @@ export class ProfileCompanyComponent implements OnInit {
 
     this.controller.getCompany(this.user.token, this.user.companyDB.email).subscribe( data => {
       this.data = data;
+      console.log(this.data);
       if(this.data.err){
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
       }else {
         console.log(this.data);
-        this.contactsCont = Object.keys(this.data.company.contacts[0]).length;
       }
     }, error => {
       console.log(error);
@@ -55,6 +54,7 @@ export class ProfileCompanyComponent implements OnInit {
       $('.modal').modal();
     });
   }
+
   edit(){
     localStorage.setItem('dataCompany', JSON.stringify(this.data.company));
     this.router.navigate( ['/iUnidCompany/editProfile']);
@@ -98,8 +98,27 @@ export class ProfileCompanyComponent implements OnInit {
       if(this.data.err){
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
+      } else {
+        this.refreshData();
+        $('#deleteProjectModal').modal('close');
+      }
+
+    }, error => {
+      console.log(error);
+      this.messageService.takeMessage(error.err.message);
+      this.router.navigate( ['/error']);
+    });
+  }
+
+  refreshData(){
+    this.controller.getCompany(this.user.token, this.user.companyDB.email).subscribe( data => {
+      this.data = data;
+      console.log(this.data);
+      if(this.data.err){
+        this.messageService.takeMessage(this.data.err.message);
+        this.router.navigate( ['/error']);
       }else {
-        this.router.navigate(['/companyProfile']);
+        console.log(this.data);
       }
     }, error => {
       console.log(error);

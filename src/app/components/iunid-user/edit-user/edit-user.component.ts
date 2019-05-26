@@ -32,8 +32,10 @@ export class EditUserComponent implements OnInit, OnDestroy {
     this.data = JSON.parse(localStorage.getItem('dataUser'));
     console.log("this.user");
     console.log(this.data);
-    this.user.name = this.data.name.split(' ')[0];
-    this.user.lastName = this.data.name.split(' ')[1] + ' ' + this.data.name.split(' ')[2];
+    let index = this.data.name.indexOf(" ");
+    console.log(this.data.name.substring(0, index));
+    this.user.name = this.data.name.substring(0, index);
+    this.user.lastName = this.data.name.substring(index+1);
     this.user.description = this.data.description;
     this.user.courses = this.data.courses;
     this.user.certificates = this.data.certificates;
@@ -143,12 +145,6 @@ export class EditUserComponent implements OnInit, OnDestroy {
   sendData() {
     //console.log(this.imageUpload.name);
 
-    let userSesion2 = JSON.parse(localStorage.getItem('user'));
-    let email2 = userSesion2.userDB.email;
-    if(this.imageUpload !== null){
-      this.saveImg(email2);
-    }
-
     let coursesData= M.Chips.getInstance($('.chips-courses')).chipsData;
     if( coursesData.length !== 0) {
       for (let i = 0; i < coursesData.length; i++){
@@ -180,7 +176,10 @@ export class EditUserComponent implements OnInit, OnDestroy {
 
     console.log(userSesion);
     if(userData.userType === 'USER_ROLE'){
-      this.controller.editUser( userSesion.token, userData, this.imageUpload).subscribe( data => {
+      if(this.imageUpload !== null){
+        this.saveImg(userData.email);
+      }
+      this.controller.editUser( userSesion.token, userData).subscribe( data => {
         this.data = data;
         if(this.data.err){
           this.messageService.takeMessage(this.data.err.message);
@@ -195,6 +194,9 @@ export class EditUserComponent implements OnInit, OnDestroy {
       });
     }else if(userData.userType === 'ADMIN_ROLE'){
       userData.userEmail = this.data.email;
+      if(this.imageUpload !== null){
+        this.saveImg(userData.userEmail);
+      }
       this.controller.editUserAdmin( userSesion.token, userData).subscribe( data => {
         this.data = data;
         if(this.data.err){

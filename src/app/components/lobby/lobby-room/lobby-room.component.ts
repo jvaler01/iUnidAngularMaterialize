@@ -62,21 +62,9 @@ export class LobbyRoomComponent implements OnInit {
   ngOnInit() {
   }
 
-  /*load(param: string) {
-    if(param === 'client'){
-      this.data = null;
-      this.data = this.projects;
-      this.client = true;
-    }
-    if(param === 'employer'){
-      this.data = null;
-      this.data = this.projectsThatHeWorks;
-      this.client = false;
-    }
-  }*/
 
-  joinChat(projectId: any){
-    localStorage.setItem("projectID", projectId);
+  joinChat(chatId: any){
+    localStorage.setItem("chatID", chatId);
     this.router.navigate( ['/iUnidUser/chat']);
   }
 }

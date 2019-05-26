@@ -46,21 +46,19 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
     console.log(this.imageUpload)
   }
   sendData() {
-    let companySesion2 = JSON.parse(localStorage.getItem('user'));
-    let email2 = companySesion2.companyDB.email;
-    if(this.imageUpload !== null){
-      this.saveImg(email2);
-    }
+
     let companyData:any = {};
     companyData.name = this.form.get('name').value;
     companyData.description = this.form.get('desc').value;
     companyData.contactEmail = this.form.get('contactEmail').value;
-    companyData.img = ':)';
     console.log(companyData);
     let companySesion = JSON.parse(localStorage.getItem('user'));
     console.log(companyData);
     if(companySesion.companyDB) {
       companyData.email = companySesion.companyDB.email;
+      if(this.imageUpload !== null){
+        this.saveImg(companyData.email);
+      }
       this.controller.editCompany(companySesion.token, companyData).subscribe(data => {
         this.data = data;
         if(this.data.err){
@@ -78,6 +76,9 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
       companyData.email = companySesion.userDB.email;
       companyData.userType = companySesion.userDB.userType;
       companyData.userEmail = this.data.email;
+      if(this.imageUpload !== null){
+        this.saveImg(companyData.userEmail);
+      }
       this.controller.editCompanyAdmin(companySesion.token, companyData).subscribe(data => {
         this.data = data;
         if(this.data.err){
