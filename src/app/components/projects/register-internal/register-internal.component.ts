@@ -60,6 +60,14 @@ export class RegisterInternalComponent implements OnInit {
       counteroffer: new FormControl(false),
       category: new FormControl('0', Validators.pattern('[^0]+')),
     });
+    this.form.controls['minPrice'].setValidators([
+      Validators.required,
+      this.checkMaxPrice.bind(this.form)
+    ]);
+    this.form.controls['maxPrice'].setValidators([
+      Validators.required,
+      this.checkminPrice.bind(this.form)
+    ]);
     console.log(this.form)
   }
 
@@ -87,6 +95,26 @@ export class RegisterInternalComponent implements OnInit {
     $(document).ready(function(){
       $('.tooltipped').tooltip();
     });
+  }
+
+  checkMaxPrice(control: FormControl): any {
+    let forma: any = this;
+    if ( control.value > forma.controls['maxPrice'].value) {
+      return {
+        maxPrice : true
+      };
+    }
+    return null;
+  }
+
+  checkminPrice(control: FormControl): any {
+    let forma: any = this;
+    if ( control.value < forma.controls['minPrice'].value) {
+      return {
+        minPrice : true
+      };
+    }
+    return null;
   }
 
   checkTags(){

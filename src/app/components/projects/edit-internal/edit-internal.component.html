@@ -81,10 +81,13 @@
 
             <div class="row">
               <div class="input-field col s12">
-                <input id="maxPrice" type="number" class="" formControlName="maxPrice" [ngClass]="{'invalid': form.get('maxPrice').errors?.required }">
+                <input id="maxPrice" min="0" type="number" class="" formControlName="maxPrice" [ngClass]="{'invalid': form.get('maxPrice').errors?.required, 'invalid': !form.controls['maxPrice'].valid  }">
                 <label for="maxPrice" class="active">Precio máximo</label>
                 <div *ngIf="form.get('maxPrice').errors?.required" class="red-text">
                   Este campo es requerido
+                </div>
+                <div *ngIf="!form.controls['maxPrice'].valid" class="red-text">
+                  No puede ser más pequeño que el precio mínimo
                 </div>
               </div>
             </div>
@@ -93,10 +96,13 @@
 
             <div class="row">
               <div class="input-field col s12">
-                <input id="minPrice" type="number" class="" formControlName="minPrice" [ngClass]="{'invalid': form.get('minPrice').errors?.required }">
+                <input id="minPrice" min="0" type="number" class="" formControlName="minPrice" [ngClass]="{'invalid': form.get('minPrice').errors?.required, 'invalid': !form.controls['minPrice'].valid }">
                 <label for="minPrice" class="active">Precio mínimo</label>
                 <div *ngIf="form.get('minPrice').errors?.required" class="red-text">
                   Este campo es requerido
+                </div>
+                <div *ngIf="!form.controls['minPrice'].valid" class="red-text">
+                  No puede ser más grande que el precio máximo
                 </div>
               </div>
             </div>
@@ -122,7 +128,7 @@
             </div>
 
             <div class="center">
-              <button type="submit" class="waves-effect waves-light btn light-blue darken-4"  [ngClass]="{'disabled': !form.valid, 'disabled': !valid }">Guardar</button>
+              <button type="submit" class="waves-effect waves-light btn light-blue darken-4"  [ngClass]="{'disabled': !form.valid, 'disabled': !valid, 'disabled': !form.controls['minPrice'].valid, 'disabled': !form.controls['maxPrice'].valid  }">Guardar</button>
             </div>
           </form>
         </div>

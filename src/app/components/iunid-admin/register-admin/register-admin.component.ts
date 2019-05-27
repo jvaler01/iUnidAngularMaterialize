@@ -26,21 +26,21 @@ export class RegisterAdminComponent implements OnInit {
               private controller: ControllerService) {
     this.form = new FormGroup({
       email: new FormControl('', [Validators.required,
-        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]),
+        Validators.pattern('^([\\w-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([\\w-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$')]),
       password: new FormControl('', Validators.required),
       repeatPassword: new FormControl(),
     });
     console.log(this.form);
     this.form.controls['repeatPassword'].setValidators([
       Validators.required,
-      this.noIgual.bind( this.form )
+      this.checkPassword.bind( this.form )
     ]);
   }
 
   ngOnInit() {
 
   }
-  noIgual( control: FormControl): any {
+  checkPassword( control: FormControl): any {
     let forma: any = this;
     if ( control.value !== forma.controls['password'].value) {
       return {

@@ -62,8 +62,11 @@
 
             <div class="row">
               <div class="input-field col s12">
-                <input id="repeatPassword" type="password" class="" formControlName="repeatPassword">
+                <input id="repeatPassword" type="password" class="" formControlName="repeatPassword" [ngClass]="{'invalid': !form.controls['repeatPassword'].valid }">
                 <label for="repeatPassword">Repetir contraseña</label>
+                <div *ngIf="!form.controls['repeatPassword'].valid" class="red-text">
+                  Las contraseñas no coinciden
+                </div>
               </div>
             </div>
 

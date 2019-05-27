@@ -22,16 +22,16 @@ export class RegisterCompanyComponent implements OnInit {
       cif: new FormControl('', [Validators.required,
         Validators.pattern('^[a-zA-Z]{1}\\d{7}[a-zA-Z0-9]{1}$')]),
       email: new FormControl('', [Validators.required,
-        Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]),
+        Validators.pattern('^([\\w-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([\\w-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$')]),
       password: new FormControl('', Validators.required),
       repeatPassword: new FormControl(),
       desc: new FormControl('', Validators.minLength(50)),
-      contactEmail: new FormControl('', Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')),
+      contactEmail: new FormControl('', Validators.pattern('^([\\w-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([\\w-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$')),
       img: new FormControl()
     });
     this.form.controls['repeatPassword'].setValidators([
       Validators.required,
-      this.noIgual.bind( this.form )
+      this.checkPassword.bind( this.form )
     ]);
   }
 
@@ -51,7 +51,7 @@ export class RegisterCompanyComponent implements OnInit {
     this.imageUpload = file;
     console.log(this.imageUpload)
   }
-  noIgual( control: FormControl): any {
+  checkPassword( control: FormControl): any {
     let forma: any = this;
     if ( control.value !== forma.controls['password'].value) {
       return {

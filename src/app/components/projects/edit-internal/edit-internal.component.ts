@@ -74,6 +74,14 @@ export class EditInternalComponent implements OnInit, OnDestroy {
       counteroffer: new FormControl(this.project.counteroffer),
       category: new FormControl(this.project.category, Validators.pattern('[^0]+')),
     });
+    this.form.controls['minPrice'].setValidators([
+      Validators.required,
+      this.checkMaxPrice.bind(this.form)
+    ]);
+    this.form.controls['maxPrice'].setValidators([
+      Validators.required,
+      this.checkminPrice.bind(this.form)
+    ]);
     console.log(this.form)
   }
 
@@ -110,6 +118,26 @@ export class EditInternalComponent implements OnInit, OnDestroy {
     $('.chips-initial').chips({
       data: dataTags,
     });
+  }
+
+  checkMaxPrice(control: FormControl): any {
+    let forma: any = this;
+    if ( control.value > forma.controls['maxPrice'].value) {
+      return {
+        maxPrice : true
+      };
+    }
+    return null;
+  }
+
+  checkminPrice(control: FormControl): any {
+    let forma: any = this;
+    if ( control.value < forma.controls['minPrice'].value) {
+      return {
+        minPrice : true
+      };
+    }
+    return null;
   }
 
   selectionFile( file: File ) {
