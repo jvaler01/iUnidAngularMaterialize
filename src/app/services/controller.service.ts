@@ -17,8 +17,8 @@ export class ControllerService {
   constructor(private http: HttpClient) { }
 
   /**
-   * Método login que recibe como parametro un modelo de usuario y lo manda al servidor por la URL /login.
-   * El objetivo es comprobar que los datos que ha introducido el usuario son validos para poder hacer la sesión.
+   * Método login que recibe como parametro un modelo de usuario que también sirve como modelo de compañía para el login y lo manda al servidor por la URL /login.
+   * El objetivo es comprobar que los datos que ha introducido el usuario son válidos para poder hacer la sesión.
    * Si el return devuelve OK se crea la sesión
    * @param user
    */
@@ -37,7 +37,7 @@ export class ControllerService {
   /**
    * Método para registrar usuarios que recibe como parámetro un modelo de usuario y lo manda al servidor por la ruta /registerUser.
    * El objetivo es enviar el usuario que se desea crear y guardarlo en base de datos.
-   * Si el return devuelve OK se habrá creado el usuario y ya se podra hacer login.
+   * Si el return devuelve OK se habrá creado el usuario y ya se podrá hacer login.
    * @param user
    */
   registerUser( user: User ) {
@@ -53,11 +53,11 @@ export class ControllerService {
   }
 
   /**
-   * Método para borrar un usuario o compañia, los parámetros son el email del usuario/compañia que se desea borrar y el token de sesión.
+   * Método para borrar un usuario o compañía, los parámetros son el email del usuario/compañía que se desea borrar y el token de sesión.
    * Se manda al servidor por la ruta /deleteAccount.
    * Si el return devuelve OK se habrá deshabilitado la cuenta
    * @param token token de la sesión para hacer comprobaciones de seguridad en el servidor. Se envía por los headers.
-   * @param email email del usuario/compañia
+   * @param email email del usuario/compañía
    */
   deleteUserOrCompany( token: any, email: any ){
     let data = {
@@ -76,9 +76,9 @@ export class ControllerService {
   }
 
   /**
-   * Método para registrar compañias que recibe como parámetro un modelo de compañia y lo manda al servidor por la ruta /registerCompany.
-   * El objetivo es enviar la compañia que se desea crear y guardarlo en base de datos.
-   * Si el return devuelve OK se habrá creado el usuario y ya se podra hacer login.
+   * Método para registrar compañías que recibe como parámetro un modelo de compañía y lo manda al servidor por la ruta /registerCompany.
+   * El objetivo es enviar la compañía que se desea crear y guardarlo en base de datos.
+   * Si el return devuelve OK se habrá creado la compañía y ya se podra hacer login.
    * @param company
    */
   registerCompany( company: Company ) {
@@ -96,7 +96,7 @@ export class ControllerService {
   /**
    * Método para crear pryectos externos a la aplicación, recibe como parámetros el token se sesión y un modelo de proyecto externo.
    * Se manda al servidor por la ruta /createExternalProject.
-   * Si el return devuelve OK el proyecto se habrá creado en la base de datos y ya sera visible para el usuario/compañia.
+   * Si el return devuelve OK el proyecto se habrá creado en la base de datos y ya sera visible para el usuario/compañía.
    * @param token
    * @param data
    */
@@ -270,9 +270,9 @@ export class ControllerService {
   }
 
   /**
-   * Método para recibir todos los datos de la compañia que ha iniciado sessión, recibe como parámetros el token de sesión y el email de la compañia.
+   * Método para recibir todos los datos de la compañía que ha iniciado sessión, recibe como parámetros el token de sesión y el email de la compañía.
    * Se manda al servidor por la ruta /getCompany.
-   * Si el return devuelve OK se carga la compañia.
+   * Si el return devuelve OK se carga la compañía.
    * @param token
    * @param email
    */
@@ -312,6 +312,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para mandar al servidor la imagen que quiere subir el usuario, recibe como parámetros la imagen a subir y el email de usuario/compañía.
+   * Se manda al servidor por la ruta /uploadImage.
+   * Si el return devuelve OK la imagen se habrá subido correctamente.
+   * @param file
+   * @param email
+   */
   saveImg(file: File, email: any){
     let url = `${this.apiUrl}uploadImage`;
     let formData = new FormData();
@@ -323,6 +330,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para mandar al servidor el archivo que quiere subir el usuario, recibe como parámetros el archivo a subir y el email de usuario/compañía.
+   * Se manda al servidor por la ruta /uploadFile.
+   * Si el return devuelve OK el archivo se habrá subido correctamente.
+   * @param file
+   * @param id
+   */
   saveFileProject(file: File, id: any){
     let url = `${this.apiUrl}uploadFile`;
     let formData = new FormData();
@@ -334,6 +348,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para mandar al servidor el archivo que quiere subir el usuario, recibe como parámetros el archivo a subir y el email de usuario/compañía.
+   * Se manda al servidor por la ruta /uploadFileChat.
+   * Si el return devuelve OK el archivo se habrá subido correctamente.
+   * @param file
+   * @param id
+   */
   async saveFile(file: File, id: any): Promise<any> {
     let url = `${this.apiUrl}uploadFileChat`;
     let formData = new FormData();
@@ -342,6 +363,13 @@ export class ControllerService {
     return this.http.post(url, formData ).toPromise();
   }
 
+  /**
+   * Método para editar la compañía, recibe como parámetros el token y un modelo de compañía.
+   * Se manda al servidor por la ruta /editCompany.
+   * Si el return devuelve OK la compañía de habrá editado correctamente.
+   * @param token
+   * @param company
+   */
   editCompany( token: any, company: Company) {
     let body = JSON.stringify(company);
     let headers = new HttpHeaders({
@@ -355,6 +383,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para obtener los proyectos de un usuario/compañía, recibe como parámetros el token de sesion y el email.
+   * Se manda al servidor por la ruta /obtainAllProjects.
+   * Si el return devuelve OK se reciben los proyectos del usuario/compañía.
+   * @param token
+   * @param email
+   */
   getProjects( token: any, email:any) {
     let data = {
       email: email
@@ -371,6 +406,14 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para obtener proyectos por Id de proyecto, recibe como parametros el token de sesión, el email del usuario/compañía y el id del proyecto.
+   * Se menada al servidor por la ruta /obtainProjectsById.
+   * Si el return devuelve OK se recibe el proyecto requerido.
+   * @param token
+   * @param email
+   * @param id
+   */
   getProjectsById( token: any, email:any, id: any) {
     let data = {
       email: email,
@@ -388,6 +431,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para obtener el nombre y el id de proyectos, recibe como parámetros el token de sesión y el email del usuario/compañía.
+   * Se manda al servidor por la ruta /obtainProjectNameAndId.
+   * Si el return devuelve OK se reciben los nombres y los ids de los proyectos requeridos.
+   * @param token
+   * @param email
+   */
   getProjectsNameAndId( token: any, email:any) {
     let data = {
       email: email
@@ -404,6 +454,12 @@ export class ControllerService {
     }));
   }
 
+  /**
+   *
+   * Si el return devuelve OK se reciben los proyectos del usuario/compañía.
+   * @param token
+   * @param email
+   */
   getProjectsThatHeWorks( token: any, email:any) {
     let data = {
       email: email
@@ -420,6 +476,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   *
+   * Si el return devuelve OK se reciben los proyectos del usuario/compañía.
+   * @param token
+   * @param email
+   * @param name
+   */
   getProjectsByName( token: any, email:any , name: any) {
     let data = {
       email: email,
@@ -437,6 +500,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   *
+   * Si el return devuelve OK se reciben los proyectos del usuario/compañía.
+   * @param token
+   * @param email
+   * @param category
+   */
   getProjectsByCategory( token: any, email:any , category: any) {
     let data = {
       email: email,
