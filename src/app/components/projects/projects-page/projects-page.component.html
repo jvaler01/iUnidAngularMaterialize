@@ -28,6 +28,8 @@
 
           <section id="content1" class="tab-content tab_section">
             <ul class="collapsible">
+
+              <div *ngIf="data.internalProjects.length === 0">No hay proyectos</div>
               <li *ngFor="let project of data.internalProjects; let i = index">
                 <div *ngIf="project.state === 'Open'" class="collapsible-header">{{ project.name }}</div>
                 <div *ngIf="project.state === 'Open'" class="collapsible-body">
@@ -40,7 +42,7 @@
                   <p><span class="bold_text">Catergoria:</span> {{ project.category }}</p>
                   <p><span class="bold_text">Descripción:</span> {{ project.description }}</p>
                   <p><span class="bold_text">Fecha de entrega:</span> {{ project.deliveryDate  | date }}</p>
-                  <p><span class="bold_text">Recompensa:</span> {{ project.minPrice }} - {{ project.maxPrice }}</p>
+                  <p><span class="bold_text">Recompensa:</span> {{ project.minPrice }}€ - {{ project.maxPrice }}€</p>
                   <div class="row" *ngIf="project.files">
                     <div class="col xl12">
                       <a *ngFor="let file of project.files" class="btn" style="margin: 5px" (click)="download(file)"><i class="fas fa-download"></i> - {{file}}</a>
@@ -90,13 +92,15 @@
 
           <section id="content2" class="tab-content tab_section">
             <ul class="collapsible">
+
+              <div *ngIf="data.internalProjects.length === 0">No hay proyectos</div>
               <li *ngFor="let project of data.internalProjects">
                 <div *ngIf="project.state === 'Close'" class="collapsible-header">{{ project.name }}</div>
                 <div *ngIf="project.state === 'Close'" class="collapsible-body">
                   <p><span class="bold_text">Catergoria:</span> {{ project.category }}</p>
                   <p><span class="bold_text">Descripción:</span> {{ project.description }}</p>
                   <p><span class="bold_text">Fecha de entrega:</span> {{ project.deliveryDate  | date }}</p>
-                  <p><span class="bold_text">Recompensa:</span> {{ project.minPrice }} - {{ project.maxPrice }}</p>
+                  <p><span class="bold_text">Recompensa:</span> {{ project.minPrice }}€ - {{ project.maxPrice }}€</p>
                   <div class="row">
                     <div class="col xl12">
                       <h5>Trabajadores: </h5>

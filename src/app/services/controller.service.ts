@@ -8,9 +8,20 @@ import {Company} from '../models/Company';
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * Servicio que se encarga de conectar con el servidor para realizar todas las peticiones que se requieran
+ */
 export class ControllerService {
   apiUrl = 'http://localhost:3000/';
   constructor(private http: HttpClient) { }
+
+  /**
+   * Método login que recibe como parametro un modelo de usuario y lo manda al servidor por la URL /login.
+   * El objetivo es comprobar que los datos que ha introducido el usuario son validos para poder hacer la sesión.
+   * Si el return devuelve OK se crea la sesión
+   * @param user
+   */
   login( user: User ) {
     let body = JSON.stringify(user);
     let headers = new HttpHeaders({
@@ -23,6 +34,12 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para registrar usuarios que recibe como parámetro un modelo de usuario y lo manda al servidor por la ruta /registerUser.
+   * El objetivo es enviar el usuario que se desea crear y guardarlo en base de datos.
+   * Si el return devuelve OK se habrá creado el usuario y ya se podra hacer login.
+   * @param user
+   */
   registerUser( user: User ) {
     let body = JSON.stringify(user);
     let headers = new HttpHeaders({
@@ -35,6 +52,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para borrar un usuario o compañia, los parámetros son el email del usuario/compañia que se desea borrar y el token de sesión.
+   * Se manda al servidor por la ruta /deleteAccount.
+   * Si el return devuelve OK se habrá deshabilitado la cuenta
+   * @param token token de la sesión para hacer comprobaciones de seguridad en el servidor. Se envía por los headers.
+   * @param email email del usuario/compañia
+   */
   deleteUserOrCompany( token: any, email: any ){
     let data = {
       email: email
@@ -51,6 +75,12 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para registrar compañias que recibe como parámetro un modelo de compañia y lo manda al servidor por la ruta /registerCompany.
+   * El objetivo es enviar la compañia que se desea crear y guardarlo en base de datos.
+   * Si el return devuelve OK se habrá creado el usuario y ya se podra hacer login.
+   * @param company
+   */
   registerCompany( company: Company ) {
     let body = JSON.stringify(company);
     let headers = new HttpHeaders({
@@ -63,6 +93,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para crear pryectos externos a la aplicación, recibe como parámetros el token se sesión y un modelo de proyecto externo.
+   * Se manda al servidor por la ruta /createExternalProject.
+   * Si el return devuelve OK el proyecto se habrá creado en la base de datos y ya sera visible para el usuario/compañia.
+   * @param token
+   * @param data
+   */
   createExternalProject( token: any, data:any ) {
     let body = JSON.stringify(data);
     let headers = new HttpHeaders({
@@ -76,6 +113,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para editar proyectos externos a la aplicación, recibe como parámetros el token de sesión y un modelo de proyecto externo.
+   * Se manda al servidor por la ruta /editExternalProject.
+   * Si el return devuelve OK el proyecto se habrá editado correctamente.
+   * @param token
+   * @param data
+   */
   editExternalProject( token: any, data:any ) {
     let body = JSON.stringify(data);
     let headers = new HttpHeaders({
@@ -89,6 +133,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para editar un proyecto interno de la aplicación, recibe como parámetros el token de sesión y un modelo de proyecto interno.
+   * Se manda al servidor por la ruta /editInernalProyect
+   * Si el return devuelve OK el proyecto se habrá editaco correctamente.
+   * @param token
+   * @param data
+   */
   editInternalProject( token: any, data:any ) {
     let body = JSON.stringify(data);
     let headers = new HttpHeaders({
@@ -102,6 +153,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para crear pryectos internos de la aplicación, recibe como parámetros el token se sesión y un modelo de proyecto interno.
+   * Se manda al servidor por la ruta /createInternalProject.
+   * Si el return devuelve OK el proyecto se habrá creado en la base de datos y ya sera visible para el usuario/compañia.
+   * @param token
+   * @param data
+   */
   createInternalProject( token: any, data:any ) {
     let body = JSON.stringify(data);
     let headers = new HttpHeaders({
@@ -115,6 +173,14 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para borrar un proyecto externo, recibe como parámetros el token de sesión, el id del proyecto y el email del usuario.
+   * Se manda al servidor por la ruta /deleteExternalProject.
+   * Si el return devuelve OK el proyecto se habrá borrado de la base de datos.
+   * @param token
+   * @param id
+   * @param email
+   */
   deleteExternalProject( token: any, id:any, email: any ){
     let data = {
       id: id,
@@ -132,6 +198,14 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para borrar un proyecto interno, recibe como parámetros el token de sesión, el id del proyecto y el email del usuario.
+   * Se manda al servidor por la ruta /deleteInternalProject.
+   * Si el return devuelve OK el proyecto se habrá borrado de la base de datos.
+   * @param token
+   * @param id
+   * @param email
+   */
   deleteInternalProject( token: any, id:any, email: any ){
     let data = {
       id: id,
@@ -149,6 +223,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para recibir todos los datos del usuario que ha iniciado sessión, recibe como parámetros el token de sesión y el email del usuario.
+   * Se manda al servidor por la ruta /getUser.
+   * Si el return devuelve OK se carga el usuario.
+   * @param token
+   * @param email
+   */
   getUser( token: any, email:any ) {
     let data = {
       email: email
@@ -165,6 +246,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para recibir del servidor todas las peticiones que tiene un usuario de unirse a un proyecto, recibe como parámetros el token de sesión y el email del usuario.
+   * Se manda al servidor por la ruta /showMessagesCollaborator.
+   * Si el return devuelve OK se cargan todos las peticiones.
+   * @param token
+   * @param email
+   */
   getUserMessages( token: any, email:any ) {
     let data = {
       email: email
@@ -181,6 +269,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para recibir todos los datos de la compañia que ha iniciado sessión, recibe como parámetros el token de sesión y el email de la compañia.
+   * Se manda al servidor por la ruta /getCompany.
+   * Si el return devuelve OK se carga la compañia.
+   * @param token
+   * @param email
+   */
   getCompany( token: any, email:any ) {
     let data = {
       email: email
@@ -197,10 +292,14 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para editar el usuario, recibe como parámetros el token y un modelo de usuario.
+   * Se manda al servidor por la ruta /editUser.
+   * Si el return devuelve OK el usuario de habrá editado correctamente.
+   * @param token
+   * @param user
+   */
   editUser( token: any, user: User) {
-
-
-
     let body = JSON.stringify(user);
     let headers = new HttpHeaders({
       'Content-Type':'application/json',
