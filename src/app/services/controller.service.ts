@@ -455,7 +455,8 @@ export class ControllerService {
   }
 
   /**
-   *
+   * Método para obtener los poyectos en los que trabaja un usuario, recibe como parámetros el token de sesión y el email del usuario.
+   * Se manda al servidor por la ruta /obtainAllProjectsThatHeWorks.
    * Si el return devuelve OK se reciben los proyectos del usuario/compañía.
    * @param token
    * @param email
@@ -477,8 +478,9 @@ export class ControllerService {
   }
 
   /**
-   *
-   * Si el return devuelve OK se reciben los proyectos del usuario/compañía.
+   * Método para obtener proyectos por nombre, recibe como parámetros el token de sesión, el email del usuario y el nombre de proyecto que desea buscar.
+   * Se manda al servidor por la ruta /obtainProjectName.
+   * Si el return devuelve OK se reciben los proyectos que coincidan con ese nombre.
    * @param token
    * @param email
    * @param name
@@ -501,8 +503,9 @@ export class ControllerService {
   }
 
   /**
-   *
-   * Si el return devuelve OK se reciben los proyectos del usuario/compañía.
+   * Método para obtener proyectos por categoría, recibe como parámetros el token de sesión, el email del usuario y la categoría del proyecto que desea buscar.
+   * Se manda al servidor por la ruta /obtainProjectCategory.
+   * Si el return devuelve OK se reciben los proyectos que coincidan con esa categoría.
    * @param token
    * @param email
    * @param category
@@ -524,6 +527,14 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para obtener proyectos por tags, recibe como parámetros el token de sesión, el email del usuario y el tag del proyecto que desea buscar.
+   * Se manda al servidor por la ruta /obtainProjectTags.
+   * Si el return devuelve OK se reciben los proyectos que coincidan con ese tag.
+   * @param token
+   * @param email
+   * @param tags
+   */
   getProjectsByTag( token: any, email:any , tags: any ) {
     let data = {
       email: email,
@@ -541,6 +552,14 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para obtener usuarios por habilidades, recibe como parámetros el token de sesión, el email de la comañía y las habilidades por las que se desea buscar.
+   * Se manda al servidor por la ruta /getUsersBySkills.
+   * Si el return devuelve OK se reciben los usuarios que coincidan con esas habilidades.
+   * @param token
+   * @param email
+   * @param skills
+   */
   getUsersBySkills( token: any, email:any , skills: any ){
     let data = {
       email: email,
@@ -558,6 +577,14 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para obtener usuarios por certificados, recibe como parámetros el token de sesión, el email de la comañía y los certificados por las que se desea buscar.
+   * Se manda al servidor por la ruta /getUsersByCertificates.
+   * Si el return devuelve OK se reciben los usuarios que coincidan con esos certificados.
+   * @param token
+   * @param email
+   * @param certificates
+   */
   getUsersByCertificates( token: any, email:any , certificates: any ){
     let data = {
       email: email,
@@ -575,6 +602,14 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para obtener usuarios por cursos, recibe como parámetros el token de sesión, el email de la comañía y los cursos por las que se desea buscar.
+   * Se manda al servidor por la ruta /getUsersByCourses.
+   * Si el return devuelve OK se reciben los usuarios que coincidan con esos cursos.
+   * @param token
+   * @param email
+   * @param courses
+   */
   getUsersByCourses( token: any, email:any , courses: any ){
     let data = {
       email: email,
@@ -592,6 +627,14 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para hacer una petición de unirse a un proyecto, recibe como parámetros el token de sesión, el email del usuario y el id del proyecto al que se quiere unir.
+   * Se manda al servidor por la ruta /addingPendingRequest.
+   * Si el return devuelve OK la petición se habrá guardado correctamente en la base de datos.
+   * @param token
+   * @param email
+   * @param projectId
+   */
   joinProject( token: any, email:any , projectId: any) {
     let data = {
       email: email,
@@ -609,6 +652,15 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para enviar una petición para que un usuario se una a un proyecto, recibe como parámetros el token de sesión, el id del proyecto, el email del usuario a unir y el email de la compañia.
+   * Se manda al servidor por la ruta /sendMessageCollaborator.
+   * Si el return devuelve OK la petición se habrá guardado correctamente en la base de datos.
+   * @param token
+   * @param projectId
+   * @param userEmail
+   * @param email
+   */
   sendMessageCollaborator( token: any, projectId:any , userEmail: any, email: any) {
     let data = {
       email: email,
@@ -627,6 +679,15 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para aceptar a un usuario en un proyecto, recibe como parámetros el token de sesión, el email del usuario, el id del proyecto y el id del usuario que se va a aceptar.
+   * Se manda al servidor por la ruta /acceptPendingRequest.
+   * Si el return devuelve OK la petición se habrá guardado correctamente en la base de datos.
+   * @param token
+   * @param email
+   * @param projectId
+   * @param userEmail
+   */
   acceptPendingRequest( token: any, email: any, projectId: any, userEmail: any) {
     let data = {
       email: email,
@@ -645,6 +706,14 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para aceptar una oferta de una compañía para entrar en su poryecto, recibe como parámetros el token de sesión, el email del usuario y el id del proyecto.
+   * Se manda al servidor por la ruta /acceptPendingRequestCollaborator.
+   * Si el return devuelve OK la petición se habrá guardado correctamente en la base de datos.
+   * @param token
+   * @param email
+   * @param projectId
+   */
   acceptOffer( token: any, email: any, projectId: any) {
     let data = {
       email: email,
@@ -662,6 +731,15 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para denegar a un usuario en un proyecto, recibe como parámetros el token de sesión, el email del usuario, el id del proyecto y el id del usuario que se va a denegar.
+   * Se manda al servidor por la ruta /denyPendingRequest.
+   * Si el return devuelve OK la petición se habrá guardado correctamente en la base de datos.
+   * @param token
+   * @param email
+   * @param projectId
+   * @param userEmail
+   */
   denyPendingRequest( token: any, email: any, projectId: any, userEmail: any) {
     let data = {
       email: email,
@@ -680,6 +758,14 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para denegar la oferta de una compañia para un usuario, recibe como parámetros el token de sesión, el email del usuario y el id del proyecto.
+   * Se manda al servidor por la ruta /denyPendingRequestCollaborator.
+   * Si el return devuelve OK la petición se habrá guardado correctamente en la base de datos.
+   * @param token
+   * @param email
+   * @param projectId
+   */
   denyOffer( token: any, email: any, projectId: any) {
     let data = {
       email: email,
@@ -697,6 +783,15 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para echar a un usuario de un proyecto, recibe como parámetros el token de sesión, el email del usuario conectado, el id del proyecto y el id del usuario que se va a echar.
+   * Se manda al servidor por la ruta /kickPerson.
+   * Si el return devuelve OK la petición se habrá guardado correctamente en la base de datos.
+   * @param token
+   * @param email
+   * @param projectId
+   * @param userEmail
+   */
   kickPerson( token: any, email: any, projectId: any, userEmail: any) {
     let data = {
       email: email,
@@ -715,6 +810,15 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para hacer una oferta para un proyecto, recibe como parámetros el token de sesión, el email del usuario, el id del proyecto y el precio que se va a ofertar.
+   * Se manda al servidor por la ruta /addingCounterOffer.
+   * Si el return devuelve OK la petición se habrá guardado correctamente en la base de datos.
+   * @param token
+   * @param email
+   * @param projectId
+   * @param price
+   */
   counterOffer( token: any, email: any, projectId: any, price: any) {
     let data = {
       email: email,
@@ -733,6 +837,16 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para aceptar la oferta de un usuario para un proyecto, recibe como parámetros el token de sesión, el email del usuario, el id del proyecto y el id del usuario que se va a aceptar.
+   * Se manda al servidor por la ruta /acceptCounterOffers.
+   * Si el return devuelve OK la petición se habrá guardado correctamente en la base de datos.
+   * @param token
+   * @param email
+   * @param projectId
+   * @param price
+   * @param userEmail
+   */
   acceptCounterOffer( token: any, email: any, projectId: any, price: any, userEmail: any ){
     let data = {
       email: email,
@@ -752,6 +866,16 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para denegar la oferta de un usuario para un proyecto, recibe como parámetros el token de sesión, el email del usuario, el id del proyecto y el id del usuario que se va a denegar.
+   * Se manda al servidor por la ruta /denyCounterOffer.
+   * Si el return devuelve OK la petición se habrá guardado correctamente en la base de datos.
+   * @param token
+   * @param email
+   * @param projectId
+   * @param userEmail
+   * @param price
+   */
   denyCounterOffer( token: any, email: any, projectId: any, userEmail: any, price: any ){
     let data = {
       email: email,
@@ -771,6 +895,14 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para cerrar un proyecto interno, recibe como parámetros el token de sesión, el email del usuario y el id del proyecto a cerrar.
+   * Se manda al serviro por la ruta /closeProject.
+   * Si el return devuelve OK el proyecto se habrá cerrado correctamente.
+   * @param token
+   * @param email
+   * @param projectId
+   */
   closeProject( token: any, email: any, projectId: any) {
     let data = {
       email: email,
@@ -788,6 +920,15 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para pagar a una persona, recibe como parametros el token de sesión, la cantidad ha pagar, el usuario a pagar y el id del proyecto.
+   * Se manda al servidor por la ruta /buy.
+   * Si el return devuelve OK se recibe la url de paypal para pagar a la persona.
+   * @param token
+   * @param amount
+   * @param userEmail
+   * @param projectId
+   */
   payUser( token: any, amount: any, userEmail: any, projectId: any){
     let data = {
       amount: amount,
@@ -806,6 +947,16 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para evaluar a un usuario, recibe como parámetro el token de sesión, el email del usuario conectado, el id de proyecto, el email del usuario a evaluar y la puntuación que se le va a dar.
+   * Se manda al servidor por la ruta /addScore.
+   * Si el return devuelve OK se habrá añadido la puntiación al usuario.
+   * @param token
+   * @param email
+   * @param projectId
+   * @param userEmail
+   * @param score
+   */
   evaluateUser( token: any, email: any, projectId: any, userEmail: any, score: any ){
     let data = {
       email: email,
@@ -825,6 +976,12 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para obtener los archivos del chat, recibe como parámetro el id del chat.
+   * Se manda al servidor por la ruta /getDeliveriesById.
+   * La respuesta devolverá todos los archivos que sean de ese chat.
+   * @param chatId
+   */
   getDeliveries(chatId: any){
     let id = chatId;
     let data = {
@@ -841,6 +998,12 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para descargar archivos del chat, recibe como parámetro el archivo que se quiere descargar.
+   * Se manda al servidor por la ruta /download.
+   * Si es correcto se descargara el archivo correspondiente.
+   * @param file
+   */
   downloadReport(file){
     // Create url
     let url = `${this.apiUrl}download`;
@@ -852,6 +1015,12 @@ export class ControllerService {
     });
   }
 
+  /**
+   * Método para descargar archivos de un proyecto, recibe como parámetro el archivo que se quiere descargar.
+   * Se manda al servidor por la ruta /downloadFile.
+   * Si es correcto se descargara el archivo correspondiente.
+   * @param file
+   */
   downloadFile(file){
     // Create url
     let url = `${this.apiUrl}downloadFile`;
@@ -865,6 +1034,14 @@ export class ControllerService {
 
   //--- ADMIN ----
 
+  /**
+   * Método para recibir todos los usuarios de la base de datos, recibe como parámetros el token de sesión, el email del usuario, y el tipo de usuario.
+   * Se manda al servidor por la ruta /getUsers.
+   * Devuelve todos los usuarios de la base de datos.
+   * @param token
+   * @param email
+   * @param userType
+   */
   getUsers(token: any, email: any, userType: any) {
     let data = {
       email: email,
@@ -882,6 +1059,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para editar usuarios desde administrador, recibe como parámetros el token de sesión y un modelos de usuario.
+   * Se manda al servidor por la ruta /editUserAdmin.
+   * Si devuelve OK se habrá actualizado la base de datos correctamente.
+   * @param token
+   * @param user
+   */
   editUserAdmin( token: any, user: User) {
     let body = JSON.stringify(user);
     let headers = new HttpHeaders({
@@ -895,6 +1079,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para editar compañías desde administrador, recibe como parámetros el token de sesión y un modelos de compañía.
+   * Se manda al servidor por la ruta /editCompanyAdmin.
+   * Si devuelve OK se habrá actualizado la base de datos correctamente.
+   * @param token
+   * @param company
+   */
   editCompanyAdmin( token: any, company: Company) {
     let body = JSON.stringify(company);
     let headers = new HttpHeaders({
@@ -908,6 +1099,13 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para crear un usuario o compañía desde la pagina de aministrador, recibe como parámetros el token de sesion y un objeto con todos los datos.
+   * Se manda al servidor por la ruta /newUser.
+   * Si devuelve OK se habrá actualizado la base de datos con el usuario o compañía nuevo.
+   * @param token
+   * @param data
+   */
   newUserOrCompany( token: any, data: any ) {
     let body = JSON.stringify(data);
     let headers = new HttpHeaders({
@@ -921,6 +1119,15 @@ export class ControllerService {
     }));
   }
 
+  /**
+   * Método para eliminar un usuario, una compañía o un administrador desde la página de aministrador, recibe como parametros el token de sesión, el email del usuaio, el email del usuario a borrar y el tipo de usuario.
+   * Se manda al servidor por la ruta /removeAccount.
+   * si devuelve OK la base de datos se habrá actualizado correctamente.
+   * @param token
+   * @param email
+   * @param userEmail
+   * @param userType
+   */
   deleteUserOrCompanyAdmin( token: any, email: any, userEmail: any, userType: any ){
     let data = {
       email: email,
