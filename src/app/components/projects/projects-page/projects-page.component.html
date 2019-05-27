@@ -52,7 +52,7 @@
                     <div class="col xl12">
                       <h5>Contra ofertas: </h5>
                       <p *ngIf="project.pendingCounterOffer.length === 0">No hay contra ofertas</p>
-                      <p style="word-break: break-all; margin-top: 5px" *ngFor="let counterOffer of project.pendingCounterOffer">{{ counterOffer.offer }} - {{ counterOffer.user }}<a style="margin-left: 5px" class="waves-effect waves-light btn" (click)="acceptCounterOffer( project._id, counterOffer.user, counterOffer.offer )">Aceptar</a><a style="margin-left: 5px" class="waves-effect waves-light btn red" (click)="denyCounterOffer( project._id, counterOffer.user, counterOffer.offer )">Borrar</a></p>
+                      <p style="word-break: break-all; margin-top: 5px" *ngFor="let counterOffer of project.pendingCounterOffer">{{ counterOffer.offer }}€ - {{ counterOffer.user }}<a style="margin-left: 5px" class="waves-effect waves-light btn" (click)="acceptCounterOffer( project._id, counterOffer.user, counterOffer.offer )">Aceptar</a><a style="margin-left: 5px" class="waves-effect waves-light btn red" (click)="denyCounterOffer( project._id, counterOffer.user, counterOffer.offer )">Borrar</a></p>
                     </div>
                   </div>
                   <div class="row" *ngIf="client">

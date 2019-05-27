@@ -180,9 +180,11 @@ export class SearchJobComponent implements OnInit {
       console.log(data);
       this.data = data;
       if(this.data.err){
+        $('#counterOfferModal').modal('close');
         this.messageService.takeMessage(this.data.err.message);
         this.router.navigate( ['/error']);
       }else{
+        $('#counterOfferModal').modal('close');
         if(JSON.parse(localStorage.getItem('user')).userDB){
           this.router.navigate( ['userProjects']);
         } else {
@@ -191,6 +193,7 @@ export class SearchJobComponent implements OnInit {
       }
     }, error => {
       console.log(error);
+      $('#counterOfferModal').modal('close');
       this.messageService.takeMessage(error.err.message);
       this.router.navigate( ['/error']);
     });
