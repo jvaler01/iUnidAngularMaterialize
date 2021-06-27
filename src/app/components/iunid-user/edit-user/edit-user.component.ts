@@ -169,6 +169,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
     userData.certificates = this.certificatesTags;
     userData.skills = this.skillsTags;
     userData.phone = this.form.get('phoneNumber').value;
+    userData.description = this.form.get('desc').value;
     console.log(userData);
     let userSesion = JSON.parse(localStorage.getItem('user'));
     userData.email = userSesion.userDB.email;
